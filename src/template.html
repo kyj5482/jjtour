@@ -438,7 +438,7 @@ const PHOTO = {
   vegas_strip:"라스베이거스 스트립", bellagio:"벨라지오 분수쇼", zion:"자이언 캐니언, 버진강", emerald_pools:"에메랄드 풀스",
   bryce:"브라이스 캐니언 ‘토르의 망치’", horseshoe:"호스슈 벤드", antelope:"로어 앤텔로프 캐니언", monument:"모뉴먼트 밸리",
   grand_canyon:"그랜드캐년 사우스림", route66:"윌리엄스 · 루트 66", disneyland:"잠자는 숲속의 공주 성", dca:"디즈니 캘리포니아 어드벤처",
-  santa_monica:"산타모니카 부두", griffith:"그리피스 천문대", getty:"게티 센터", sd_zoo:"샌디에이고 동물원 판다 (자료 사진)", seaworld:"씨월드 샌디에이고 범고래", balboa:"발보아 파크",
+  santa_monica:"산타모니카 부두", griffith:"그리피스 천문대", getty:"게티 센터", sd_zoo:"샌디에이고 동물원 판다 (자료 사진)", seaworld:"씨월드 샌디에이고 범고래", alabama_hills:"앨라배마 힐스 아치와 휘트니산", mono_lake:"모노 호수 사우스 투파", balboa:"발보아 파크",
   lajolla:"라호야 코브 바다사자", laguna:"라구나 비치 하이슬러 공원", sjc_mission:"미션 산후안 카피스트라노", sb_mission:"올드 미션 산타바바라",
   solvang:"솔뱅 풍차", sb_wharf:"산타바바라 해변", tunnel_view:"요세미티 터널 뷰", glacier_point:"글레이셔 포인트와 하프 돔",
   yosemite_falls:"요세미티 폭포", mariposa:"마리포사 그로브 그리즐리 자이언트", tioga:"테나야 호수 (티오가 로드)", emerald_bay:"타호 호수 에메랄드 베이",
@@ -459,8 +459,8 @@ const PL = {
   sjc:[33.501,-117.663,"산후안 카피스트라노"], laguna:[33.542,-117.785,"라구나 비치"], la:[34.05,-118.25,""],
   ventura:[34.28,-119.29,""], sb:[34.42,-119.698,"산타바바라"], solvang:[34.596,-120.137,"솔뱅"], malibu:[34.03,-118.78,"말리부"],
   grapevine:[34.94,-118.92,""], bakers:[35.37,-119.02,"베이커스필드"], fresno:[36.74,-119.79,"프레즈노"], oakhurst:[37.33,-119.65,""],
-  mariposa:[37.51,-119.6,"마리포사 그로브"], yv:[37.745,-119.59,"요세미티 밸리"], tuol:[37.87,-119.36,"투올럼니"],
-  leevining:[37.957,-119.12,"모노 호수"], bridgeport:[38.256,-119.23,""], markle:[38.69,-119.78,""],
+  mariposa:[37.51,-119.6,"마리포사 그로브"], palmdale:[34.58,-118.12,""], mojave:[35.05,-118.17,""], lonepine:[36.606,-118.063,"론파인 · 휘트니산"], bishop:[37.363,-118.395,"비숍"], tuolgrove:[37.758,-119.805,"투올럼니 그로브"], groveland:[37.838,-120.231,"그로블랜드"], jamestown:[37.953,-120.422,""], elportal:[37.675,-119.78,""], yv:[37.745,-119.59,"요세미티 밸리"], tuol:[37.87,-119.36,"투올럼니"],
+  leevining:[37.957,-119.12,"모노 호수 · 리 바이닝"], bridgeport:[38.256,-119.23,""], markle:[38.69,-119.78,""],
   tahoe:[38.94,-119.98,"사우스 레이크 타호"], emerald:[38.954,-120.11,"에메랄드 베이"], placer:[38.73,-120.80,""],
   sac:[38.58,-121.49,"새크라멘토"], napa:[38.30,-122.29,"나파"], sonoma:[38.29,-122.46,""], ggb:[37.8199,-122.4783,"금문교"],
   sf:[37.7749,-122.4194,"샌프란시스코 숙소"], sfo:[37.62,-122.38,"SFO 공항"], stanford:[37.4275,-122.1697,"스탠퍼드"],
@@ -484,8 +484,8 @@ const MAPS = {
   "6/2":{legs:[D("drive",["sb","solvang"]),D("drive",["solvang","sb","ventura","malibu","irvine"])],stops:["sb","solvang","malibu","irvine"],note:"솔뱅 왕복 + 해안도로 귀가, 약 3시간 45분"},
   "6/3":{legs:[],stops:["irvine"],note:"이동 없음 · 얼바인"},
   "6/4":{legs:[D("fly",["las","sna"],"B")],stops:["irvine"],note:"동생네가 라스베이거스에서 비행기로 도착"},
-  "6/5":{legs:[D("drive",["irvine","la","grapevine","bakers","fresno","oakhurst","mariposa","yv"])],stops:["irvine","mariposa","yv"],note:"약 500km · 6시간, 캘리포니아 중부를 남에서 북으로"},
-  "6/6":{legs:[D("drive",["yv","tuol","leevining","bridgeport","markle","tahoe"])],stops:["yv","tuol","leevining","tahoe"],note:"약 300km · 4–5시간, 시에라 산맥을 동쪽으로 넘어 북쪽으로"},
+  "6/5":{legs:[D("drive",["irvine","palmdale","mojave","lonepine","bishop","leevining","tuol","yv"])],stops:["irvine","lonepine","bishop","leevining","yv"],note:"약 600km · 7시간, 시에라 산맥 동쪽 395번 도로로 올라가 티오가 고개로 진입"},
+  "6/6":{legs:[D("drive",["yv","tuolgrove","groveland","jamestown","placer","tahoe"])],stops:["yv","tuolgrove","groveland","tahoe"],note:"약 330km · 5시간, 서쪽으로 나가 49번 골드러시 도로와 50번 도로로"},
   "6/7":{legs:[D("drive",["tahoe","emerald","placer","sac","napa"])],stops:["tahoe","emerald","napa"],note:"약 250km · 3시간, 산에서 내려와 서쪽으로"},
   "6/8":{legs:[D("drive",["napa","sonoma","ggb","sf"])],stops:["napa","ggb","sf"],note:"약 90km · 1시간 30분, 금문교를 건너 시내로"},
   "6/9":{legs:[D("fly",["sna","sfo"],"B"),D("drive",["sf","fwharf"])],stops:["sfo","sf","fwharf"],note:"동생네가 남쪽에서 비행기로 합류"},
@@ -524,11 +524,11 @@ function fitBox(b, minW){
   if(w/h<R){ const nw=h*R, c=(x0+x1)/2; x0=c-nw/2; w=nw; } else { const nh=w/R, c=(y0+y1)/2; y0=c-nh/2; h=nh; }
   return [x0,y0,w,h];
 }
-function scaleBar(vx,vy,vw,vh,fs){
+function scaleBar(vx,vy,vw,vh,fs,K){
   const kmU = MK/111; const opts=[5,10,25,50,100,200]; let km=opts[0];
   for(const o of opts){ if(o*kmU < vw*0.22) km=o; }
-  const L=km*kmU, x=vx+vw*0.04, y=vy+vh-vh*0.06;
-  return `<g class="sbar"><line x1="${x}" y1="${y}" x2="${x+L}" y2="${y}"/><line x1="${x}" y1="${y-fs*0.35}" x2="${x}" y2="${y+fs*0.35}"/><line x1="${x+L}" y1="${y-fs*0.35}" x2="${x+L}" y2="${y+fs*0.35}"/><text x="${x+L/2}" y="${y-fs*0.55}" font-size="${fs*0.85}" text-anchor="middle">${km} km</text></g>`;
+  const L=km*kmU*K, x=(vx+vw*0.04)*K, y=(vy+vh-vh*0.06)*K, f=fs*K;
+  return `<g class="sbar"><line x1="${x}" y1="${y}" x2="${x+L}" y2="${y}"/><line x1="${x}" y1="${y-f*0.35}" x2="${x}" y2="${y+f*0.35}"/><line x1="${x+L}" y1="${y-f*0.35}" x2="${x+L}" y2="${y+f*0.35}"/><text x="${x+L/2}" y="${y-f*0.55}" font-size="${f*0.85}" text-anchor="middle">${km} km</text></g>`;
 }
 function legPath(leg, vx, vw){
   const pts = leg.p.map(k=>{
@@ -567,39 +567,49 @@ const isMobile = () => window.matchMedia("(max-width:760px)").matches;
 function mapSVG({legs, stops, team, overview, minW=34}){
   const keys = [...legs.flatMap(l=>l.p), ...stops];
   const [vx,vy,vw,vh] = overview ? [0,30,830,580] : fitBox(bboxOf(keys), minW);
-  // phones draw the map ~340px wide, so enlarge text in map units to keep it ~11px+ on screen
+  // Layout happens in projected map units. Output is rescaled so every map is 1000 units wide:
+  // zoomed-in maps would otherwise carry 1–5 unit font sizes, which phones round and clamp (squeezed, overlapping text).
+  const K = 1000/vw, P = v => +(v*K).toFixed(2);
   const fs = (overview ? vw/46 : vw/30) * (isMobile() ? (overview ? 1.6 : 1.25) : 1);
   const col = t => `var(--${(t||team)==="A"?"pine":(t||team)==="B"?"sand":"sky"})`;
-  let s = `<svg viewBox="${vx.toFixed(2)} ${vy.toFixed(2)} ${vw.toFixed(2)} ${vh.toFixed(2)}" role="img" aria-label="이동 경로 지도" preserveAspectRatio="xMidYMid meet">`;
-  s += `<rect class="sea" x="${vx-200}" y="${vy-200}" width="${vw+400}" height="${vh+400}"/>`;
+  let s = `<svg viewBox="${P(vx)} ${P(vy)} 1000 ${P(vh)}" role="img" aria-label="이동 경로 지도" preserveAspectRatio="xMidYMid meet">`;
+  s += `<g transform="scale(${K})"><rect class="sea" x="${vx-200}" y="${vy-200}" width="${vw+400}" height="${vh+400}"/>`;
   s += Object.values(GEO).map(d=>`<path class="land" d="${d}"/>`).join("");
   const [tx,ty]=proj(39.09,-120.04); s += `<ellipse class="lake" cx="${tx}" cy="${ty}" rx="5" ry="9.5"/>`;
-  const [px,py]=proj(36.0,-123.6); s += `<text class="water" x="${px}" y="${py}" font-size="${(overview?fs:fs*0.8)*1.1}" text-anchor="middle">태평양</text>`;
-  if(overview || vw>150) STATES_KO.forEach(([n,la,lo])=>{const [x,y]=proj(la,lo); s+=`<text class="state" x="${x}" y="${y}" font-size="${(overview ? vw/46 : vw/30)*1.15}" text-anchor="middle">${n}</text>`;});
   legs.forEach(l=>{ s += `<path class="leg ${l.m}" d="${legPath(l,vx,vw)}" style="stroke:${col(l.team)}" vector-effect="non-scaling-stroke"/>`; });
-  legs.filter(l=>l.p.some(isOff)).forEach(l=>{ const k=l.p.find(isOff); const other=l.p.find(o=>!isOff(o)); const [,y]=proj(PL[other][0],PL[other][1]);
-    const yy = y + (k==="korea"? -vw*0.08 : vw*0.06); s+=`<text class="lbl strong" x="${vx+fs*0.5}" y="${yy-fs*0.6}" font-size="${fs}" style="stroke-width:${(fs*0.28).toFixed(3)}">${PL[k][2]} ✈</text>`; });
+  s += `</g>`;
+  const T = (x,y,size,cls,txt,extra="") => `<text class="${cls}" x="${P(x)}" y="${P(y)}" font-size="${P(size)}" ${extra}>${txt}</text>`;
+  // keep the ocean label fully inside the frame (a clipped "태평양" reads as "평양")
+  const wf=(overview?fs:fs*0.8)*1.1, ww=wf*3*1.25, [px0,py0]=proj(36.0,-123.6);
+  const px=Math.min(Math.max(px0, vx+ww/2+fs*0.4), vx+vw-ww/2-fs*0.4), py=Math.min(Math.max(py0, vy+wf*1.5), vy+vh-wf);
+  s += T(px,py,wf,"water","태평양",'text-anchor="middle"');
+  const fs0 = overview ? vw/46 : vw/30;
+  if(overview || vw>150) STATES_KO.forEach(([n,la,lo])=>{const [x,y]=proj(la,lo); s+=T(x,y,fs0*1.15,"state",n,'text-anchor="middle"');});
+  const sw = `style="stroke-width:${P(fs*0.28)}"`;
+  const offBoxes = legs.filter(l=>l.p.some(isOff)).map(l=>{ const k=l.p.find(isOff); const other=l.p.find(o=>!isOff(o)); const [,y]=proj(PL[other][0],PL[other][1]);
+    const yy=y+(k==="korea"? -vw*0.08 : vw*0.06)-fs*0.6;
+    s += T(vx+fs*0.5, yy, fs, "lbl strong", PL[k][2]+" ✈", sw);
+    return {x0:vx, y0:yy-fs*1.1, x1:vx+fs*0.5+[...PL[k][2]].length*fs*1.05+fs*1.2, y1:yy+fs*0.4}; });
   const r = overview?fs*0.32:fs*0.62;
   const items = stops.filter(k=>!isOff(k)).map(k=>{const [x,y]=proj(PL[k][0],PL[k][1]); return {k,x,y,r,text:PL[k][2]};});
   const iw=vw*0.24, ih=iw*580/830, ix=vx+vw-iw-vw*0.02, iy=vy+vw*0.02;
-  const offBoxes = legs.filter(l=>l.p.some(isOff)).map(l=>{ const k=l.p.find(isOff); const other=l.p.find(o=>!isOff(o)); const [,y]=proj(PL[other][0],PL[other][1]);
-    const yy=y+(k==="korea"? -vw*0.08 : vw*0.06)-fs*0.6; return {x0:vx, y0:yy-fs*1.1, x1:vx+fs*0.5+[...PL[k][2]].length*fs*1.05+fs*1.2, y1:yy+fs*0.4}; });
-  const labs = placeLabels(items, fs*(overview?0.8:0.92), [vx,vy,vw,vh], (overview?[]:[{x0:ix-fs*0.3,y0:iy-fs*0.3,x1:ix+iw,y1:iy+ih+fs*0.3}]).concat(offBoxes));
-  items.forEach((it,i)=>{
-    s+=`<circle class="stop" cx="${it.x}" cy="${it.y}" r="${r}" style="fill:${overview?"var(--ink)":col()}"/>`;
-    if(!overview) s+=`<text class="no" x="${it.x}" y="${it.y+fs*0.27}" font-size="${fs*0.75}" text-anchor="middle">${i+1}</text>`;
-  });
+  const lf = fs*(overview?0.8:0.92);
+  const labs = placeLabels(items, lf, [vx,vy,vw,vh], (overview?[]:[{x0:ix-fs*0.3,y0:iy-fs*0.3,x1:ix+iw,y1:iy+ih+fs*0.3}]).concat(offBoxes, [{x0:px-ww/2,y0:py-wf,x1:px+ww/2,y1:py+wf*0.3}]));
   const stopXY = items.map(it=>[it.x,it.y]);
   CTX.forEach(([la,lo,n])=>{ const [x,y]=proj(la,lo); if(x<vx||x>vx+vw||y<vy||y>vy+vh) return;
     if(stopXY.some(([a,b])=>Math.hypot(a-x,b-y)<fs*3)) return;
-    const cf=fs*0.82, w=[...n].length*cf*1.02, r={x0:x-fs*0.2,y0:y-cf*0.6,x1:x+fs*0.4+w,y1:y+cf*0.6};
-    if(r.x1>vx+vw || labs.placed.some(p=>!(r.x1<p.x0||r.x0>p.x1||r.y1<p.y0||r.y0>p.y1))) return;
-    labs.placed.push(r);
-    s+=`<circle class="ctx" cx="${x}" cy="${y}" r="${fs*0.18}"/><text class="ctxt" x="${x+fs*0.4}" y="${y+fs*0.35}" font-size="${cf}">${n}</text>`; });
-  items.forEach((it,i)=>{ const L=labs[i]; if(L) s+=`<text class="lbl" x="${L.x}" y="${L.y}" text-anchor="${L.anc}" font-size="${fs*(overview?0.8:0.92)}" style="stroke-width:${(fs*0.28).toFixed(3)}">${it.text}</text>`; });
+    const cf=fs*0.82, w=[...n].length*cf*1.02, rr={x0:x-fs*0.2,y0:y-cf*0.6,x1:x+fs*0.4+w,y1:y+cf*0.6};
+    if(rr.x1>vx+vw || labs.placed.some(q=>!(rr.x1<q.x0||rr.x0>q.x1||rr.y1<q.y0||rr.y0>q.y1))) return;
+    labs.placed.push(rr);
+    s+=`<circle class="ctx" cx="${P(x)}" cy="${P(y)}" r="${P(fs*0.18)}"/>`+T(x+fs*0.4,y+fs*0.35,cf,"ctxt",n); });
+  items.forEach((it,i)=>{
+    s+=`<circle class="stop" cx="${P(it.x)}" cy="${P(it.y)}" r="${P(r)}" style="fill:${overview?"var(--ink)":col()}"/>`;
+    if(!overview) s+=T(it.x,it.y+fs*0.27,fs*0.75,"no",i+1,'text-anchor="middle"');
+  });
+  items.forEach((it,i)=>{ const L=labs[i]; if(L) s+=T(L.x,L.y,lf,"lbl",it.text,`text-anchor="${L.anc}" ${sw}`); });
   if(!overview){
-    s += scaleBar(vx,vy,vw,vh,fs);
-    s += `<svg class="inset" x="${ix}" y="${iy}" width="${iw}" height="${ih}" viewBox="0 30 830 580"><rect class="sea" x="0" y="30" width="830" height="580"/>`
+    s += scaleBar(vx,vy,vw,vh,fs,K);
+    s += `<svg class="inset" x="${P(ix)}" y="${P(iy)}" width="${P(iw)}" height="${P(ih)}" viewBox="0 30 830 580"><rect class="sea" x="0" y="30" width="830" height="580"/>`
       + Object.values(GEO).map(d=>`<path class="land" d="${d}"/>`).join("")
       + [["CA",36.6,-119.8],["NV",39.2,-116.9],["UT",39.2,-111.6],["AZ",34.4,-111.6]].map(([n,la,lo])=>{const [x,y]=proj(la,lo);return `<text class="state" x="${x}" y="${y}" font-size="44" text-anchor="middle">${n}</text>`;}).join("")
       + `<rect class="here" x="${vx}" y="${vy}" width="${Math.max(vw,14)}" height="${Math.max(vh,10)}"/><rect class="iframe" x="0" y="30" width="830" height="580"/></svg>`;
@@ -613,7 +623,7 @@ function dayMap(team, d, kids){
 function overviewMap(team){
   const pick = t => Object.values(MAPS[t]).flatMap(m=>m.legs.map(l=>({...l, team:l.team||t})));
   const legs = team ? pick(team).filter(l=>l.team===team) : [...pick("A"),...pick("B")];
-  const stopsA = ["irvine","sb","yv","tahoe","napa","sf"], stopsB=["lv","zion","bryce","page","monument","gc","irvine","sdzoo","sf"];
+  const stopsA = ["irvine","sb","bishop","yv","tahoe","napa","sf"], stopsB=["lv","zion","bryce","page","monument","gc","irvine","sdzoo","sf"];
   const stops = [...new Set(team==="A"?stopsA:team==="B"?stopsB:[...stopsA,...stopsB])];
   return `<figure class="map overview">${mapSVG({legs, stops, team: team||"A", overview:true})}
    <figcaption><b>지도로 보는 13일</b> 굵은 선은 차, 점선은 비행기입니다. 얼바인은 LA 남쪽 해안, 라스베이거스는 동쪽 사막, 요세미티·타호·샌프란시스코는 북쪽입니다.</figcaption></figure>`;
@@ -637,12 +647,12 @@ function board(){
 
 /* ---------- logistics per day ---------- */
 const STAY = {
- A:{"5/30":"얼바인 아들 집","5/31":"얼바인 아들 집","6/1":"산타바바라 호텔","6/2":"얼바인 아들 집","6/3":"얼바인 아들 집","6/4":"얼바인 아들 집 (새벽 출발)","6/5":"요세미티 남쪽 입구 숙소","6/6":"사우스 레이크 타호","6/7":"나파","6/8":"샌프란시스코","6/9":"샌프란시스코","6/10":"샌프란시스코","6/11":"기내 (6/13 새벽 인천)"},
+ A:{"5/30":"얼바인 아들 집","5/31":"얼바인 아들 집","6/1":"산타바바라 호텔","6/2":"얼바인 아들 집","6/3":"얼바인 아들 집","6/4":"얼바인 아들 집 (새벽 출발)","6/5":"요세미티 엘 포털 숙소 (밸리까지 20분)","6/6":"사우스 레이크 타호","6/7":"나파","6/8":"샌프란시스코","6/9":"샌프란시스코","6/10":"샌프란시스코","6/11":"기내 (6/13 새벽 인천)"},
  B:{"5/30":"라스베이거스 스트립","5/31":"페이지 호텔 (투어 포함)","6/1":"페이지 호텔 (투어 포함)","6/2":"라스베이거스 스트립","6/3":"라스베이거스 스트립","6/4":"얼바인 오빠네 집","6/5":"얼바인 오빠네 집","6/6":"얼바인 오빠네 집","6/7":"얼바인 오빠네 집","6/8":"얼바인 오빠네 집","6/9":"샌프란시스코","6/10":"샌프란시스코","6/11":"기내 (6/13 새벽 인천)"}
 };
 /*__MEALS__*/
 const MOVE = {
- A:{"5/30":"항공 + 승용차","5/31":"승용차 25분","6/1":"승용차 2시간 30분","6/2":"승용차 약 4시간 30분","6/3":"근거리","6/4":"근거리","6/5":"승용차 약 6시간 (밤길)","6/6":"승용차 4–5시간","6/7":"승용차 약 3시간","6/8":"승용차 약 2시간 30분 (뮤어 우즈 경유)","6/9":"도보 · 케이블카","6/10":"승용차 45분","6/11":"배 + 항공"},
+ A:{"5/30":"항공 + 승용차","5/31":"승용차 25분","6/1":"승용차 2시간 30분","6/2":"승용차 약 4시간 30분","6/3":"근거리","6/4":"근거리","6/5":"승용차 약 7시간 (395번 도로, 밤길)","6/6":"승용차 약 5시간 (49번 골드러시 도로)","6/7":"승용차 약 3시간","6/8":"승용차 약 2시간 30분 (뮤어 우즈 경유)","6/9":"도보 · 케이블카","6/10":"승용차 45분","6/11":"배 + 항공"},
  B:{"5/30":"국제선 + 국내선","5/31":"투어 밴 6–7시간","6/1":"투어 밴 + 4x4","6/2":"투어 밴 7–8시간","6/3":"도보·택시","6/4":"국내선 + 렌터카","6/5":"렌터카 왕복 2–3시간","6/6":"렌터카 왕복 3시간","6/7":"렌터카 25분","6/8":"렌터카 25분","6/9":"국내선 + 렌터카","6/10":"렌터카 45분","6/11":"배 + 항공"}
 };
 function infoList(team,d){
@@ -667,7 +677,7 @@ function glance(team, days){
   </tbody></table></div>`;
 }
 function renderA(){
-  return `<section class="cover">${img("glacier_point")}<div class="in"><span class="eyebrow">Private itinerary · 부모님</span><h1>캘리포니아 해안과 시에라 산맥</h1><p>2027년 5월 30일 – 6월 11일 · 손주 졸업식과 요세미티·타호·나파·샌프란시스코</p><div class="chips"><span class="chip">13일</span><span class="chip">아시아나 직항</span><span class="chip">아들 가족과 자동차 여행</span><span class="chip">트래킹 13코스</span><span class="chip">미스트 트레일 · 뮤어 우즈</span></div></div></section>
+  return `<section class="cover">${img("glacier_point")}<div class="in"><span class="eyebrow">Private itinerary · 부모님</span><h1>캘리포니아 해안과 시에라 산맥</h1><p>2027년 5월 30일 – 6월 11일 · 손주 졸업식과 요세미티·타호·나파·샌프란시스코</p><div class="chips"><span class="chip">13일</span><span class="chip">아시아나 직항</span><span class="chip">아들 가족과 자동차 여행</span><span class="chip">트래킹 ${A_DAYS.reduce((n,x)=>n+(x.hike||[]).length,0)}코스</span><span class="chip">395번 동쪽 길 · 티오가 고개</span></div></div></section>
   <section class="sec"><div class="letter"><h3>아버지, 어머니께</h3><p>10년 전 그랜드캐년과 LA 시내는 이미 보셨으니, 이번에는 바닷가 마을과 250년 된 미션, 그리고 처음 보시는 요세미티·타호·나파 위주로 꾸렸습니다.</p><p>저희 가족도 주말마다 산에 다니다 보니, 이번 여행은 <b>거의 매일 아침 한 코스씩 함께 걷는</b> 일정으로 짰습니다. 관광버스로 전망대만 찍고 가는 여행이 아니라, 이곳 사람들이 실제로 걷는 길을 제가 앞장서 모시겠습니다. 가장 힘든 날은 요세미티 미스트 트레일 하루뿐이고, 그날도 중간에서 돌아올 수 있습니다.</p><p>날짜마다 <b>‘아들의 현지 팁’</b>을 접어 두었습니다. 궁금하실 때 눌러 보시고, 미국에서 지내며 알게 된 생활 요령은 맨 위 <b>‘현지인 꿀팁’</b> 탭에 모았습니다.</p><p class="sign">얼바인에서, 아들 드림</p></div></section>
   <section class="sec"><div class="sec-h"><h2>일정 한눈에</h2><p>줄을 누르면 그날 일정으로 이동합니다</p></div>${glance("A",A_DAYS)}</section>
   <section class="sec"><div class="sec-h"><h2>이동 경로</h2><p>초록 선이 부모님 경로입니다</p></div>${overviewMap("A")}<div style="margin-top:12px">${board()}</div></section>
@@ -810,7 +820,7 @@ const HOTELS = {
   lv1:{lbl:"라스베이거스 스트립 · 5/30(일)",n:1,tax:.1338,fee:50,t:{eco:[94,"Excalibur"],std:[146,"Planet Hollywood"],lux:[206,"Caesars Palace"]}},
   lv2:{lbl:"라스베이거스 스트립 · 6/2–6/3(평일)",n:2,tax:.1338,fee:50,t:{eco:[62,"Flamingo"],std:[94,"Paris Las Vegas"],lux:[230,"Bellagio"]}},
   sb:{lbl:"산타바바라 · 6/1",n:1,tax:.12,fee:0,t:{eco:[145,"Lemon Tree Inn"],std:[199,"Franciscan Inn & Suites"],lux:[334,"Hilton Santa Barbara Beachfront"]}},
-  yo:{lbl:"요세미티 남쪽 입구 · 6/5",n:1,tax:.10,fee:0,t:{eco:[98,"Yosemite Bug Rustic Resort"],std:[172,"Quality Inn Yosemite Gateway"],lux:[329,"Tenaya Lodge at Yosemite"]}},
+  yo:{lbl:"요세미티 엘 포털·밸리 · 6/5 (추정)",n:1,tax:.10,fee:0,t:{eco:[189,"Cedar Lodge (엘 포털)"],std:[279,"Yosemite View Lodge (엘 포털)"],lux:[399,"Yosemite Valley Lodge (밸리 안)"]}},
   th:{lbl:"사우스 레이크 타호 · 6/6",n:1,tax:.12,fee:0,t:{eco:[103,"Golden Nugget Lake Tahoe"],std:[149,"The Jeffrey Hotel"],lux:[215,"Black Bear Lodge"]}},
   np:{lbl:"나파 · 6/7",n:1,tax:.14,fee:0,t:{eco:[109,"Bel Abri Napa Valley Inn"],std:[197,"Hotel Napa Valley"],lux:[392,"Archer Hotel Napa"]}},
   sfA:{lbl:"샌프란시스코 · 6/8–6/10",n:3,tax:.1625,fee:0,t:{eco:[126,"Best Western Plus Bayside"],std:[194,"Suites at Fisherman's Wharf"],lux:[339,"Hotel Zephyr"]}},
@@ -1022,7 +1032,7 @@ const CHECK = [
  ["렌터카 예약 (SNA·SFO) + 부스터 시트","7살은 부스터 시트 법적 의무"],
  ["국제운전면허증 (운전할 어른)","한국 면허증과 함께 지참"],
  ["여행자 보험 가입","의료비 한도 충분히"],
- ["티오가 로드 개통 여부 확인 (5월 말)","닫혀 있으면 6/6 우회로 이용"],
+ ["티오가 고개 개통 여부 확인 (5월 말)","6/5 395번·비숍 경로는 티오가가 열려야 가능 · 닫혀 있으면 프레즈노 경유 남쪽 입구"],
  ["주니어 레인저 책자 3권 인쇄 (동생네 아이 2명)","자이언·브라이스·그랜드캐년 · 공원 안내 페이지에서 PDF 내려받기, 알카트라즈는 현장에서"],
  ["졸업식 시간·장소 확정","6/3 Jia 초등학교 · 6/4 Jaei 중학교 졸업식"]
 ];
