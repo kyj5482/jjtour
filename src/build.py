@@ -12,6 +12,7 @@ html = html.replace("/*__GEO__*/", read("geo.js"))
 html = html.replace("/*__DAYS__*/", read("days.js"))
 html = html.replace("/*__MEALS__*/", read("meals.js"))
 html = html.replace("/*__TIPS__*/", read("tips.js"))
+html = html.replace("/*__ENGLISH__*/", read("english.js"))
 import base64
 faces = []
 for name, w in [("Regular",400),("SemiBold",600),("Bold",700),("ExtraBold",800)]:

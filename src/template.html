@@ -357,6 +357,40 @@ details.tips li{padding-left:2px}
 .tipcat details[open] summary{color:var(--sky)}
 .tipcat details p{margin:0;padding:0 16px 14px;font-size:.96rem}
 .must{display:inline-block;font-size:.68rem;font-weight:800;color:var(--sand);border:1px solid var(--sand);border-radius:999px;padding:0 6px;margin-left:6px;vertical-align:2px}
+/* english role-play */
+.en-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.en-tools button{font:inherit;font-weight:700;font-size:.92rem;border:1.5px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px;border-radius:999px;cursor:pointer}
+.en-tools button[aria-pressed="true"]{background:var(--sky);border-color:var(--sky);color:#fff}
+.scenes{display:grid;gap:12px}
+details.scene{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+details.scene>summary{cursor:pointer;list-style:none;padding:14px 16px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;align-items:center}
+details.scene>summary::-webkit-details-marker{display:none}
+details.scene>summary h3{font-size:1.1rem;margin:0}
+details.scene>summary small{grid-column:1;color:var(--muted);font-size:.84rem}
+details.scene>summary .st{grid-row:1/3;grid-column:2;font-size:.78rem;font-weight:800;border-radius:999px;padding:3px 10px;border:1.5px solid var(--line);color:var(--muted)}
+details.scene.done>summary .st{border-color:var(--good);color:var(--good)}
+.scene-body{padding:0 16px 16px;display:grid;gap:12px}
+.scene-body .scene-intro{margin:0;font-size:.95rem;color:var(--muted)}
+.scene-bar{display:flex;flex-wrap:wrap;gap:8px}
+.scene-bar button{font:inherit;font-size:.88rem;font-weight:700;border:1.5px solid var(--sky);background:var(--sky-soft);color:var(--sky);padding:7px 12px;border-radius:999px;cursor:pointer}
+.dialog{display:grid;gap:8px}
+.line{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:start;max-width:92%}
+.line.M{margin-left:auto;grid-template-columns:auto minmax(0,1fr)}
+.line .who{font-size:.72rem;font-weight:800;color:var(--muted);padding-top:12px;white-space:nowrap}
+.bubble{border-radius:14px;padding:9px 13px;display:grid;gap:2px;background:var(--soft)}
+.line.M .bubble{background:var(--sky-soft);border:1.5px solid #BBD3EA}
+.bubble .en{font-size:1.05rem;font-weight:700;color:var(--ink)}
+.bubble .pron{font-size:.86rem;color:var(--sky);font-weight:600}
+.bubble .ko{font-size:.84rem;color:var(--muted)}
+.line.playing .bubble{outline:3px solid var(--gold)}
+.say-btn{font:inherit;border:0;background:transparent;cursor:pointer;color:var(--sky);font-size:1.15rem;padding:8px 4px;line-height:1}
+.hide-me .line.M .en,.hide-me .line.M .pron{filter:blur(6px);cursor:pointer;user-select:none}
+.hide-me .line.M.peek .en,.hide-me .line.M.peek .pron{filter:none}
+.scene-tips{background:#FFFBF2;border:2px dashed var(--gold);border-radius:12px;padding:10px 14px}
+.scene-tips h4{margin:0 0 4px;font-size:.84rem;color:var(--gold)}
+.scene-tips ul{margin:0;padding-left:18px;font-size:.93rem}
+.scene-done{display:flex;gap:8px;align-items:center;font-weight:700;cursor:pointer}
+.scene-done input{width:20px;height:20px;accent-color:var(--good)}
 footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);font-size:.8rem;color:var(--muted)}
 footer ol{padding-left:18px;columns:2;column-gap:28px;margin:10px 0 0}
 footer details.credits summary{cursor:pointer;font-weight:700;color:var(--sky);list-style:none;display:inline-block;padding:4px 0}
@@ -420,6 +454,7 @@ footer details.credits[open] summary::before{content:"－ "}
     <button class="tab" role="tab" id="tab-C" aria-selected="false" data-view="C"><span class="dot" style="background:var(--gold)"></span>여행 경비</button>
     <button class="tab" role="tab" id="tab-D" aria-selected="false" data-view="D"><span class="dot" style="background:var(--sky)"></span>준비물 · 연락처</button>
     <button class="tab" role="tab" id="tab-E" aria-selected="false" data-view="E"><span class="dot" style="background:var(--kid)"></span>현지인 꿀팁</button>
+    <button class="tab" role="tab" id="tab-F" aria-selected="false" data-view="F"><span class="dot" style="background:var(--good)"></span>여행 영어</button>
   </nav>
   <main id="view"></main>
   <footer>
@@ -751,9 +786,10 @@ function jrSection(kids){
   const got = JR.filter(j=>done[j.k]).length;
   return `<section class="sec jr ${kids?"jr-kids":""}"><div class="sec-h"><h2 ${kids?'class="k" style="font-family:var(--f-kid);font-weight:400"':""}>${kids?"주니어 레인저 배지 모으기":"주니어 레인저 도전"}</h2><p>${got} / ${JR.length} 배지</p></div>
    <div class="letter jr-intro">${kids
-     ? `<p style="font-family:var(--f-kid);font-size:1.12rem">미국 국립공원에는 진짜 레인저(공원 지킴이)가 있어요. 공원 책자의 문제를 풀고 레인저에게 <b>영어로</b> 말을 걸면, 오른손을 들고 선서한 뒤 진짜 배지를 받을 수 있어요! 이번 여행에서 4개를 모아 봐요.</p>`
+     ? `<p style="font-family:var(--f-kid);font-size:1.12rem">미국 국립공원에는 진짜 레인저(공원 지킴이)가 있어요. 공원 책자의 문제를 풀고 레인저에게 <b>영어로</b> 말을 걸어 봐요. 레인저가 엄마·아빠에게 배지를 맡겨 두면, 책자를 다 풀고 오른손을 들고 선서할 때 받을 수 있어요! 이번 여행에서 4개를 모아 봐요.</p>`
      : `<p>미국 국립공원마다 있는 무료 어린이 프로그램입니다. 공원 책자의 활동을 풀고, 레인저 앞에서 오른손을 들고 영어로 선서하면 그 공원 배지를 줍니다. 아이들이 레인저에게 직접 영어로 말을 거는 게 핵심이라, 영어 연습과 모험심 둘 다 챙길 수 있어.</p>
-        <p><b>오빠의 요령:</b> 캐년 투어는 공원마다 머무는 시간이 2–3시간이라 현장에서 처음 받아 풀면 시간이 모자라. 책자 3권(자이언·브라이스·그랜드캐년)을 한국에서 미리 인쇄해서 비행기와 투어 밴 안에서 풀어 두고, 공원에서는 레인저 검사와 선서만 하는 게 좋아. 우편으로 배지를 보내 주는 공원도 해외로는 안 보내니 주소는 얼바인 오빠네 집으로 써.</p>`}</div>
+        <p><b>오빠의 요령:</b> 캐년 투어는 공원마다 머무는 시간이 2–3시간이라 레인저 앞에서 책자를 다 끝내기 어려워. 그럴 땐 방문자 센터 레인저에게 투어 중이라고 말하면 <b>보통 부모에게 배지를 미리 주고, 아이가 다 하면 건네주라고 해.</b> 책자 3권(자이언·브라이스·그랜드캐년)은 한국에서 미리 인쇄해 비행기와 밴에서 풀고, 다 하면 엄마·아빠가 확인하고 선서식을 해 주면 돼. 아이들이 레인저에게 직접 영어로 말을 거는 순간이 제일 중요하니 그건 꼭 시켜 봐.</p>
+        <p class="say-line">부모가 쓸 영어: <b lang="en">We are on a tour and have little time. Could we take the badges and give them when they finish?</b></p>`}</div>
    <div class="jr-grid">${cards}</div>
    <div class="jr-en-wrap"><h3 ${kids?'class="k" style="font-family:var(--f-kid);font-weight:400"':""}>레인저에게 영어로 말해 봐요</h3>${jrEnglish(kids)}
    <p class="fine">선서 문구는 공원마다 조금씩 다르고, 레인저가 한 줄씩 먼저 말해 주면 따라 하면 돼요.</p></div></section>`;
@@ -1064,11 +1100,89 @@ function renderE(){
   <section class="sec"><div class="tipgrid">${TIPS.map(([h,sub,items])=>`<div class="tipcat"><h3>${h}</h3><p>${sub}</p>${items.map(([t,b,m])=>`<details><summary><span>${t}${m?'<span class="must">꼭</span>':""}</span></summary><p>${b}</p></details>`).join("")}</div>`).join("")}</div></section>`;
 }
 
+/* ---------- travel English role-play ---------- */
+/*__ENGLISH__*/
+const EN = {hide:false, slow:true};
+try{ Object.assign(EN, JSON.parse(localStorage.getItem("jj_en")||"{}")); }catch(e){}
+const enDone = () => { try{ return JSON.parse(localStorage.getItem("jj_en_done")||"{}"); }catch(e){ return {}; } };
+const canSpeak = "speechSynthesis" in window;
+function enVoices(){
+  const v = canSpeak ? speechSynthesis.getVoices().filter(x=>/^en[-_]US/i.test(x.lang)) : [];
+  const pick = re => v.find(x=>re.test(x.name));
+  const a = pick(/Samantha|Google US English|Jenny|Aria/) || v[0], b = pick(/Alex|Daniel|Guy|Fred|Tom/) || v.find(x=>x!==a) || a;
+  return {T:a, M:b};
+}
+function speak(text, role, onend){
+  if(!canSpeak){ onend&&onend(); return; }
+  const u = new SpeechSynthesisUtterance(text), vs = enVoices();
+  u.lang = "en-US"; if(vs[role]) u.voice = vs[role]; u.rate = EN.slow ? 0.78 : 0.95;
+  u.onend = u.onerror = () => onend&&onend();
+  speechSynthesis.speak(u);
+}
+function renderF(){
+  const done = enDone(), n = EN_SCENES.filter(s=>done[s.id]).length;
+  return `<section class="sec"><div class="letter"><h3>미리 연습하고 오는 여행 영어</h3>
+     <p>입국 심사부터 식당, 렌터카, 공원 입구까지 실제로 오가는 대화를 장면별로 적었습니다. <b>파란 말풍선이 우리가 할 말</b>이고, 회색은 상대방 말입니다.</p>
+     <p><b>연습 순서:</b> ① ▶를 눌러 원어민 발음을 들어요 → ② ‘내 대사 가리기’를 켜고 한국어 뜻만 보고 영어로 말해 봐요 → ③ ‘대화 전체 듣기’로 상대 말을 듣고 내 차례에 소리 내어 답해요. 막히면 흐린 글씨를 눌러 확인하면 돼요.</p>
+     <p class="sign">얼바인에서, 아들 · 오빠</p></div></section>
+   <section class="sec"><div class="sec-h"><h2>장면별 롤플레이</h2><p>${n} / ${EN_SCENES.length} 장면 연습 완료</p></div>
+   <div class="en-tools" style="margin-bottom:12px">
+     <button type="button" data-en="hide" aria-pressed="${EN.hide}">내 대사 가리기</button>
+     <button type="button" data-en="slow" aria-pressed="${EN.slow}">천천히 듣기</button>
+     ${canSpeak?"":`<span class="fine">이 브라우저는 소리 듣기를 지원하지 않아요. 휴대폰 사파리나 크롬에서 열어 주세요.</span>`}
+   </div>
+   <div class="scenes ${EN.hide?"hide-me":""}">${EN_SCENES.map((s,si)=>`<details class="scene ${done[s.id]?"done":""}" data-scene="${s.id}" ${si===0?"open":""}>
+     <summary><h3>${si+1}. ${s.t}</h3><small>${s.where} · 상대: ${s.them}</small><span class="st">${done[s.id]?"연습 완료":"연습 전"}</span></summary>
+     <div class="scene-body"><p class="scene-intro">${s.intro}</p>
+       <div class="scene-bar">${canSpeak?`<button type="button" data-play="${s.id}">▶ 대화 전체 듣기</button><button type="button" data-play="${s.id}" data-turn="1">▶ 내 차례엔 내가 말하기</button>`:""}</div>
+       <div class="dialog">${s.lines.map(([r,en,ko,pr],li)=>`<div class="line ${r}" data-li="${li}">${r==="T"?`<span class="who">상대</span>`:(canSpeak?`<button type="button" class="say-btn" data-say="${s.id}:${li}" aria-label="듣기">▶</button>`:"")}
+         <div class="bubble"><span class="en" lang="en">${en}</span>${pr?`<span class="pron">${pr}</span>`:""}<span class="ko">${ko}</span></div>
+         ${r==="T"&&canSpeak?`<button type="button" class="say-btn" data-say="${s.id}:${li}" aria-label="듣기">▶</button>`:""}</div>`).join("")}</div>
+       <div class="scene-tips"><h4>아들 · 오빠의 한마디</h4><ul>${s.tips.map(t=>`<li>${t}</li>`).join("")}</ul></div>
+       <label class="scene-done"><input type="checkbox" data-done="${s.id}" ${done[s.id]?"checked":""}> 이 장면 연습 다 했어요</label>
+     </div></details>`).join("")}</div></section>`;
+}
+let enRun = 0;
+function bindF(el){
+  el.querySelectorAll("[data-en]").forEach(b=>b.addEventListener("click",()=>{
+    const k=b.dataset.en; EN[k]=!EN[k]; b.setAttribute("aria-pressed",EN[k]);
+    try{ localStorage.setItem("jj_en", JSON.stringify(EN)); }catch(e){}
+    if(k==="hide") el.querySelector(".scenes").classList.toggle("hide-me", EN.hide);
+  }));
+  el.querySelectorAll(".line.M .bubble").forEach(b=>b.addEventListener("click",()=>b.parentElement.classList.toggle("peek")));
+  el.querySelectorAll("[data-say]").forEach(b=>b.addEventListener("click",e=>{
+    e.stopPropagation(); enRun++; speechSynthesis.cancel();
+    const [id,li]=b.dataset.say.split(":"); const s=EN_SCENES.find(x=>x.id===id), line=s.lines[+li];
+    const row=b.closest(".line"); row.classList.add("playing"); speak(line[1], line[0], ()=>row.classList.remove("playing"));
+  }));
+  el.querySelectorAll("[data-play]").forEach(b=>b.addEventListener("click",()=>{
+    const run=++enRun; speechSynthesis.cancel();
+    const s=EN_SCENES.find(x=>x.id===b.dataset.play), turn=!!b.dataset.turn, box=b.closest(".scene-body");
+    const rows=[...box.querySelectorAll(".line")];
+    const step=i=>{
+      rows.forEach(r=>r.classList.remove("playing"));
+      if(run!==enRun || i>=s.lines.length) return;
+      const [r,en]=s.lines[i]; rows[i].classList.add("playing"); rows[i].scrollIntoView({block:"nearest",behavior:"smooth"});
+      // practice mode: my lines get a pause long enough to say them out loud, then the answer plays
+      if(turn && r==="M") setTimeout(()=>{ if(run===enRun) speak(en,"M",()=>setTimeout(()=>step(i+1),400)); }, 900+en.length*70);
+      else speak(en, r, ()=>setTimeout(()=>step(i+1), 350));
+    };
+    step(0);
+  }));
+  el.querySelectorAll("[data-done]").forEach(c=>c.addEventListener("change",()=>{
+    const d=enDone(); d[c.dataset.done]=c.checked; try{ localStorage.setItem("jj_en_done", JSON.stringify(d)); }catch(e){}
+    const sc=c.closest(".scene"); sc.classList.toggle("done",c.checked); sc.querySelector(".st").textContent=c.checked?"연습 완료":"연습 전";
+    const n=EN_SCENES.filter(s=>d[s.id]).length; el.querySelector(".sec-h p").textContent=`${n} / ${EN_SCENES.length} 장면 연습 완료`;
+  }));
+  if(canSpeak) speechSynthesis.getVoices();
+}
+
 /* ---------- view switching ---------- */
 function show(v){
   document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-selected", String(b.dataset.view===v)));
   const el = document.getElementById("view");
-  el.innerHTML = v==="A"?renderA():v==="B"?renderB():v==="C"?renderC():v==="E"?renderE():renderD();
+  if(window.speechSynthesis) speechSynthesis.cancel(); enRun++;
+  el.innerHTML = v==="A"?renderA():v==="B"?renderB():v==="C"?renderC():v==="E"?renderE():v==="F"?renderF():renderD();
   el.querySelectorAll("tr[data-go]").forEach(tr=>tr.addEventListener("click",()=>document.getElementById(tr.dataset.go)?.scrollIntoView({behavior:"smooth"})));
   if(v==="B"){
     el.querySelectorAll(".sub button").forEach(b=>b.addEventListener("click",()=>{ bMode=b.dataset.mode; try{localStorage.setItem("jj_bmode",bMode);}catch(e){} show("B"); }));
@@ -1083,6 +1197,7 @@ function show(v){
   }
   if(v==="C") bindC(el);
   if(v==="D") bindD(el);
+  if(v==="F") bindF(el);
   try{ localStorage.setItem("jj_view", v); }catch(e){}
 }
 document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{ show(b.dataset.view); window.scrollTo({top:0}); }));
@@ -1092,6 +1207,6 @@ let wasMobile = isMobile();
 window.addEventListener("resize", ()=>{ const m=isMobile(); if(m!==wasMobile){ wasMobile=m; const y=scrollY; show(document.querySelector('.tab[aria-selected="true"]').dataset.view); scrollTo(0,y); } });
 let start = "A";
 const hash = (location.hash||"").slice(1);
-if(["A","B","C","D","E"].includes(hash)) start = hash; else { try{ start = localStorage.getItem("jj_view") || "A"; }catch(e){} }
+if(["A","B","C","D","E","F"].includes(hash)) start = hash; else { try{ start = localStorage.getItem("jj_view") || "A"; }catch(e){} }
 show(start);
 </script>
