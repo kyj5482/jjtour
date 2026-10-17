@@ -185,6 +185,18 @@ details.hist p{margin:8px 0 0;font-size:.97rem}
 figure.map{margin:0;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--sea);max-width:100%}
 figure.map svg{display:block;width:100%;height:auto;aspect-ratio:1.45}
 figure.map.overview svg{aspect-ratio:830/580}
+figure.map .mapbox{position:relative;container-type:inline-size}
+.ml-layer{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.ml{position:absolute;white-space:nowrap;line-height:1;letter-spacing:0;font-family:var(--f-body);font-size:calc(var(--f) * 3.4px)}
+@supports (width:1cqw){ .ml{font-size:calc(var(--f) * 1cqw)} }
+.ml.s{transform:translate(0,-.8em)} .ml.m{transform:translate(-50%,-.8em)} .ml.e{transform:translate(-100%,-.8em)}
+.ml.lbl{color:var(--label);font-weight:800;text-shadow:0 0 .14em var(--land),0 0 .14em var(--land),.07em .07em 0 var(--land),-.07em -.07em 0 var(--land),.07em -.07em 0 var(--land),-.07em .07em 0 var(--land),0 .08em 0 var(--land),0 -.08em 0 var(--land)}
+.ml.lbl.strong{color:var(--sky)}
+.ml.ctxt{color:var(--muted)}
+.ml.water{color:var(--muted);letter-spacing:.2em}
+.ml.state{color:var(--muted);opacity:.55;letter-spacing:.15em;font-weight:800}
+.ml.no{color:#fff;font-weight:800;font-family:var(--f-num)}
+.ml.sbar{color:var(--label)}
 figure.map figcaption{background:var(--card);padding:8px 12px;font-size:.86rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}
 figure.map figcaption b{color:var(--ink)}
 .map .sea{fill:var(--sea)} .map .land{fill:var(--land);stroke:var(--border);stroke-width:1;vector-effect:non-scaling-stroke}
@@ -559,11 +571,11 @@ function fitBox(b, minW){
   if(w/h<R){ const nw=h*R, c=(x0+x1)/2; x0=c-nw/2; w=nw; } else { const nh=w/R, c=(y0+y1)/2; y0=c-nh/2; h=nh; }
   return [x0,y0,w,h];
 }
-function scaleBar(vx,vy,vw,vh,fs,K){
+function scaleBar(vx,vy,vw,vh,fs,K,T){
   const kmU = MK/111; const opts=[5,10,25,50,100,200]; let km=opts[0];
   for(const o of opts){ if(o*kmU < vw*0.22) km=o; }
   const L=km*kmU*K, x=(vx+vw*0.04)*K, y=(vy+vh-vh*0.06)*K, f=fs*K;
-  return `<g class="sbar"><line x1="${x}" y1="${y}" x2="${x+L}" y2="${y}"/><line x1="${x}" y1="${y-f*0.35}" x2="${x}" y2="${y+f*0.35}"/><line x1="${x+L}" y1="${y-f*0.35}" x2="${x+L}" y2="${y+f*0.35}"/><text x="${x+L/2}" y="${y-f*0.55}" font-size="${f*0.85}" text-anchor="middle">${km} km</text></g>`;
+  return `<g class="sbar"><line x1="${x}" y1="${y}" x2="${x+L}" y2="${y}"/><line x1="${x}" y1="${y-f*0.35}" x2="${x}" y2="${y+f*0.35}"/><line x1="${x+L}" y1="${y-f*0.35}" x2="${x+L}" y2="${y+f*0.35}"/></g>` + T(vx+vw*0.04+km*kmU/2, vy+vh-vh*0.06-fs*0.55, fs*0.85, "sbar", `${km} km`, "middle");
 }
 function legPath(leg, vx, vw){
   const pts = leg.p.map(k=>{
@@ -593,7 +605,16 @@ function placeLabels(items, fs, box, extra=[]){
       const inside = !box || (r.x0>=box[0] && r.x1<=box[0]+box[2] && r.y0>=box[1] && r.y1<=box[1]+box[3]);
       if(inside && !placed.some(p=>hit(p,r))){ placed.push(r); return {x:anc==="middle"?it.x:it.x+dx, y:it.y+dy+fs*0.34, anc}; }
     }
-    return null;   // no free spot: the numbered dot and the caption still identify the stop
+    return null;
+  });
+  // second chance: a stop with no free spot tries a slightly smaller label before going unlabeled
+  items.forEach((it,i)=>{ if(labs[i]!==null || !it.text) return;
+    const f2=fs*0.85, w=[...it.text].reduce((a,c)=>a+(/[\u3131-\uD79D]/.test(c)?1.02:0.6),0)*f2+f2*0.3, h=f2*1.15;
+    for(const g of [it.r+f2*0.3, it.r+f2*1.2]) for(const [dx,dy,anc] of [[g,0,"start"],[-g,0,"end"],[0,-g-h*0.35,"middle"],[0,g+h*0.75,"middle"]]){
+      const bx = anc==="start"? it.x+dx : anc==="end"? it.x+dx-w : it.x-w/2, by=it.y+dy-h*0.5, r={x0:bx,y0:by,x1:bx+w,y1:by+h};
+      const inside = !box || (r.x0>=box[0] && r.x1<=box[0]+box[2] && r.y0>=box[1] && r.y1<=box[1]+box[3]);
+      if(inside && !placed.some(p=>hit(p,r))){ placed.push(r); labs[i]={x:anc==="middle"?it.x:it.x+dx, y:it.y+dy+f2*0.34, anc, small:true}; return; }
+    }
   });
   labs.placed = placed;
   return labs;
@@ -605,7 +626,7 @@ function mapSVG({legs, stops, team, overview, minW=34}){
   // Layout happens in projected map units. Output is rescaled so every map is 1000 units wide:
   // zoomed-in maps would otherwise carry 1–5 unit font sizes, which phones round and clamp (squeezed, overlapping text).
   const K = 1000/vw, P = v => +(v*K).toFixed(2);
-  const fs = (overview ? vw/46 : vw/30) * (isMobile() ? (overview ? 1.6 : 1.25) : 1);
+  const fs = (overview ? vw/46 : vw/30) * (isMobile() ? (overview ? 1.75 : 1.35) : 1);
   const col = t => `var(--${(t||team)==="A"?"pine":(t||team)==="B"?"sand":"sky"})`;
   let s = `<svg viewBox="${P(vx)} ${P(vy)} 1000 ${P(vh)}" role="img" aria-label="이동 경로 지도" preserveAspectRatio="xMidYMid meet">`;
   s += `<g transform="scale(${K})"><rect class="sea" x="${vx-200}" y="${vy-200}" width="${vw+400}" height="${vh+400}"/>`;
@@ -613,18 +634,23 @@ function mapSVG({legs, stops, team, overview, minW=34}){
   const [tx,ty]=proj(39.09,-120.04); s += `<ellipse class="lake" cx="${tx}" cy="${ty}" rx="5" ry="9.5"/>`;
   legs.forEach(l=>{ s += `<path class="leg ${l.m}" d="${legPath(l,vx,vw)}" style="stroke:${col(l.team)}" vector-effect="non-scaling-stroke"/>`; });
   s += `</g>`;
-  const T = (x,y,size,cls,txt,extra="") => `<text class="${cls}" x="${P(x)}" y="${P(y)}" font-size="${P(size)}" ${extra}>${txt}</text>`;
+  // Labels are HTML spans over the SVG: phone browsers mis-space glyphs of scaled SVG <text> (letters pile up).
+  // Position is a % of the map box and size is a % of its width (cqw), so they scale exactly like the drawing.
+  const H = [];
+  const T = (x,y,size,cls,txt,anc="start") => { H.push(`<span class="ml ${cls} ${anc[0]}" style="left:${((x-vx)/vw*100).toFixed(3)}%;top:${((y-vy)/vh*100).toFixed(3)}%;--f:${(size/vw*100).toFixed(3)}">${txt}</span>`); return ""; };
   // keep the ocean label fully inside the frame (a clipped "태평양" reads as "평양")
   const wf=(overview?fs:fs*0.8)*1.1, ww=wf*3*1.25, [px0,py0]=proj(36.0,-123.6);
-  const px=Math.min(Math.max(px0, vx+ww/2+fs*0.4), vx+vw-ww/2-fs*0.4), py=Math.min(Math.max(py0, vy+wf*1.5), vy+vh-wf);
-  s += T(px,py,wf,"water","태평양",'text-anchor="middle"');
+  const px=Math.min(Math.max(px0, vx+ww/2+fs*0.4), vx+vw-ww/2-fs*0.4);
+  let py=Math.min(Math.max(py0, vy+wf*1.5), vy+vh-wf);
   const fs0 = overview ? vw/46 : vw/30;
-  if(overview || vw>150) STATES_KO.forEach(([n,la,lo])=>{const [x,y]=proj(la,lo); s+=T(x,y,fs0*1.15,"state",n,'text-anchor="middle"');});
-  const sw = `style="stroke-width:${P(fs*0.28)}"`;
+  if(overview || vw>150) STATES_KO.forEach(([n,la,lo])=>{const [x,y]=proj(la,lo); s+=T(x,y,fs0*1.15,"state",n,"middle");});
   const offBoxes = legs.filter(l=>l.p.some(isOff)).map(l=>{ const k=l.p.find(isOff); const other=l.p.find(o=>!isOff(o)); const [,y]=proj(PL[other][0],PL[other][1]);
     const yy=y+(k==="korea"? -vw*0.08 : vw*0.06)-fs*0.6;
-    s += T(vx+fs*0.5, yy, fs, "lbl strong", PL[k][2]+" ✈", sw);
+    s += T(vx+fs*0.5, yy, fs, "lbl strong", PL[k][2]+" ✈");
     return {x0:vx, y0:yy-fs*1.1, x1:vx+fs*0.5+[...PL[k][2]].length*fs*1.05+fs*1.2, y1:yy+fs*0.4}; });
+  { const wb = y => ({x0:px-ww/2,y0:y-wf,x1:px+ww/2,y1:y+wf*0.3}), hitB=(a,b)=>!(a.x1<b.x0||a.x0>b.x1||a.y1<b.y0||a.y0>b.y1);
+    for(const dy of [0, wf*1.6, -wf*1.6, wf*3.2, -wf*3.2]){ const y=Math.min(Math.max(py+dy, vy+wf*1.5), vy+vh-wf); if(!offBoxes.some(b=>hitB(b,wb(y)))){ py=y; break; } } }
+  s += T(px,py,wf,"water","태평양","middle");
   const r = overview?fs*0.32:fs*0.62;
   const items = stops.filter(k=>!isOff(k)).map(k=>{const [x,y]=proj(PL[k][0],PL[k][1]); return {k,x,y,r,text:PL[k][2]};});
   const iw=vw*0.24, ih=iw*580/830, ix=vx+vw-iw-vw*0.02, iy=vy+vw*0.02;
@@ -634,22 +660,21 @@ function mapSVG({legs, stops, team, overview, minW=34}){
   CTX.forEach(([la,lo,n])=>{ const [x,y]=proj(la,lo); if(x<vx||x>vx+vw||y<vy||y>vy+vh) return;
     if(stopXY.some(([a,b])=>Math.hypot(a-x,b-y)<fs*3)) return;
     const cf=fs*0.82, w=[...n].length*cf*1.02, rr={x0:x-fs*0.2,y0:y-cf*0.6,x1:x+fs*0.4+w,y1:y+cf*0.6};
-    if(rr.x1>vx+vw || labs.placed.some(q=>!(rr.x1<q.x0||rr.x0>q.x1||rr.y1<q.y0||rr.y0>q.y1))) return;
+    if(rr.x1>vx+vw || rr.y0<vy || rr.y1>vy+vh || labs.placed.some(q=>!(rr.x1<q.x0||rr.x0>q.x1||rr.y1<q.y0||rr.y0>q.y1))) return;
     labs.placed.push(rr);
     s+=`<circle class="ctx" cx="${P(x)}" cy="${P(y)}" r="${P(fs*0.18)}"/>`+T(x+fs*0.4,y+fs*0.35,cf,"ctxt",n); });
   items.forEach((it,i)=>{
     s+=`<circle class="stop" cx="${P(it.x)}" cy="${P(it.y)}" r="${P(r)}" style="fill:${overview?"var(--ink)":col()}"/>`;
-    if(!overview) s+=T(it.x,it.y+fs*0.27,fs*0.75,"no",i+1,'text-anchor="middle"');
+    if(!overview) s+=T(it.x,it.y+fs*0.27,fs*0.75,"no",i+1,"middle");
   });
-  items.forEach((it,i)=>{ const L=labs[i]; if(L) s+=T(L.x,L.y,lf,"lbl",it.text,`text-anchor="${L.anc}" ${sw}`); });
+  items.forEach((it,i)=>{ const L=labs[i]; if(L) s+=T(L.x,L.y,L.small?lf*0.85:lf,"lbl",it.text,L.anc); });
   if(!overview){
-    s += scaleBar(vx,vy,vw,vh,fs,K);
+    s += scaleBar(vx,vy,vw,vh,fs,K,T);
     s += `<svg class="inset" x="${P(ix)}" y="${P(iy)}" width="${P(iw)}" height="${P(ih)}" viewBox="0 30 830 580"><rect class="sea" x="0" y="30" width="830" height="580"/>`
       + Object.values(GEO).map(d=>`<path class="land" d="${d}"/>`).join("")
-      + [["CA",36.6,-119.8],["NV",39.2,-116.9],["UT",39.2,-111.6],["AZ",34.4,-111.6]].map(([n,la,lo])=>{const [x,y]=proj(la,lo);return `<text class="state" x="${x}" y="${y}" font-size="44" text-anchor="middle">${n}</text>`;}).join("")
       + `<rect class="here" x="${vx}" y="${vy}" width="${Math.max(vw,14)}" height="${Math.max(vh,10)}"/><rect class="iframe" x="0" y="30" width="830" height="580"/></svg>`;
   }
-  return s + `</svg>`;
+  return `<div class="mapbox">${s}</svg><div class="ml-layer" aria-hidden="true">${H.join("")}</div></div>`;
 }
 function dayMap(team, d, kids){
   const m = MAPS[team][d] || MAPS[team][d.split("-")[0]]; if(!m) return "";
