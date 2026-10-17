@@ -1,4 +1,5 @@
 <meta charset="utf-8">
+<meta name="color-scheme" content="light">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>JJ Tour 서부 가족여행</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -9,38 +10,24 @@
 /*__FONTS__*/
 /* Layout: a private-itinerary booklet. Cover photo per team, then an at-a-glance table, then day spreads (story column + logistics sidebar). */
 :root{
-  --paper:#F1F3F4; --card:#FFFFFF; --ink:#13202A; --muted:#58666E; --line:#D6DDE0; --soft:#E8ECEE;
-  --brand:#1B3A57; --gold:#A87A22;
-  --pine:#2E6B57; --pine-soft:#E1EDE8;
-  --sand:#AE4F28; --sand-soft:#F5E6DD;
-  --sky:#2C6996;  --sky-soft:#E0EBF4;
-  --kid:#D38A20;  --kid-soft:#FBEFD9;
-  --good:#2C7A4C; --warn:#A35F14;
-  --sea:#D9E6ED; --land:#F9F8F4; --border:#AAB7BB; --label:#22323A;
+  /* light only: warm paper, high-contrast ink for older eyes */
+  color-scheme:light;
+  --paper:#F7F3EC; --card:#FFFFFF; --ink:#1B1F23; --muted:#4D5862; --line:#E2DACD; --soft:#F1ECE3;
+  --brand:#1E3A5F; --gold:#9A6B12;
+  --pine:#2B6A52; --pine-soft:#E4F0EA;
+  --sand:#B04A22; --sand-soft:#FAE9DF;
+  --sky:#1F5F95;  --sky-soft:#E3EEF8;
+  --kid:#C77C12;  --kid-soft:#FDF0D8;
+  --good:#23794A; --warn:#9C5510;
+  --sea:#D3E5EF; --land:#FFFDF8; --border:#A8B4B8; --label:#1B2A33;
   --f-display:"Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
   --f-body:"Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
   --f-num:"Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif;
   --f-kid:"Jua", "Pretendard", system-ui, sans-serif;
   --r:12px;
 }
-@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --paper:#0E1519; --card:#162027; --ink:#E6ECEE; --muted:#9AAAB0; --line:#28363D; --soft:#1D2930;
-  --brand:#8FB6DA; --gold:#E1B65C;
-  --pine:#6DBA9D; --pine-soft:#1B2D27; --sand:#E58C60; --sand-soft:#33221A;
-  --sky:#80B5DF; --sky-soft:#17283A; --kid:#F0B65C; --kid-soft:#33281A;
-  --good:#6FC48F; --warn:#E6A75A;
-  --sea:#0C2130; --land:#1A252A; --border:#3E5057; --label:#D3DEDF; color-scheme:dark;
-}}
-:root[data-theme="dark"]{
-  --paper:#0E1519; --card:#162027; --ink:#E6ECEE; --muted:#9AAAB0; --line:#28363D; --soft:#1D2930;
-  --brand:#8FB6DA; --gold:#E1B65C;
-  --pine:#6DBA9D; --pine-soft:#1B2D27; --sand:#E58C60; --sand-soft:#33221A;
-  --sky:#80B5DF; --sky-soft:#17283A; --kid:#F0B65C; --kid-soft:#33281A;
-  --good:#6FC48F; --warn:#E6A75A;
-  --sea:#0C2130; --land:#1A252A; --border:#3E5057; --label:#D3DEDF; color-scheme:dark;
-}
 *{box-sizing:border-box}
-body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16.5px;line-height:1.7;letter-spacing:-.01em;font-feature-settings:'tnum' 0;word-break:keep-all;overflow-wrap:break-word;
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;letter-spacing:-.01em;font-feature-settings:'tnum' 0;word-break:keep-all;overflow-wrap:break-word;
   padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:0 56px}
 .wrap{max-width:1120px;margin:0 auto}
 h1,h2,h3,h4{text-wrap:balance;line-height:1.35;margin:0;font-weight:700;letter-spacing:-.025em}
@@ -509,46 +496,56 @@ function legPath(leg, vx, vw){
 function placeLabels(items, fs, box, extra=[]){
   const placed = items.map(it=>({x0:it.x-it.r,y0:it.y-it.r,x1:it.x+it.r,y1:it.y+it.r})).concat(extra);
   const hit = (a,b)=>!(a.x1<b.x0||a.x0>b.x1||a.y1<b.y0||a.y0>b.y1);
-  return items.map(it=>{
+  const labs = items.map(it=>{
     if(!it.text) return null;
-    const w = [...it.text].length*fs*0.92, h=fs*1.05, g=it.r+fs*0.3;
-    const cands = [[g,0,"start"],[-g,0,"end"],[0,-g-h*0.35,"middle"],[0,g+h*0.75,"middle"],[g,-h*0.8,"start"],[g,h*0.8,"start"],[-g,-h*0.8,"end"],[-g,h*0.8,"end"]];
-    for(const [dx,dy,anc] of cands){
+    // Korean glyphs are ~1em wide; add the halo stroke so boxes match what is drawn
+    const w = [...it.text].reduce((a,c)=>a+(/[\u3131-\uD79D]/.test(c)?1.02:0.6),0)*fs+fs*0.3, h=fs*1.15, g0=it.r+fs*0.3;
+    for(const g of [g0, g0+fs*0.9, g0+fs*1.8])
+    for(const [dx,dy,anc] of [[g,0,"start"],[-g,0,"end"],[0,-g-h*0.35,"middle"],[0,g+h*0.75,"middle"],[g,-h*0.8,"start"],[g,h*0.8,"start"],[-g,-h*0.8,"end"],[-g,h*0.8,"end"]]){
       const bx = anc==="start"? it.x+dx : anc==="end"? it.x+dx-w : it.x-w/2;
       const by = it.y+dy-h*0.5;
       const r = {x0:bx,y0:by,x1:bx+w,y1:by+h};
       const inside = !box || (r.x0>=box[0] && r.x1<=box[0]+box[2] && r.y0>=box[1] && r.y1<=box[1]+box[3]);
       if(inside && !placed.some(p=>hit(p,r))){ placed.push(r); return {x:anc==="middle"?it.x:it.x+dx, y:it.y+dy+fs*0.34, anc}; }
     }
-    return {x:it.x+g, y:it.y+fs*0.34, anc:"start"};
+    return null;   // no free spot: the numbered dot and the caption still identify the stop
   });
+  labs.placed = placed;
+  return labs;
 }
+const isMobile = () => window.matchMedia("(max-width:760px)").matches;
 function mapSVG({legs, stops, team, overview, minW=34}){
   const keys = [...legs.flatMap(l=>l.p), ...stops];
   const [vx,vy,vw,vh] = overview ? [0,30,830,580] : fitBox(bboxOf(keys), minW);
-  const fs = overview ? vw/46 : vw/30;
+  // phones draw the map ~340px wide, so enlarge text in map units to keep it ~11px+ on screen
+  const fs = (overview ? vw/46 : vw/30) * (isMobile() ? (overview ? 1.6 : 1.25) : 1);
   const col = t => `var(--${(t||team)==="A"?"pine":(t||team)==="B"?"sand":"sky"})`;
   let s = `<svg viewBox="${vx.toFixed(2)} ${vy.toFixed(2)} ${vw.toFixed(2)} ${vh.toFixed(2)}" role="img" aria-label="이동 경로 지도" preserveAspectRatio="xMidYMid meet">`;
   s += `<rect class="sea" x="${vx-200}" y="${vy-200}" width="${vw+400}" height="${vh+400}"/>`;
   s += Object.values(GEO).map(d=>`<path class="land" d="${d}"/>`).join("");
   const [tx,ty]=proj(39.09,-120.04); s += `<ellipse class="lake" cx="${tx}" cy="${ty}" rx="5" ry="9.5"/>`;
   const [px,py]=proj(36.0,-123.6); s += `<text class="water" x="${px}" y="${py}" font-size="${(overview?fs:fs*0.8)*1.1}" text-anchor="middle">태평양</text>`;
-  if(overview || vw>150) STATES_KO.forEach(([n,la,lo])=>{const [x,y]=proj(la,lo); s+=`<text class="state" x="${x}" y="${y}" font-size="${fs*1.15}" text-anchor="middle">${n}</text>`;});
-  const stopXY = stops.filter(k=>!isOff(k)).map(k=>proj(PL[k][0],PL[k][1]));
-  CTX.forEach(([la,lo,n])=>{ const [x,y]=proj(la,lo); if(x<vx||x>vx+vw||y<vy||y>vy+vh) return;
-    if(stopXY.some(([a,b])=>Math.hypot(a-x,b-y)<fs*3)) return;
-    s+=`<circle class="ctx" cx="${x}" cy="${y}" r="${fs*0.18}"/><text class="ctxt" x="${x+fs*0.4}" y="${y+fs*0.35}" font-size="${fs*0.82}">${n}</text>`; });
+  if(overview || vw>150) STATES_KO.forEach(([n,la,lo])=>{const [x,y]=proj(la,lo); s+=`<text class="state" x="${x}" y="${y}" font-size="${(overview ? vw/46 : vw/30)*1.15}" text-anchor="middle">${n}</text>`;});
   legs.forEach(l=>{ s += `<path class="leg ${l.m}" d="${legPath(l,vx,vw)}" style="stroke:${col(l.team)}" vector-effect="non-scaling-stroke"/>`; });
   legs.filter(l=>l.p.some(isOff)).forEach(l=>{ const k=l.p.find(isOff); const other=l.p.find(o=>!isOff(o)); const [,y]=proj(PL[other][0],PL[other][1]);
     const yy = y + (k==="korea"? -vw*0.08 : vw*0.06); s+=`<text class="lbl strong" x="${vx+fs*0.5}" y="${yy-fs*0.6}" font-size="${fs}" style="stroke-width:${(fs*0.28).toFixed(3)}">${PL[k][2]} ✈</text>`; });
   const r = overview?fs*0.32:fs*0.62;
   const items = stops.filter(k=>!isOff(k)).map(k=>{const [x,y]=proj(PL[k][0],PL[k][1]); return {k,x,y,r,text:PL[k][2]};});
   const iw=vw*0.24, ih=iw*580/830, ix=vx+vw-iw-vw*0.02, iy=vy+vw*0.02;
-  const labs = placeLabels(items, fs*(overview?0.8:0.92), [vx,vy,vw,vh], overview?[]:[{x0:ix-fs*0.3,y0:iy-fs*0.3,x1:ix+iw,y1:iy+ih+fs*0.3}]);
+  const offBoxes = legs.filter(l=>l.p.some(isOff)).map(l=>{ const k=l.p.find(isOff); const other=l.p.find(o=>!isOff(o)); const [,y]=proj(PL[other][0],PL[other][1]);
+    const yy=y+(k==="korea"? -vw*0.08 : vw*0.06)-fs*0.6; return {x0:vx, y0:yy-fs*1.1, x1:vx+fs*0.5+[...PL[k][2]].length*fs*1.05+fs*1.2, y1:yy+fs*0.4}; });
+  const labs = placeLabels(items, fs*(overview?0.8:0.92), [vx,vy,vw,vh], (overview?[]:[{x0:ix-fs*0.3,y0:iy-fs*0.3,x1:ix+iw,y1:iy+ih+fs*0.3}]).concat(offBoxes));
   items.forEach((it,i)=>{
     s+=`<circle class="stop" cx="${it.x}" cy="${it.y}" r="${r}" style="fill:${overview?"var(--ink)":col()}"/>`;
     if(!overview) s+=`<text class="no" x="${it.x}" y="${it.y+fs*0.27}" font-size="${fs*0.75}" text-anchor="middle">${i+1}</text>`;
   });
+  const stopXY = items.map(it=>[it.x,it.y]);
+  CTX.forEach(([la,lo,n])=>{ const [x,y]=proj(la,lo); if(x<vx||x>vx+vw||y<vy||y>vy+vh) return;
+    if(stopXY.some(([a,b])=>Math.hypot(a-x,b-y)<fs*3)) return;
+    const cf=fs*0.82, w=[...n].length*cf*1.02, r={x0:x-fs*0.2,y0:y-cf*0.6,x1:x+fs*0.4+w,y1:y+cf*0.6};
+    if(r.x1>vx+vw || labs.placed.some(p=>!(r.x1<p.x0||r.x0>p.x1||r.y1<p.y0||r.y0>p.y1))) return;
+    labs.placed.push(r);
+    s+=`<circle class="ctx" cx="${x}" cy="${y}" r="${fs*0.18}"/><text class="ctxt" x="${x+fs*0.4}" y="${y+fs*0.35}" font-size="${cf}">${n}</text>`; });
   items.forEach((it,i)=>{ const L=labs[i]; if(L) s+=`<text class="lbl" x="${L.x}" y="${L.y}" text-anchor="${L.anc}" font-size="${fs*(overview?0.8:0.92)}" style="stroke-width:${(fs*0.28).toFixed(3)}">${it.text}</text>`; });
   if(!overview){
     s += scaleBar(vx,vy,vw,vh,fs);
@@ -576,7 +573,7 @@ function overviewMap(team){
 const DATES = ["5/30","5/31","6/1","6/2","6/3","6/4","6/5","6/6","6/7","6/8","6/9","6/10","6/11"];
 const DOW   = ["일","월","화","수","목","금","토","일","월","화","수","목","금"];
 const ROUTE = {
-  A:["도착·얼바인","라구나·미션","산타바바라","솔뱅","졸업식","졸업식","요세미티","타호","나파","SF","SF","스탠퍼드","SF 출국"],
+  A:["도착·얼바인","라구나·미션","산타바바라","솔뱅","Jia 졸업","Jaei 졸업","요세미티","타호","나파","SF","SF","스탠퍼드","SF 출국"],
   B:["베가스","자이언·브라이스","앤텔로프·모뉴먼트","그랜드캐년","베가스 공연","얼바인","LA","샌디에이고","디즈니","디즈니","SF 합류","스탠퍼드","SF 출국"]
 };
 function board(){
@@ -919,7 +916,7 @@ const CHECK = [
  ["국제운전면허증 (운전할 어른)","한국 면허증과 함께 지참"],
  ["여행자 보험 가입","의료비 한도 충분히"],
  ["티오가 로드 개통 여부 확인 (5월 말)","닫혀 있으면 6/6 우회로 이용"],
- ["졸업식 일정·장소 확정","Jaei & Jia 졸업식 6/3–6/4"]
+ ["졸업식 시간·장소 확정","6/3 Jia 초등학교 · 6/4 Jaei 중학교 졸업식"]
 ];
 const CONTACTS = [
  ["긴급 (경찰·구급·소방)","911"],
@@ -966,6 +963,8 @@ function show(v){
 document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{ show(b.dataset.view); window.scrollTo({top:0}); }));
 document.getElementById("credits").innerHTML = Object.entries(CREDITS).map(([k,c])=>
   `<li>${PHOTO[k]||k}: <a href="${c.page}" target="_blank" rel="noopener">${c.title.replace("File:","")}</a> · ${c.artist||"저작자 미상"} · ${c.license||""}</li>`).join("");
+let wasMobile = isMobile();
+window.addEventListener("resize", ()=>{ const m=isMobile(); if(m!==wasMobile){ wasMobile=m; const y=scrollY; show(document.querySelector('.tab[aria-selected="true"]').dataset.view); scrollTo(0,y); } });
 let start = "A";
 const hash = (location.hash||"").slice(1);
 if(["A","B","C","D","E"].includes(hash)) start = hash; else { try{ start = localStorage.getItem("jj_view") || "A"; }catch(e){} }
