@@ -156,7 +156,7 @@ details.hist p{margin:8px 0 0;font-size:.97rem}
 .glance td.m{font-size:.84rem;color:var(--muted)}
 /* parents: large & calm */
 .parents{font-size:1.06rem}
-.parents .day-body{grid-template-columns:1fr}
+.parents .day-body{grid-template-columns:minmax(0,1fr)}
 .parents .lead{font-size:1.16rem;line-height:1.85}
 .parents .todo{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:1.1rem}
 .parents .todo li{padding:11px 15px;border-radius:10px;background:var(--pine-soft);display:grid;grid-template-columns:auto 1fr;gap:12px}
@@ -279,6 +279,24 @@ figure.map figcaption b{color:var(--ink)}
 .hike p{margin:0;font-size:.97rem}
 .hike .say{border-left:3px solid var(--gold);padding:2px 0 2px 12px;color:var(--ink);font-size:.95rem}
 .hike .say b{color:var(--gold);font-size:.78rem;letter-spacing:.06em;display:block}
+.choice{border:2px solid var(--team, var(--sand));border-radius:14px;padding:14px 16px;display:grid;gap:10px;background:var(--sand-soft)}
+.choice-q{font-weight:800;font-size:1.02rem}
+.choice-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.choice-btns button{font:inherit;font-weight:800;font-size:.98rem;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:12px 10px;cursor:pointer;line-height:1.35}
+.choice-btns button[aria-pressed="true"]{border-color:var(--sand);background:var(--sand);color:#fff}
+.choice-btns .rec{display:inline-block;font-size:.7rem;font-weight:800;border:1px solid currentColor;border-radius:999px;padding:0 6px;margin-left:4px;vertical-align:2px}
+.cmp summary{cursor:pointer;font-weight:700;color:var(--sky);list-style:none}
+.cmp summary::-webkit-details-marker{display:none}
+.cmp summary::before{content:"＋ ";font-family:var(--f-num)} .cmp[open] summary::before{content:"－ "}
+.cmp-t{overflow-x:auto;margin-top:8px;background:var(--card);border-radius:10px;border:1px solid var(--line)}
+.cmp-t table{width:100%;border-collapse:collapse;font-size:.9rem;min-width:420px}
+.cmp-t th,.cmp-t td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.cmp-t thead th{background:var(--soft);font-size:.82rem}
+.cmp-t tbody th{color:var(--muted);font-size:.82rem;white-space:nowrap}
+.cmp .why{margin:10px 0 0;font-size:.95rem;border-left:3px solid var(--gold);padding-left:12px}
+.kids .choice{border-color:var(--kid);background:var(--kid-soft)}
+.kids .choice-btns button{font-family:var(--f-kid);font-weight:400;font-size:1.08rem}
+.kids .choice-btns button[aria-pressed="true"]{border-color:var(--kid);background:var(--kid)}
 details.tips{border:1px solid var(--line);border-radius:12px;background:var(--soft)}
 details.tips summary{cursor:pointer;list-style:none;padding:12px 16px;font-weight:800;display:flex;justify-content:space-between;gap:10px;align-items:center}
 details.tips summary::-webkit-details-marker{display:none}
@@ -318,7 +336,10 @@ footer details.credits summary::-webkit-details-marker{display:none}
 footer details.credits summary::before{content:"＋ ";font-family:var(--f-num)}
 footer details.credits[open] summary::before{content:"－ "}
 @media (max-width:760px){
-  .day-body{grid-template-columns:1fr;padding:16px}
+  .day-body,.parents .day-body{grid-template-columns:minmax(0,1fr);padding:16px}
+  .cmp-t table{min-width:0;font-size:.84rem}
+  .cmp-t th,.cmp-t td{padding:7px 6px}
+  .cmp-t tbody th{white-space:normal;width:22%}
   .day-hero{aspect-ratio:16/10}
   .cover{min-height:300px}
   .cover .in{padding:20px}
@@ -389,7 +410,7 @@ const PHOTO = {
   vegas_strip:"라스베이거스 스트립", bellagio:"벨라지오 분수쇼", zion:"자이언 캐니언, 버진강", emerald_pools:"에메랄드 풀스",
   bryce:"브라이스 캐니언 ‘토르의 망치’", horseshoe:"호스슈 벤드", antelope:"로어 앤텔로프 캐니언", monument:"모뉴먼트 밸리",
   grand_canyon:"그랜드캐년 사우스림", route66:"윌리엄스 · 루트 66", disneyland:"잠자는 숲속의 공주 성", dca:"디즈니 캘리포니아 어드벤처",
-  santa_monica:"산타모니카 부두", griffith:"그리피스 천문대", getty:"게티 센터", sd_zoo:"샌디에이고 동물원 판다", balboa:"발보아 파크",
+  santa_monica:"산타모니카 부두", griffith:"그리피스 천문대", getty:"게티 센터", sd_zoo:"샌디에이고 동물원 판다 (자료 사진)", seaworld:"씨월드 샌디에이고 범고래", balboa:"발보아 파크",
   lajolla:"라호야 코브 바다사자", laguna:"라구나 비치 하이슬러 공원", sjc_mission:"미션 산후안 카피스트라노", sb_mission:"올드 미션 산타바바라",
   solvang:"솔뱅 풍차", sb_wharf:"산타바바라 해변", tunnel_view:"요세미티 터널 뷰", glacier_point:"글레이셔 포인트와 하프 돔",
   yosemite_falls:"요세미티 폭포", mariposa:"마리포사 그로브 그리즐리 자이언트", tioga:"테나야 호수 (티오가 로드)", emerald_bay:"타호 호수 에메랄드 베이",
@@ -422,7 +443,7 @@ const PL = {
   monument:[36.98,-110.11,"모뉴먼트 밸리"], cameron:[35.88,-111.41,""], desertview:[36.04,-111.83,"데저트 뷰"],
   gc:[36.057,-112.14,"그랜드캐년"], williams:[35.25,-112.19,"윌리엄스"], kingman:[35.19,-114.05,""], hoover:[36.016,-114.737,""],
   hollywood:[34.10,-118.33,"할리우드"], griffith:[34.118,-118.300,"그리피스 천문대"], smonica:[34.008,-118.499,"산타모니카"],
-  sdzoo:[32.735,-117.149,"샌디에이고 동물원"], lajolla:[32.85,-117.27,"라호야"], oceanside:[33.2,-117.38,""], anaheim:[33.81,-117.919,"디즈니랜드"]
+  sdzoo:[32.735,-117.149,"샌디에이고 동물원"], seaworld:[32.7648,-117.2263,"씨월드"], lajolla:[32.85,-117.27,"라호야"], oceanside:[33.2,-117.38,""], anaheim:[33.81,-117.919,"디즈니랜드"]
 };
 const CTX = [[34.05,-118.25,"LA"],[37.7749,-122.4194,"SF"],[36.114,-115.173,"라스베이거스"],[32.72,-117.16,"샌디에이고"],[33.45,-112.07,"피닉스"],[38.58,-121.49,"새크라멘토"],[40.76,-111.89,"솔트레이크시티"]];
 const STATES_KO = [["캘리포니아",35.4,-119.4],["네바다",39.4,-116.9],["유타",39.4,-111.6],["애리조나",34.3,-111.5],["오리건",42.25,-120.5],["뉴멕시코",34.4,-108.9]];
@@ -452,6 +473,7 @@ const MAPS = {
   "6/4":{legs:[D("fly",["las","sna"]),D("drive",["sna","irvine"])],stops:["lv","irvine"],note:"남서쪽으로 1시간 10분 비행"},
   "6/5":{legs:[D("drive",["irvine","griffith","hollywood","smonica","irvine"])],stops:["irvine","griffith","hollywood","smonica"],note:"왕복 약 2–3시간 (LA는 북쪽으로 1시간)"},
   "6/6":{legs:[D("drive",["irvine","oceanside","sdzoo","lajolla","oceanside","irvine"])],stops:["irvine","sdzoo","lajolla"],note:"남쪽으로 1시간 20분, 왕복 약 3시간"},
+  "6/6-sw":{legs:[D("drive",["irvine","oceanside","seaworld","lajolla","oceanside","irvine"])],stops:["irvine","seaworld","lajolla"],note:"남쪽으로 1시간 15분, 왕복 약 3시간"},
   "6/7":{legs:[D("drive",["irvine","anaheim"])],stops:["irvine","anaheim"],note:"북쪽으로 25분"},
   "6/8":{legs:[D("drive",["irvine","anaheim"])],stops:["irvine","anaheim"],note:"북쪽으로 25분"},
   "6/9":{legs:[D("fly",["sna","sfo"]),D("drive",["sfo","sf","fwharf"])],stops:["sna","sfo","sf","fwharf"],note:"북쪽으로 1시간 40분 비행"},
@@ -557,7 +579,7 @@ function mapSVG({legs, stops, team, overview, minW=34}){
   return s + `</svg>`;
 }
 function dayMap(team, d, kids){
-  const m = MAPS[team][d]; if(!m) return "";
+  const m = MAPS[team][d] || MAPS[team][d.split("-")[0]]; if(!m) return "";
   return `<figure class="map">${mapSVG({legs:m.legs, stops:m.stops, team})}<figcaption><b>${kids?"오늘의 지도":"오늘 이동"}</b> ${m.note}<span class="legend-mini"><i class="l-drive"></i>차 <i class="l-fly"></i>비행기${m.legs.some(l=>l.m==="boat")?' <i class="l-boat"></i>배':""}</span></figcaption></figure>`;
 }
 function overviewMap(team){
@@ -658,6 +680,23 @@ function dayA(x,i){
      ${linksBlock(x)}
    </div><div class="aside">${dayMap("A",x.d)}${mealsBlock("A",x.d)}${infoList("A",x.d)}</div></div></article>`;
 }
+/* ---------- one-of-two day choices (6/6 동물원 vs 씨월드) ---------- */
+function getChoice(c){ let v=null; try{ v=localStorage.getItem("jj_choice_"+c.id); }catch(e){} return c.opts[v] ? v : c.rec; }
+function setChoice(c, v){ try{ localStorage.setItem("jj_choice_"+c.id, v); }catch(e){} syncChoiceCost(); }
+function applyChoice(x){ if(!x.choice) return x; const k=getChoice(x.choice); return {...x, ...x.choice.opts[k], mapKey: k===x.choice.rec ? x.d : x.d+"-"+k}; }
+function choiceBlock(x, kids){
+  if(!x.choice) return ""; const c=x.choice, cur=getChoice(c);
+  const btns = Object.entries(c.opts).map(([k,o])=>`<button type="button" data-choice="${c.id}" data-val="${k}" aria-pressed="${k===cur}">${o.lbl}${k===c.rec?' <span class="rec">추천</span>':""}</button>`).join("");
+  return `<div class="choice"><div class="choice-q">${kids?'<span class="k" style="font-family:var(--f-kid)">'+c.q+'</span>':c.q}</div><div class="choice-btns" role="group" aria-label="${c.q}">${btns}</div>
+    ${kids?"":`<details class="cmp"><summary>둘 비교해 보기</summary><div class="cmp-t"><table><thead><tr><th></th>${Object.values(c.opts).map(o=>`<th>${o.lbl}</th>`).join("")}</tr></thead><tbody>${c.cmp.map(([a,...v])=>`<tr><th>${a}</th>${v.map(t=>`<td>${t}</td>`).join("")}</tr>`).join("")}</tbody></table></div><p class="why">${c.why}</p></details>`}</div>`;
+}
+const CHOICE_ITEMS = {sd:{zoo:["b_zooa","b_zooc"], sw:["b_swa","b_swp"]}};
+function syncChoiceCost(){
+  if(typeof S==="undefined") return;
+  B_DAYS.filter(x=>x.choice).forEach(x=>{ const cur=getChoice(x.choice);
+    Object.entries(CHOICE_ITEMS[x.choice.id]).forEach(([k,ids])=>S.items.B.forEach(i=>{ if(ids.includes(i.id)) i.on = k===cur; })); });
+  try{ localStorage.setItem("jj_cost", JSON.stringify(S)); }catch(e){}
+}
 let bMode = "adult";
 try{ bMode = localStorage.getItem("jj_bmode") || "adult"; }catch(e){}
 function renderB(){
@@ -666,21 +705,22 @@ function renderB(){
   <section class="sec"><div class="sub" role="group" aria-label="보기 방식"><button type="button" data-mode="adult" aria-pressed="${!kids}">어른용 상세 일정</button><button type="button" data-mode="kids" aria-pressed="${kids}">아이들용 모험 일정</button></div></section>
   ${kids ? `<section class="sec"><div class="letter" style="border:2px solid var(--kid)"><h3 class="k" style="font-family:var(--f-kid);font-weight:400">탐험대 대원들에게</h3><p style="font-family:var(--f-kid);font-size:1.08rem">13일 동안 사막, 협곡, 놀이공원, 바다를 모험해요. 매일 미션을 해내면 체크하세요! 지도에서 오늘 어디로 가는지, 차를 얼마나 타는지도 확인해요.</p></div></section>`
    : `<section class="sec"><div class="letter"><h3>첫 미국 여행, 오빠가 알려줄게</h3><p>미국 입국에는 ESTA(전자여행허가, 1인 $40.62)가 필요합니다. 출발 72시간 전까지 신청하세요. 캐년 투어는 밴으로 하루 5–8시간 이동하니 아이들 간식과 볼거리를 넉넉히 준비하세요. 국립공원 3곳은 성인 1인당 비거주 연간 패스($250)를 미리 사 두는 게 가장 저렴합니다. 날짜마다 접어 둔 ‘오빠의 현지 팁’과 맨 위 ‘현지인 꿀팁’ 탭에 미국 생활 요령을 모아 뒀어.</p><p class="sign">얼바인에서, 오빠가</p></div></section>
-     <section class="sec"><div class="sec-h"><h2>일정 한눈에</h2><p>줄을 누르면 그날 일정으로 이동합니다</p></div>${glance("B",B_DAYS)}</section>
+     <section class="sec"><div class="sec-h"><h2>일정 한눈에</h2><p>줄을 누르면 그날 일정으로 이동합니다</p></div>${glance("B",B_DAYS.map(applyChoice))}</section>
      <section class="sec"><div class="sec-h"><h2>MaxTour 3일 투어 포함 사항</h2><p>공식 투어 페이지 기준</p></div><div class="strip"><div><b>포함</b>호텔 2박, 아침 2·점심 2·저녁 1, 국립공원 기본 입장료, 생수·간식</div><div><b>불포함</b>앤텔로프 $87, 모뉴먼트 4x4 $75, 비거주 공원 요금, 가이드 팁</div><div><b>조건</b>만 5세 이상, 어린이도 같은 요금, 최대 14명 밴</div><div><b>짐</b>캐리어 불가, 배낭·더플백 1개</div></div></section>`}
   <section class="sec"><div class="sec-h"><h2>이동 경로</h2><p>주황 선이 동생네 가족 경로입니다</p></div>${overviewMap("B")}${kids?"":`<div style="margin-top:12px">${board()}</div>`}</section>
-  <section class="sec ${kids?"kids":""}"><div class="sec-h"><h2 ${kids?'class="k" style="font-family:var(--f-kid);font-weight:400"':""}>${kids?"매일매일 모험":"날짜별 일정"}</h2></div><div class="days">${B_DAYS.map(kids?dayKid:dayB).join("")}</div></section>`;
+  <section class="sec ${kids?"kids":""}"><div class="sec-h"><h2 ${kids?'class="k" style="font-family:var(--f-kid);font-weight:400"':""}>${kids?"매일매일 모험":"날짜별 일정"}</h2></div><div class="days">${B_DAYS.map(applyChoice).map(kids?dayKid:dayB).join("")}</div></section>`;
 }
 function dayB(x,i){
   const team = x.joint ? "var(--sky)" : "var(--sand)";
   return `<article class="day" id="B-${i}" style="--team:${team}">${hero(x)}
    <div class="day-body"><div class="main">
+     ${choiceBlock(x)}
      <p class="lead">${x.lead}</p>
      <div class="tl">${x.tl.map(([a,b])=>`<div><time>${a}</time><span>${b}</span></div>`).join("")}</div>
      ${x.ph.length>1?`<div class="extra-ph">${x.ph.slice(1).map(fig).join("")}</div>`:""}
      ${x.book?`<div class="box book"><h4>예약 · 요금</h4><ul>${x.book.map(s=>`<li>${s}</li>`).join("")}</ul></div>`:""}
      ${histBlock(x,"배경 이야기")}
-   </div><div class="aside">${dayMap("B",x.d)}${mealsBlock("B",x.d)}${infoList("B",x.d)}
+   </div><div class="aside">${dayMap("B",x.mapKey||x.d)}${mealsBlock("B",x.d,false,x.meal)}${infoList("B",x.d)}
      ${tipsBlock(x,"오빠")}
      ${linksBlock(x)}</div></div></article>`;
 }
@@ -691,10 +731,11 @@ function dayKid(x,i){
   const driveTxt = h===0 ? "오늘은 차를 거의 안 타요!" : h<1 ? "차 타는 시간: 아주 조금" : `차 타는 시간: 약 ${h}시간`;
   return `<article class="day" id="B-${i}" style="--team:var(--kid)">${hero(x,k.t)}
    <div class="day-body"><div class="main">
+     ${choiceBlock(x,true)}
      <div class="drive"><span>${driveTxt}</span><div class="bar" aria-hidden="true"><span style="width:${pct}%"></span></div></div>
      <div class="facts">${k.fact.map(([a,b])=>`<div class="fact"><b>${a}</b>${b}</div>`).join("")}</div>
      <div class="mission"><div class="k" style="font-family:var(--f-kid);font-size:1.1rem;color:var(--kid)">오늘의 미션</div>${k.m.map((m,j)=>{const id=`m-${x.d.replace("/","-")}-${j}`;return `<label for="${id}"><input type="checkbox" id="${id}" data-mid="${id}" ${done[id]?"checked":""}>${m}</label>`;}).join("")}</div>
-   </div><div class="aside">${dayMap("B",x.d,true)}${mealsBlock("B",x.d,true)}</div></div></article>`;
+   </div><div class="aside">${dayMap("B",x.mapKey||x.d,true)}${mealsBlock("B",x.d,true,x.meal)}</div></div></article>`;
 }
 
 /* ---------- cost model ---------- */
@@ -770,6 +811,8 @@ function freshState(){ return {
     it({id:"b_ll",cat:"tour",lbl:"라이트닝 레인 멀티패스 (1인 1일)",u:32,q:8,on:false}),
     it({id:"b_zooa",cat:"tour",lbl:"샌디에이고 동물원 (성인·12세 이상)",u:78,q:2}),
     it({id:"b_zooc",cat:"tour",lbl:"샌디에이고 동물원 (3–11세)",u:68,q:2}),
+    it({id:"b_swa",cat:"tour",lbl:"씨월드 샌디에이고 1일권 (온라인 날짜 지정)",u:95,q:4,on:false}),
+    it({id:"b_swp",cat:"move",lbl:"씨월드 주차",u:32,q:1,on:false}),
     it({id:"b_alca",cat:"tour",lbl:"알카트라즈 낮 투어 (성인)",u:47.95,q:2,tag:"확인"}),
     it({id:"b_alcc",cat:"tour",lbl:"알카트라즈 낮 투어 (5–11세)",u:29.15,q:2}),
     it({id:"b_sci",cat:"tour",lbl:"익스플로라토리움 (선택)",u:35,q:4,on:false}),
@@ -789,7 +832,11 @@ const SHOWS = {mys:[95,"미스테르 (세금·수수료 포함 추정)"], o:[155
 let S = freshState();
 S.items.B.find(i=>i.id==="b_show").show="mys";
 let BASE = JSON.parse(JSON.stringify(S));
-try{ const saved = JSON.parse(localStorage.getItem("jj_cost")||"null"); if(saved && saved.items) S = saved; }catch(e){}
+try{ const saved = JSON.parse(localStorage.getItem("jj_cost")||"null"); if(saved && saved.items){
+  const fresh = freshState();
+  ["A","B"].forEach(t=>fresh.items[t].forEach((f,idx)=>{ if(!saved.items[t].some(i=>i.id===f.id)) saved.items[t].splice(Math.min(idx,saved.items[t].length),0,f); }));
+  S = saved; } }catch(e){}
+syncChoiceCost();
 
 function tierOf(s){ return s.tier || S.style; }
 function unit(i, st){
@@ -954,6 +1001,12 @@ function show(v){
   el.querySelectorAll("tr[data-go]").forEach(tr=>tr.addEventListener("click",()=>document.getElementById(tr.dataset.go)?.scrollIntoView({behavior:"smooth"})));
   if(v==="B"){
     el.querySelectorAll(".sub button").forEach(b=>b.addEventListener("click",()=>{ bMode=b.dataset.mode; try{localStorage.setItem("jj_bmode",bMode);}catch(e){} show("B"); }));
+    el.querySelectorAll("[data-choice]").forEach(b=>b.addEventListener("click",()=>{
+      const c = B_DAYS.find(x=>x.choice&&x.choice.id===b.dataset.choice).choice;
+      const art = b.closest("article").id, top = b.getBoundingClientRect().top;
+      setChoice(c, b.dataset.val); show("B");
+      const nb = document.querySelector(`#${art} [data-choice="${c.id}"][data-val="${b.dataset.val}"]`); if(nb) scrollBy(0, nb.getBoundingClientRect().top-top);
+    }));
     el.querySelectorAll("input[data-mid]").forEach(c=>c.addEventListener("change",()=>{ const m=missions(); m[c.dataset.mid]=c.checked; try{localStorage.setItem("jj_missions",JSON.stringify(m));}catch(e){} }));
   }
   if(v==="C") bindC(el);

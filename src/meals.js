@@ -33,8 +33,8 @@ const MP = {
  }
 };
 const MTAG = {inc:"투어 포함", rsv:"예약 추천", home:"집밥", air:"기내"};
-function mealsBlock(team, d, kids){
-  const m = MP[team][d]; if(!m) return "";
+function mealsBlock(team, d, kids, override){
+  const m = override || MP[team][d]; if(!m) return "";
   if(kids) return `<div class="meals"><h4>오늘 뭐 먹지?</h4>${m.map(([k,w])=>`<div><b>${k}</b><span>${w}</span></div>`).join("")}</div>`;
   return `<div class="meals"><h4>오늘의 식사</h4>${m.map(([k,w,n,t])=>`<div><b>${k}</b><span>${w}${t?`<span class="mtag ${t}">${MTAG[t]}</span>`:""}${n?`<small>${n}</small>`:""}</span></div>`).join("")}</div>`;
 }
