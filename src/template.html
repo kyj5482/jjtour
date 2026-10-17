@@ -277,6 +277,8 @@ figure.map figcaption b{color:var(--ink)}
 .intro video{display:block;width:100%;aspect-ratio:16/9;background:#05090c;object-fit:cover}
 .intro .bar{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;padding:10px 16px;background:#0b1217;color:#cfd8dc;font-size:.86rem}
 .intro .bar b{color:#fff}
+.intro.kids-film .bar{background:#E8822A;color:#fff}
+.intro.kids-film .bar b{font-family:var(--f-kid);font-weight:400;font-size:1.05rem}
 /* hikes */
 .hikes{display:grid;gap:10px}
 .hike{border:1.5px solid var(--pine);border-radius:12px;padding:14px 16px;display:grid;gap:8px;background:var(--card)}
@@ -457,8 +459,8 @@ footer details.credits[open] summary::before{content:"－ "}
     <span class="code">JJ-2027-0530 · 6명 · 13일</span>
   </header>
   <section class="intro" aria-label="인트로 영상">
-    <video id="film" controls playsinline preload="metadata" poster="intro_poster.jpg"><source src="intro.mp4" type="video/mp4"></video>
-    <div class="bar"><span><b>인트로 · 미국 서부는 어떤 곳일까?</b> 소리를 켜고 보세요 (1분 30초)</span><span>2027.5.30 – 6.11 · 3대 10명의 서부 여행</span></div>
+    <video id="film" controls playsinline preload="metadata" poster="intro_poster.jpg" src="intro.mp4"></video>
+    <div class="bar"><span id="film-t"><b>인트로 · 미국 서부는 어떤 곳일까?</b> 소리를 켜고 보세요 (1분 30초)</span><span id="film-s">2027.5.30 – 6.11 · 3대 10명의 서부 여행</span></div>
   </section>
   <nav class="tabs" role="tablist" aria-label="보기 선택">
     <button class="tab" role="tab" id="tab-A" aria-selected="true" data-view="A"><span class="dot" style="background:var(--pine)"></span>부모님 일정</button>
@@ -1202,11 +1204,24 @@ function bindF(el){
   if(canSpeak) speechSynthesis.getVoices();
 }
 
+/* ---------- intro film: the kids' adventure view gets its own film ---------- */
+const FILMS = {
+  adult:{src:"intro.mp4", poster:"intro_poster.jpg", t:"<b>인트로 · 미국 서부는 어떤 곳일까?</b> 소리를 켜고 보세요 (1분 30초)", s:"2027.5.30 – 6.11 · 3대 10명의 서부 여행"},
+  kids:{src:"intro_kids.mp4", poster:"intro_kids_poster.jpg", t:"<b>탐험대 출동 영상!</b> 소리를 켜고 보세요 (1분 18초)", s:"사막 · 협곡 · 꿈의 나라 · 바다 탐험"}
+};
+function setFilm(kind){
+  const v=document.getElementById("film"), f=FILMS[kind]; if(!v || v.dataset.kind===kind) return;
+  v.pause(); v.dataset.kind=kind; v.poster=f.poster; v.src=f.src; v.load();
+  document.getElementById("film-t").innerHTML=f.t; document.getElementById("film-s").textContent=f.s;
+  v.closest(".intro").classList.toggle("kids-film", kind==="kids");
+}
+
 /* ---------- view switching ---------- */
 function show(v){
   document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-selected", String(b.dataset.view===v)));
   const el = document.getElementById("view");
   if(window.speechSynthesis) speechSynthesis.cancel(); enRun++;
+  setFilm(v==="B" && bMode==="kids" ? "kids" : "adult");
   el.innerHTML = v==="A"?renderA():v==="B"?renderB():v==="C"?renderC():v==="E"?renderE():v==="F"?renderF():renderD();
   el.querySelectorAll("tr[data-go]").forEach(tr=>tr.addEventListener("click",()=>document.getElementById(tr.dataset.go)?.scrollIntoView({behavior:"smooth"})));
   if(v==="B"){
