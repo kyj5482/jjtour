@@ -1,0 +1,973 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>JJ Tour 서부 가족여행</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&display=swap">
+<style>
+/*__FONTS__*/
+/* Layout: a private-itinerary booklet. Cover photo per team, then an at-a-glance table, then day spreads (story column + logistics sidebar). */
+:root{
+  --paper:#F1F3F4; --card:#FFFFFF; --ink:#13202A; --muted:#58666E; --line:#D6DDE0; --soft:#E8ECEE;
+  --brand:#1B3A57; --gold:#A87A22;
+  --pine:#2E6B57; --pine-soft:#E1EDE8;
+  --sand:#AE4F28; --sand-soft:#F5E6DD;
+  --sky:#2C6996;  --sky-soft:#E0EBF4;
+  --kid:#D38A20;  --kid-soft:#FBEFD9;
+  --good:#2C7A4C; --warn:#A35F14;
+  --sea:#D9E6ED; --land:#F9F8F4; --border:#AAB7BB; --label:#22323A;
+  --f-display:"Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --f-body:"Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --f-num:"Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif;
+  --f-kid:"Jua", "Pretendard", system-ui, sans-serif;
+  --r:12px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --paper:#0E1519; --card:#162027; --ink:#E6ECEE; --muted:#9AAAB0; --line:#28363D; --soft:#1D2930;
+  --brand:#8FB6DA; --gold:#E1B65C;
+  --pine:#6DBA9D; --pine-soft:#1B2D27; --sand:#E58C60; --sand-soft:#33221A;
+  --sky:#80B5DF; --sky-soft:#17283A; --kid:#F0B65C; --kid-soft:#33281A;
+  --good:#6FC48F; --warn:#E6A75A;
+  --sea:#0C2130; --land:#1A252A; --border:#3E5057; --label:#D3DEDF; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --paper:#0E1519; --card:#162027; --ink:#E6ECEE; --muted:#9AAAB0; --line:#28363D; --soft:#1D2930;
+  --brand:#8FB6DA; --gold:#E1B65C;
+  --pine:#6DBA9D; --pine-soft:#1B2D27; --sand:#E58C60; --sand-soft:#33221A;
+  --sky:#80B5DF; --sky-soft:#17283A; --kid:#F0B65C; --kid-soft:#33281A;
+  --good:#6FC48F; --warn:#E6A75A;
+  --sea:#0C2130; --land:#1A252A; --border:#3E5057; --label:#D3DEDF; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16.5px;line-height:1.7;letter-spacing:-.01em;font-feature-settings:'tnum' 0;word-break:keep-all;overflow-wrap:break-word;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:0 56px}
+.wrap{max-width:1120px;margin:0 auto}
+h1,h2,h3,h4{text-wrap:balance;line-height:1.35;margin:0;font-weight:700;letter-spacing:-.025em}
+a{color:var(--sky)}
+:focus-visible{outline:3px solid var(--sky);outline-offset:2px;border-radius:4px}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums;font-weight:600}
+.eyebrow{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
+
+/* top bar */
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-block:16px 12px}
+.brand{display:flex;align-items:center;gap:10px}
+.mark{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;background:var(--brand);color:var(--paper);font-family:var(--f-num);font-weight:700;font-size:1rem}
+.brand b{font-weight:800;letter-spacing:.18em;font-size:.98rem}
+.brand small{display:block;color:var(--muted);font-size:.76rem;letter-spacing:.02em}
+.code{font-family:var(--f-num);font-size:.82rem;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:4px 12px}
+
+/* tabs */
+.tabs{position:sticky;top:env(safe-area-inset-top, 0px);z-index:6;background:var(--paper);display:flex;gap:6px;flex-wrap:wrap;padding-block:10px;border-bottom:1px solid var(--line)}
+.tab{font:inherit;font-weight:700;border:1.5px solid var(--line);background:var(--card);color:var(--ink);padding:9px 16px;border-radius:999px;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:.95rem}
+.tab .dot{width:9px;height:9px;border-radius:50%}
+.tab[aria-selected="true"]{border-color:var(--brand);background:var(--brand);color:var(--paper)}
+
+/* cover */
+.cover{position:relative;margin-top:20px;border-radius:18px;overflow:hidden;background:var(--brand);min-height:340px;display:flex;align-items:flex-end}
+.cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,16,24,.05) 20%,rgba(8,16,24,.78) 100%)}
+.cover .in{position:relative;z-index:1;padding:28px 30px;color:#fff;display:grid;gap:10px;max-width:760px}
+.cover .eyebrow{color:rgba(255,255,255,.82)}
+.cover h1{font-family:var(--f-display);font-size:clamp(1.9rem,4.6vw,3rem);font-weight:800;letter-spacing:-.03em}
+.cover p{margin:0;font-size:1.04rem;color:rgba(255,255,255,.9)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:999px;padding:4px 12px;font-size:.86rem;font-weight:700;backdrop-filter:blur(4px)}
+
+/* sections */
+.sec{margin-top:34px}
+.sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.sec-h h2{font-size:1.35rem}
+.sec-h p{margin:0;color:var(--muted);font-size:.92rem}
+.letter{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;display:grid;gap:6px}
+.letter p{margin:0}
+.letter .sign{color:var(--muted);font-size:.88rem}
+
+/* at a glance */
+.glance{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow-x:auto}
+.glance table{width:100%;border-collapse:collapse;min-width:640px}
+.glance th,.glance td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top;font-size:.93rem}
+.glance th{font-size:.74rem;letter-spacing:.1em;color:var(--muted);font-weight:700;background:var(--soft)}
+.glance tr:last-child td{border-bottom:0}
+.glance td.d{font-family:var(--f-num);font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--muted)}
+.glance td.t{font-weight:700}
+.glance tbody tr{cursor:pointer}
+.glance tbody tr:hover td{background:var(--soft)}
+.glance .jt{display:inline-block;font-size:.72rem;font-weight:700;color:var(--sky);border:1px solid var(--sky);border-radius:999px;padding:0 7px;margin-left:6px}
+
+/* route board */
+.board{overflow-x:auto}
+.board table{border-collapse:separate;border-spacing:3px;min-width:760px;width:100%;font-size:.76rem}
+.board th{font-family:var(--f-num);font-weight:400;color:var(--muted);padding:2px 0;text-align:center}
+.board th.who{text-align:left;width:70px;font-family:var(--f-body);font-weight:800;color:var(--ink)}
+.board td{height:44px;border-radius:6px;text-align:center;padding:2px;line-height:1.25;vertical-align:middle;font-weight:700}
+.board .A{background:var(--pine-soft);color:var(--pine)} .board .B{background:var(--sand-soft);color:var(--sand)} .board .J{background:var(--sky-soft);color:var(--sky)}
+.board .meet{outline:2px dashed var(--sky);outline-offset:-2px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.8rem;color:var(--muted);margin-top:6px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+
+/* day spread */
+.days{display:grid;gap:28px}
+.day{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;scroll-margin-top:70px}
+.day-hero{position:relative;aspect-ratio:21/8;background:linear-gradient(135deg,var(--soft),var(--line));overflow:hidden;max-width:100%}
+.day-hero img{width:100%;height:100%;object-fit:cover;display:block}
+.day-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 35%,rgba(8,16,24,.72))}
+.day-hero .cap{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:16px 22px;color:#fff;display:grid;gap:2px}
+.day-hero .dn{font-family:var(--f-num);font-size:.82rem;letter-spacing:.12em;opacity:.9}
+.day-hero h2{font-size:clamp(1.25rem,2.6vw,1.7rem)}
+.day-hero .where{font-size:.88rem;opacity:.9}
+.day-hero.noimg::after{display:none}
+.day-hero.noimg{aspect-ratio:auto;background:var(--soft)}
+.day-hero.noimg .cap{position:static;color:var(--ink);padding:20px 22px}
+.photo-credit{position:absolute;right:10px;top:8px;z-index:1;font-size:.68rem;color:rgba(255,255,255,.85)}
+.day-body{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:22px;padding:20px 22px 24px}
+.main{display:grid;gap:14px;align-content:start;min-width:0}
+.aside{display:grid;gap:12px;align-content:start;min-width:0}
+.lead{margin:0;font-size:1.05rem}
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.strip div{background:var(--soft);border-radius:8px;padding:8px 12px;font-size:.88rem}
+.strip b{display:block;font-size:.72rem;letter-spacing:.1em;color:var(--muted);font-weight:700}
+.tl{display:grid;border-left:2px solid var(--line);margin-left:6px}
+.tl div{display:grid;grid-template-columns:96px minmax(0,1fr);gap:10px;padding:6px 0 6px 16px;position:relative}
+.tl div::before{content:"";position:absolute;left:-7px;top:14px;width:12px;height:12px;border-radius:50%;background:var(--card);border:2.5px solid var(--team, var(--pine))}
+.tl time{font-family:var(--f-num);font-variant-numeric:tabular-nums;font-weight:600;font-size:.86rem;color:var(--muted);padding-top:2px}
+.extra-ph{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.ph{position:relative;margin:0;border-radius:10px;overflow:hidden;background:linear-gradient(135deg,var(--soft),var(--line));aspect-ratio:3/2;max-width:100%}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.ph figcaption{position:absolute;left:0;right:0;bottom:0;padding:16px 10px 6px;font-size:.78rem;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.62))}
+.box{border-radius:10px;padding:12px 14px;background:var(--soft);font-size:.92rem}
+.box h4{margin:0 0 4px;font-size:.74rem;letter-spacing:.1em;color:var(--muted)}
+.box ul{margin:0;padding-left:18px}
+.box.book{background:var(--sky-soft)}
+.box.note{background:transparent;border:1.5px solid var(--team, var(--pine))}
+details.hist{border-top:1px solid var(--line);padding-top:10px}
+details.hist summary{cursor:pointer;font-weight:800;color:var(--team, var(--pine));list-style:none}
+details.hist summary::before{content:"＋ ";font-family:var(--f-num)}
+details.hist[open] summary::before{content:"－ "}
+details.hist p{margin:8px 0 0;font-size:.97rem}
+.hist figure{margin:10px 0 0;max-width:230px}
+.hist figure img{width:100%;border-radius:8px;display:block}
+.hist figure figcaption{font-size:.78rem;color:var(--muted)}
+.links{display:flex;flex-wrap:wrap;gap:6px}
+.links a{font-size:.84rem;text-decoration:none;border:1px solid var(--line);padding:4px 10px;border-radius:999px;color:var(--ink);background:var(--card)}
+.links a:hover{border-color:var(--sky)}
+.info{display:grid;gap:0;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.info div{display:grid;grid-template-columns:62px minmax(0,1fr);gap:8px;padding:8px 12px;border-bottom:1px solid var(--line);font-size:.9rem}
+.info div:last-child{border-bottom:0}
+.info b{color:var(--muted);font-size:.78rem;letter-spacing:.06em;padding-top:2px}
+.tag{display:inline-block;font-size:.7rem;font-weight:700;padding:0 7px;border-radius:999px;color:var(--muted);border:1px solid var(--line);margin-left:6px;vertical-align:1px;white-space:nowrap}
+.tag.warn{color:var(--warn);border-color:var(--warn)}
+
+/* meals */
+.meals{border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.meals h4{margin:0;padding:8px 12px;font-size:.78rem;letter-spacing:.08em;color:var(--muted);background:var(--soft)}
+.meals div{display:grid;grid-template-columns:44px minmax(0,1fr);gap:8px;padding:8px 12px;border-top:1px solid var(--line);font-size:.9rem;line-height:1.55}
+.meals b{font-weight:700;color:var(--gold)}
+.meals small{display:block;color:var(--muted);font-size:.8rem}
+.mtag{display:inline-block;font-size:.7rem;font-weight:700;padding:0 6px;border-radius:999px;margin-left:6px;vertical-align:1px;border:1px solid currentColor}
+.mtag.inc{color:var(--good)} .mtag.rsv{color:var(--warn)} .mtag.home{color:var(--pine)} .mtag.air{color:var(--sky)}
+.glance td.m{font-size:.84rem;color:var(--muted)}
+/* parents: large & calm */
+.parents{font-size:1.06rem}
+.parents .day-body{grid-template-columns:1fr}
+.parents .lead{font-size:1.16rem;line-height:1.85}
+.parents .todo{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:1.1rem}
+.parents .todo li{padding:11px 15px;border-radius:10px;background:var(--pine-soft);display:grid;grid-template-columns:auto 1fr;gap:12px}
+.parents .todo li b{color:var(--pine);font-family:var(--f-num)}
+.parents .aside{grid-template-columns:repeat(auto-fit,minmax(280px,1fr));align-items:start}
+
+/* kids */
+.kids .day{border:2px solid var(--kid);border-radius:22px}
+.kids h2,.kids .k{font-family:var(--f-kid);font-weight:400}
+.kids .day-hero h2{font-size:1.9rem}
+.drive{display:flex;align-items:center;gap:10px;font-family:var(--f-kid);font-size:1.08rem}
+.drive .bar{flex:1;height:14px;border-radius:999px;background:var(--soft);overflow:hidden;border:1px solid var(--line);max-width:260px}
+.drive .bar span{display:block;height:100%;background:var(--kid)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.fact{background:var(--kid-soft);border-radius:14px;padding:12px 14px}
+.fact b{font-family:var(--f-kid);font-weight:400;font-size:1.12rem;display:block;color:var(--kid)}
+.mission{display:grid;gap:6px}
+.mission label{display:flex;gap:10px;align-items:flex-start;font-family:var(--f-kid);font-size:1.1rem;padding:8px 12px;border-radius:12px;border:2px dashed var(--kid);cursor:pointer}
+.mission input{width:22px;height:22px;accent-color:var(--kid);flex:none;margin-top:4px}
+.mission label:has(input:checked){background:var(--kid-soft);border-style:solid}
+.sub{display:flex;gap:6px;flex-wrap:wrap}
+.sub button{font:inherit;font-size:.92rem;font-weight:700;border:1.5px solid var(--line);background:var(--card);color:var(--muted);padding:8px 14px;border-radius:10px;cursor:pointer}
+.sub button[aria-pressed="true"]{background:var(--sand-soft);border-color:var(--sand);color:var(--ink)}
+
+/* maps */
+figure.map{margin:0;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--sea);max-width:100%}
+figure.map svg{display:block;width:100%;height:auto;aspect-ratio:1.45}
+figure.map.overview svg{aspect-ratio:830/580}
+figure.map figcaption{background:var(--card);padding:8px 12px;font-size:.86rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}
+figure.map figcaption b{color:var(--ink)}
+.map .sea{fill:var(--sea)} .map .land{fill:var(--land);stroke:var(--border);stroke-width:1;vector-effect:non-scaling-stroke}
+.map .lake{fill:var(--sea);stroke:var(--border);stroke-width:.6}
+.map text{font-family:var(--f-body)}
+.map .water{fill:var(--muted);letter-spacing:.2em}
+.map .state{fill:var(--muted);opacity:.55;letter-spacing:.15em;font-weight:800}
+.map .ctx{fill:var(--muted)} .map .ctxt{fill:var(--muted)}
+.map .leg{fill:none;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
+.map .leg.fly{stroke-dasharray:2 7;stroke-width:3}
+.map .leg.boat{stroke-dasharray:6 5;stroke-width:2.5}
+.map .stop{stroke:var(--card);stroke-width:2;vector-effect:non-scaling-stroke}
+.map .no{fill:#fff;font-weight:800;font-family:var(--f-num)}
+.map .lbl{fill:var(--label);font-weight:800;paint-order:stroke;stroke:var(--land);stroke-linejoin:round}
+.map .lbl.strong{fill:var(--sky)}
+.map .sbar line{stroke:var(--label);stroke-width:1.5;vector-effect:non-scaling-stroke} .map .sbar text{fill:var(--label)}
+.map .inset .here{fill:none;stroke:var(--sand);stroke-width:2.5;vector-effect:non-scaling-stroke}
+.map .inset .iframe{fill:none;stroke:var(--border);stroke-width:1;vector-effect:non-scaling-stroke}
+.legend-mini{margin-left:auto;display:inline-flex;gap:6px;align-items:center;font-size:.78rem}
+.legend-mini i{display:inline-block;width:20px;height:0;border-top:3px solid var(--muted);margin-left:4px}
+.legend-mini i.l-fly{border-top-style:dotted} .legend-mini i.l-boat{border-top-style:dashed}
+
+/* cost */
+.cost-top{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;display:grid;gap:4px}
+.kpi .v{font-family:var(--f-num);font-variant-numeric:tabular-nums;font-size:1.75rem;font-weight:800;letter-spacing:-.02em;line-height:1.2}
+.kpi .s{font-size:.86rem;color:var(--muted)}
+.kpi.A{border-top:4px solid var(--pine)} .kpi.B{border-top:4px solid var(--sand)} .kpi.T{border-top:4px solid var(--brand)}
+.delta{font-family:var(--f-num);font-size:.86rem;font-weight:700}
+.delta.up{color:var(--warn)} .delta.down{color:var(--good)} .delta.same{color:var(--muted)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;display:grid;gap:14px}
+.ctrls{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:end}
+.ctrls label{display:grid;gap:4px;font-size:.82rem;color:var(--muted);font-weight:700}
+.ctrls label{min-width:0;max-width:100%}
+.ctrls select{width:100%;max-width:100%;text-overflow:ellipsis}
+.ctrls input,.ctrls select{font:inherit;font-size:.95rem;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:7px 10px}
+.ctrls input[type=number]{width:110px}
+.ctrls .flight{flex:1 1 320px}
+.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{font:inherit;font-weight:700;font-size:.9rem;background:var(--card);color:var(--muted);border:0;padding:8px 14px;cursor:pointer;border-right:1px solid var(--line)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--brand);color:var(--paper)}
+.btn{font:inherit;font-weight:700;border:1.5px solid var(--ink);background:transparent;color:var(--ink);padding:8px 14px;border-radius:8px;cursor:pointer}
+.bars{display:grid;gap:10px}
+.barrow{display:grid;grid-template-columns:120px minmax(0,1fr) 130px;gap:10px;align-items:center;font-size:.88rem}
+.stack{display:flex;height:16px;border-radius:999px;overflow:hidden;background:var(--soft)}
+.stack span{height:100%}
+.catleg{display:flex;flex-wrap:wrap;gap:12px;font-size:.8rem;color:var(--muted)}
+.catleg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px}
+.sheet{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.sheet>h3{padding:14px 18px;font-size:1.12rem;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline}
+.sheet .scroll{overflow-x:auto}
+.sheet table{width:100%;border-collapse:collapse;min-width:720px;font-size:.92rem}
+.sheet td,.sheet th{padding:8px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+.sheet th{font-size:.72rem;letter-spacing:.08em;color:var(--muted);font-weight:700;background:var(--soft)}
+.sheet tr.grp td{background:var(--paper);font-weight:800;font-size:.84rem}
+.sheet tr.grp td span{font-family:var(--f-num);font-weight:700;float:right;color:var(--muted)}
+.sheet tr.off td:not(:first-child){opacity:.4}
+.sheet td.r{text-align:right;font-family:var(--f-num);font-variant-numeric:tabular-nums;white-space:nowrap}
+.sheet input[type=number]{width:62px;font:inherit;font-family:var(--f-num);padding:4px 6px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink)}
+.sheet select{font:inherit;font-size:.85rem;padding:4px 6px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink);max-width:250px}
+.sheet input[type=checkbox]{width:18px;height:18px;accent-color:var(--brand)}
+.sheet .lbl small{display:block;color:var(--muted);font-size:.78rem;line-height:1.5}
+.fine{font-size:.82rem;color:var(--muted)}
+
+/* prep */
+.prep{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.check label{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.check input{width:18px;height:18px;margin-top:5px;accent-color:var(--brand);flex:none}
+.check small{display:block;color:var(--muted);font-size:.82rem}
+.contact{display:grid;gap:8px}
+.contact div{display:flex;justify-content:space-between;gap:10px;align-items:center;border-bottom:1px solid var(--line);padding:8px 0;flex-wrap:wrap}
+.contact .num{user-select:all;font-size:1rem}
+.contact button{font:inherit;font-size:.8rem;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:6px;padding:3px 8px;cursor:pointer}
+
+/* intro film */
+.intro{margin-top:16px;border-radius:18px;overflow:hidden;background:#05090c;position:relative}
+.intro video{display:block;width:100%;aspect-ratio:16/9;background:#05090c;object-fit:cover}
+.intro .bar{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;padding:10px 16px;background:#0b1217;color:#cfd8dc;font-size:.86rem}
+.intro .bar b{color:#fff}
+/* hikes */
+.hikes{display:grid;gap:10px}
+.hike{border:1.5px solid var(--pine);border-radius:12px;padding:14px 16px;display:grid;gap:8px;background:var(--card)}
+.hike-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.hike-h h4{font-size:1.08rem;margin:0;letter-spacing:-.02em}
+.hike-h .k{font-size:.74rem;letter-spacing:.12em;color:var(--pine);font-weight:800}
+.lv{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;font-weight:700;color:var(--muted)}
+.lv i{width:9px;height:9px;border-radius:50%;background:var(--line);display:inline-block}
+.lv i.on{background:var(--pine)} .lv.l3 i.on{background:var(--sand)}
+.stats{display:flex;flex-wrap:wrap;gap:6px}
+.stats span{background:var(--pine-soft);color:var(--ink);border-radius:999px;padding:2px 11px;font-size:.88rem;font-family:var(--f-num);font-weight:600}
+.hike p{margin:0;font-size:.97rem}
+.hike .say{border-left:3px solid var(--gold);padding:2px 0 2px 12px;color:var(--ink);font-size:.95rem}
+.hike .say b{color:var(--gold);font-size:.78rem;letter-spacing:.06em;display:block}
+details.tips{border:1px solid var(--line);border-radius:12px;background:var(--soft)}
+details.tips summary{cursor:pointer;list-style:none;padding:12px 16px;font-weight:800;display:flex;justify-content:space-between;gap:10px;align-items:center}
+details.tips summary::-webkit-details-marker{display:none}
+details.tips summary .n{font-family:var(--f-num);font-size:.8rem;color:var(--muted);font-weight:700}
+details.tips summary::after{content:"펼치기";font-size:.78rem;color:var(--sky);font-weight:700}
+details.tips[open] summary::after{content:"접기"}
+details.tips ol{margin:0;padding:0 16px 14px 36px;display:grid;gap:8px}
+details.tips li{padding-left:2px}
+.trails{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow-x:auto}
+.trails table{width:100%;border-collapse:collapse;min-width:620px;font-size:.93rem}
+.trails th,.trails td{text-align:left;padding:9px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+.trails th{font-size:.74rem;letter-spacing:.1em;color:var(--muted);font-weight:700;background:var(--soft)}
+.trails td.d{font-family:var(--f-num);color:var(--muted);white-space:nowrap}
+.trails td.n{font-weight:700}
+.trails tbody tr{cursor:pointer} .trails tbody tr:hover td{background:var(--soft)}
+.trail-sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}
+.trail-sum div{background:var(--pine-soft);border-radius:10px;padding:10px 14px}
+.trail-sum b{display:block;font-family:var(--f-num);font-size:1.5rem;font-weight:800;color:var(--pine);line-height:1.2}
+.trail-sum span{font-size:.84rem;color:var(--muted)}
+/* tips tab */
+.tipgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:14px;align-items:start}
+.tipcat{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.tipcat>h3{font-size:1.08rem;padding:14px 16px 4px}
+.tipcat>p{margin:0;padding:0 16px 10px;color:var(--muted);font-size:.88rem}
+.tipcat details{border-top:1px solid var(--line)}
+.tipcat summary{cursor:pointer;padding:11px 16px;font-weight:700;list-style:none;display:grid;grid-template-columns:1fr auto;gap:8px}
+.tipcat summary::-webkit-details-marker{display:none}
+.tipcat summary::after{content:"＋";font-family:var(--f-num);color:var(--sky)}
+.tipcat details[open] summary::after{content:"－"}
+.tipcat details[open] summary{color:var(--sky)}
+.tipcat details p{margin:0;padding:0 16px 14px;font-size:.96rem}
+.must{display:inline-block;font-size:.68rem;font-weight:800;color:var(--sand);border:1px solid var(--sand);border-radius:999px;padding:0 6px;margin-left:6px;vertical-align:2px}
+footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);font-size:.8rem;color:var(--muted)}
+footer ol{padding-left:18px;columns:2;column-gap:28px;margin:10px 0 0}
+footer details.credits summary{cursor:pointer;font-weight:700;color:var(--sky);list-style:none;display:inline-block;padding:4px 0}
+footer details.credits summary::-webkit-details-marker{display:none}
+footer details.credits summary::before{content:"＋ ";font-family:var(--f-num)}
+footer details.credits[open] summary::before{content:"－ "}
+@media (max-width:760px){
+  .day-body{grid-template-columns:1fr;padding:16px}
+  .day-hero{aspect-ratio:16/10}
+  .cover{min-height:300px}
+  .cover .in{padding:20px}
+  .barrow{grid-template-columns:84px minmax(0,1fr);}
+  .barrow .num{grid-column:2}
+  footer ol{columns:1}
+  .tl div{grid-template-columns:78px minmax(0,1fr)}
+  /* cost sheet: rows become stacked cards so dropdowns get the full width */
+  .ctrls .flight{flex-basis:100%}
+  .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:-16px;padding-inline:16px}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:none;padding:8px 13px;font-size:.9rem}
+  .sheet .scroll{overflow-x:visible}
+  .sheet table{min-width:0;display:block}
+  .sheet thead{display:none}
+  .sheet tbody{display:block}
+  .sheet tr.grp{display:block}
+  .sheet tr.grp td{display:block}
+  .sheet tr[data-id]{display:grid;grid-template-columns:30px minmax(0,1fr) auto;grid-template-areas:"c l l" ". s s" ". u q";gap:6px 8px;padding:10px 12px;border-bottom:1px solid var(--line);align-items:center}
+  .sheet tr[data-id] td{display:block;padding:0;border:0}
+  .sheet tr[data-id] td:nth-child(1){grid-area:c}
+  .sheet tr[data-id] td:nth-child(2){grid-area:l}
+  .sheet tr[data-id] td:nth-child(3){grid-area:s}
+  .sheet tr[data-id] td:nth-child(3):empty{display:none}
+  .sheet tr[data-id] td:nth-child(4){grid-area:u;text-align:left;color:var(--muted)}
+  .sheet tr[data-id] td:nth-child(5){display:none}
+  .sheet tr[data-id] td:nth-child(6){grid-area:q;font-weight:700}
+  .sheet tr[data-id] td:nth-child(4)::before{content:"단가 "}
+  .sheet select{width:100%;max-width:100%}
+  .sheet tr[data-id]{grid-template-areas:"c l l" ". s s" ". u q" ". n q"}
+  .sheet tr[data-id] td:nth-child(5){display:flex;grid-area:n;align-items:center;gap:6px}
+  .sheet tr[data-id] td:nth-child(5)::before{content:"수량";font-size:.82rem;color:var(--muted)}
+  .sheet tr[data-id] td:nth-child(6){align-self:end}
+}
+@media (prefers-reduced-motion:no-preference){ .day{transition:border-color .2s} .stack span{transition:width .3s} }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><div class="mark">JJ</div><div><b>JJ TOUR</b><small>California · Nevada · Utah · Arizona · 프라이빗 맞춤 여행</small></div></div>
+    <span class="code">JJ-2027-0530 · 6명 · 13일</span>
+  </header>
+  <section class="intro" aria-label="인트로 영상">
+    <video id="film" controls playsinline preload="metadata" poster="intro_poster.jpg"><source src="intro.mp4" type="video/mp4"></video>
+    <div class="bar"><span><b>인트로 · 미국 서부는 어떤 곳일까?</b> 소리를 켜고 보세요 (1분 30초)</span><span>2027.5.30 – 6.11 · 3대 10명의 서부 여행</span></div>
+  </section>
+  <nav class="tabs" role="tablist" aria-label="보기 선택">
+    <button class="tab" role="tab" id="tab-A" aria-selected="true" data-view="A"><span class="dot" style="background:var(--pine)"></span>부모님 일정</button>
+    <button class="tab" role="tab" id="tab-B" aria-selected="false" data-view="B"><span class="dot" style="background:var(--sand)"></span>동생네 가족 일정</button>
+    <button class="tab" role="tab" id="tab-C" aria-selected="false" data-view="C"><span class="dot" style="background:var(--gold)"></span>여행 경비</button>
+    <button class="tab" role="tab" id="tab-D" aria-selected="false" data-view="D"><span class="dot" style="background:var(--sky)"></span>준비물 · 연락처</button>
+    <button class="tab" role="tab" id="tab-E" aria-selected="false" data-view="E"><span class="dot" style="background:var(--kid)"></span>현지인 꿀팁</button>
+  </nav>
+  <main id="view"></main>
+  <footer>
+    <p><b>JJ Tour 안내</b> · 항공 요금은 2026년 10월 17–18일 대한항공·아시아나·에어프레미아 공식 사이트, 호텔 요금은 2026년 10월 18일 Google 호텔(해당 날짜, 세금 별도 1박 요금), 렌터카는 KAYAK, 캐년 투어는 MaxTour 공식 페이지에서 확인한 값입니다. ‘추정’ 표시는 예약 전에 다시 확인해야 합니다. 2026년부터 미국 국립공원 11곳(요세미티·자이언·브라이스·그랜드캐년 포함)은 16세 이상 비거주 외국인에게 공원별 1인 $100를 추가로 받습니다.</p>
+    <p><b>사진 출처</b> · 브라이스와 요세미티 역사 사진은 미국 국립공원관리청(NPS) 공식 사진(퍼블릭 도메인), 나머지는 Wikimedia Commons의 자유 라이선스 사진입니다. 지도는 미국 인구조사국 주 경계(us-atlas)를 쓴 개략도로 실제 도로와 다를 수 있습니다.</p>
+    <details class="credits"><summary>사진 출처 전체 보기</summary><ol id="credits"></ol></details>
+  </footer>
+</div>
+
+<script>window.__CREDITS=/*__CREDITS__*/;</script>
+<script>
+/*__GEO__*/
+/* ---------- photos ---------- */
+const CREDITS = window.__CREDITS || {};
+const PHOTO = {
+  vegas_strip:"라스베이거스 스트립", bellagio:"벨라지오 분수쇼", zion:"자이언 캐니언, 버진강", emerald_pools:"에메랄드 풀스",
+  bryce:"브라이스 캐니언 ‘토르의 망치’", horseshoe:"호스슈 벤드", antelope:"로어 앤텔로프 캐니언", monument:"모뉴먼트 밸리",
+  grand_canyon:"그랜드캐년 사우스림", route66:"윌리엄스 · 루트 66", disneyland:"잠자는 숲속의 공주 성", dca:"디즈니 캘리포니아 어드벤처",
+  santa_monica:"산타모니카 부두", griffith:"그리피스 천문대", getty:"게티 센터", sd_zoo:"샌디에이고 동물원 판다", balboa:"발보아 파크",
+  lajolla:"라호야 코브 바다사자", laguna:"라구나 비치 하이슬러 공원", sjc_mission:"미션 산후안 카피스트라노", sb_mission:"올드 미션 산타바바라",
+  solvang:"솔뱅 풍차", sb_wharf:"산타바바라 해변", tunnel_view:"요세미티 터널 뷰", glacier_point:"글레이셔 포인트와 하프 돔",
+  yosemite_falls:"요세미티 폭포", mariposa:"마리포사 그로브 그리즐리 자이언트", tioga:"테나야 호수 (티오가 로드)", emerald_bay:"타호 호수 에메랄드 베이",
+  sand_harbor:"샌드 하버", napa:"나파 밸리 포도밭", golden_gate:"금문교", alcatraz:"알카트라즈 섬", cable_car:"샌프란시스코 케이블카",
+  stanford:"스탠퍼드 메모리얼 교회", chm:"컴퓨터 역사 박물관", apple_park:"애플 파크", googleplex:"구글플렉스",
+  exploratorium:"익스플로라토리움", cal_academy:"캘리포니아 과학 아카데미", yose_history:"루스벨트와 존 뮤어, 1903"
+};
+const img = (key, cls="") => `<img src="img/${key}.jpg" alt="${PHOTO[key]||key}" loading="lazy" ${cls} onerror="this.remove()">`;
+function fig(key){ return `<figure class="ph">${img(key)}<figcaption>${PHOTO[key]||key}</figcaption></figure>`; }
+const NPS = p => `https://www.nps.gov/${p}/learn/photosmultimedia/videos.htm`;
+
+/* ---------- maps ---------- */
+const MK = 60, MC = Math.cos(37*Math.PI/180);
+const proj = (lat,lon) => [(lon+125)*MC*MK, (42.5-lat)*MK];
+const PL = {
+  korea:[34.6,-126.8,"인천에서"], korea2:[37.6,-126.8,"인천으로"],
+  lax:[33.942,-118.408,"LA 공항"], irvine:[33.684,-117.826,"얼바인 (집)"], sna:[33.676,-117.868,"존웨인 공항"],
+  sjc:[33.501,-117.663,"산후안 카피스트라노"], laguna:[33.542,-117.785,"라구나 비치"], la:[34.05,-118.25,""],
+  ventura:[34.28,-119.29,""], sb:[34.42,-119.698,"산타바바라"], solvang:[34.596,-120.137,"솔뱅"], malibu:[34.03,-118.78,"말리부"],
+  grapevine:[34.94,-118.92,""], bakers:[35.37,-119.02,"베이커스필드"], fresno:[36.74,-119.79,"프레즈노"], oakhurst:[37.33,-119.65,""],
+  mariposa:[37.51,-119.6,"마리포사 그로브"], yv:[37.745,-119.59,"요세미티 밸리"], tuol:[37.87,-119.36,"투올럼니"],
+  leevining:[37.957,-119.12,"모노 호수"], bridgeport:[38.256,-119.23,""], markle:[38.69,-119.78,""],
+  tahoe:[38.94,-119.98,"사우스 레이크 타호"], emerald:[38.954,-120.11,"에메랄드 베이"], placer:[38.73,-120.80,""],
+  sac:[38.58,-121.49,"새크라멘토"], napa:[38.30,-122.29,"나파"], sonoma:[38.29,-122.46,""], ggb:[37.8199,-122.4783,"금문교"],
+  sf:[37.7749,-122.4194,"샌프란시스코 숙소"], sfo:[37.62,-122.38,"SFO 공항"], stanford:[37.4275,-122.1697,"스탠퍼드"],
+  mv:[37.414,-122.077,"마운틴뷰"], alcatraz:[37.827,-122.423,"알카트라즈"], fwharf:[37.808,-122.417,"피셔맨스 워프"],
+  lv:[36.114,-115.173,"라스베이거스"], las:[36.084,-115.153,"LAS 공항"], stgeorge:[37.10,-113.58,""], zion:[37.2,-112.99,"자이언"],
+  mtcarmel:[37.23,-112.68,""], bryce:[37.628,-112.168,"브라이스 캐니언"], kanab:[37.05,-112.53,""], page:[36.914,-111.456,"페이지 (숙소)"],
+  horseshoe:[36.879,-111.51,"호스슈 벤드"], antelope:[36.86,-111.37,"앤텔로프"], kayenta:[36.73,-110.25,""],
+  monument:[36.98,-110.11,"모뉴먼트 밸리"], cameron:[35.88,-111.41,""], desertview:[36.04,-111.83,"데저트 뷰"],
+  gc:[36.057,-112.14,"그랜드캐년"], williams:[35.25,-112.19,"윌리엄스"], kingman:[35.19,-114.05,""], hoover:[36.016,-114.737,""],
+  hollywood:[34.10,-118.33,"할리우드"], griffith:[34.118,-118.300,"그리피스 천문대"], smonica:[34.008,-118.499,"산타모니카"],
+  sdzoo:[32.735,-117.149,"샌디에이고 동물원"], lajolla:[32.85,-117.27,"라호야"], oceanside:[33.2,-117.38,""], anaheim:[33.81,-117.919,"디즈니랜드"]
+};
+const CTX = [[34.05,-118.25,"LA"],[37.7749,-122.4194,"SF"],[36.114,-115.173,"라스베이거스"],[32.72,-117.16,"샌디에이고"],[33.45,-112.07,"피닉스"],[38.58,-121.49,"새크라멘토"],[40.76,-111.89,"솔트레이크시티"]];
+const STATES_KO = [["캘리포니아",35.4,-119.4],["네바다",39.4,-116.9],["유타",39.4,-111.6],["애리조나",34.3,-111.5],["오리건",42.25,-120.5],["뉴멕시코",34.4,-108.9]];
+const D = (m,p,team)=>({m,p,team});
+const MAPS = {
+ A:{
+  "5/30":{legs:[D("fly",["korea","lax"]),D("drive",["lax","irvine"])],stops:["lax","irvine"],note:"LA 공항 → 얼바인 차로 약 50분"},
+  "5/31":{legs:[D("drive",["irvine","sjc","laguna","irvine"])],stops:["irvine","sjc","laguna"],note:"집에서 남쪽으로 25분, 왕복 약 1시간"},
+  "6/1":{legs:[D("drive",["irvine","la","ventura","sb"])],stops:["irvine","sb"],note:"약 200km · 2시간 30분 (LA를 지나 북쪽 해안으로)"},
+  "6/2":{legs:[D("drive",["sb","solvang"]),D("drive",["solvang","sb","ventura","malibu","irvine"])],stops:["sb","solvang","malibu","irvine"],note:"솔뱅 왕복 + 해안도로 귀가, 약 3시간 45분"},
+  "6/3":{legs:[],stops:["irvine"],note:"이동 없음 · 얼바인"},
+  "6/4":{legs:[D("fly",["las","sna"],"B")],stops:["irvine"],note:"동생네가 라스베이거스에서 비행기로 도착"},
+  "6/5":{legs:[D("drive",["irvine","la","grapevine","bakers","fresno","oakhurst","mariposa","yv"])],stops:["irvine","mariposa","yv"],note:"약 500km · 6시간, 캘리포니아 중부를 남에서 북으로"},
+  "6/6":{legs:[D("drive",["yv","tuol","leevining","bridgeport","markle","tahoe"])],stops:["yv","tuol","leevining","tahoe"],note:"약 300km · 4–5시간, 시에라 산맥을 동쪽으로 넘어 북쪽으로"},
+  "6/7":{legs:[D("drive",["tahoe","emerald","placer","sac","napa"])],stops:["tahoe","emerald","napa"],note:"약 250km · 3시간, 산에서 내려와 서쪽으로"},
+  "6/8":{legs:[D("drive",["napa","sonoma","ggb","sf"])],stops:["napa","ggb","sf"],note:"약 90km · 1시간 30분, 금문교를 건너 시내로"},
+  "6/9":{legs:[D("fly",["sna","sfo"],"B"),D("drive",["sf","fwharf"])],stops:["sfo","sf","fwharf"],note:"동생네가 남쪽에서 비행기로 합류"},
+  "6/10":{legs:[D("drive",["sf","stanford","mv","sf"])],stops:["sf","stanford","mv"],note:"시내에서 남쪽으로 약 45분"},
+  "6/11":{legs:[D("boat",["fwharf","alcatraz"]),D("drive",["sf","sfo"]),D("fly",["sfo","korea2"])],stops:["alcatraz","fwharf","sfo"],note:"배 15분 · 밤 비행기로 인천까지 13시간"}
+ },
+ B:{
+  "5/30":{legs:[D("fly",["korea","lax"]),D("fly",["lax","las"])],stops:["lax","lv"],note:"LA 공항에서 갈아타고 동쪽으로 1시간 10분 비행"},
+  "5/31":{legs:[D("drive",["lv","stgeorge","zion","mtcarmel","bryce","kanab","page"])],stops:["lv","zion","bryce","page"],note:"약 640km · 차 6–7시간, 네바다 → 유타 → 애리조나"},
+  "6/1":{legs:[D("drive",["page","horseshoe","page","antelope","kayenta","monument","kayenta","page"])],stops:["horseshoe","antelope","monument","page"],note:"약 400km · 나바호 자치구역 안"},
+  "6/2":{legs:[D("drive",["page","cameron","desertview","gc","williams","kingman","hoover","lv"])],stops:["desertview","gc","williams","lv"],note:"약 700km · 차 7–8시간, 그랜드캐년을 돌아 베가스로"},
+  "6/3":{legs:[],stops:["lv"],note:"이동 없음 · 라스베이거스"},
+  "6/4":{legs:[D("fly",["las","sna"]),D("drive",["sna","irvine"])],stops:["lv","irvine"],note:"남서쪽으로 1시간 10분 비행"},
+  "6/5":{legs:[D("drive",["irvine","griffith","hollywood","smonica","irvine"])],stops:["irvine","griffith","hollywood","smonica"],note:"왕복 약 2–3시간 (LA는 북쪽으로 1시간)"},
+  "6/6":{legs:[D("drive",["irvine","oceanside","sdzoo","lajolla","oceanside","irvine"])],stops:["irvine","sdzoo","lajolla"],note:"남쪽으로 1시간 20분, 왕복 약 3시간"},
+  "6/7":{legs:[D("drive",["irvine","anaheim"])],stops:["irvine","anaheim"],note:"북쪽으로 25분"},
+  "6/8":{legs:[D("drive",["irvine","anaheim"])],stops:["irvine","anaheim"],note:"북쪽으로 25분"},
+  "6/9":{legs:[D("fly",["sna","sfo"]),D("drive",["sfo","sf","fwharf"])],stops:["sna","sfo","sf","fwharf"],note:"북쪽으로 1시간 40분 비행"},
+  "6/10":{legs:[D("drive",["sf","stanford","sf"])],stops:["sf","stanford"],note:"시내에서 남쪽으로 약 45분"},
+  "6/11":{legs:[D("boat",["fwharf","alcatraz"]),D("drive",["sf","sfo"]),D("fly",["sfo","korea2"])],stops:["alcatraz","fwharf","sfo"],note:"배 15분 · 밤 비행기로 인천까지 13시간"}
+ }
+};
+const isOff = k => k==="korea"||k==="korea2";
+function bboxOf(keys){
+  let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;
+  keys.filter(k=>!isOff(k)).forEach(k=>{const [x,y]=proj(PL[k][0],PL[k][1]); x0=Math.min(x0,x);y0=Math.min(y0,y);x1=Math.max(x1,x);y1=Math.max(y1,y);});
+  return [x0,y0,x1,y1];
+}
+function fitBox(b, minW){
+  let [x0,y0,x1,y1]=b, w=x1-x0, h=y1-y0;
+  const pad = Math.max(w*0.18, h*0.22) + 4;
+  x0-=pad*1.2; x1+=pad*1.9; y0-=pad; y1+=pad; w=x1-x0; h=y1-y0;   // more room on the right for labels
+  if(w<minW){ const c=(x0+x1)/2 + minW*0.08; x0=c-minW/2; x1=c+minW/2; w=minW; }
+  const R=1.45;
+  if(w/h<R){ const nw=h*R, c=(x0+x1)/2; x0=c-nw/2; w=nw; } else { const nh=w/R, c=(y0+y1)/2; y0=c-nh/2; h=nh; }
+  return [x0,y0,w,h];
+}
+function scaleBar(vx,vy,vw,vh,fs){
+  const kmU = MK/111; const opts=[5,10,25,50,100,200]; let km=opts[0];
+  for(const o of opts){ if(o*kmU < vw*0.22) km=o; }
+  const L=km*kmU, x=vx+vw*0.04, y=vy+vh-vh*0.06;
+  return `<g class="sbar"><line x1="${x}" y1="${y}" x2="${x+L}" y2="${y}"/><line x1="${x}" y1="${y-fs*0.35}" x2="${x}" y2="${y+fs*0.35}"/><line x1="${x+L}" y1="${y-fs*0.35}" x2="${x+L}" y2="${y+fs*0.35}"/><text x="${x+L/2}" y="${y-fs*0.55}" font-size="${fs*0.85}" text-anchor="middle">${km} km</text></g>`;
+}
+function legPath(leg, vx, vw){
+  const pts = leg.p.map(k=>{
+    if(isOff(k)){ const other = leg.p.find(o=>!isOff(o)); const [,y]=proj(PL[other][0],PL[other][1]); return [vx-4, y + (k==="korea"? -vw*0.08 : vw*0.06)]; }
+    return proj(PL[k][0],PL[k][1]);
+  });
+  if(leg.m==="fly" || leg.m==="boat"){
+    const [a,b]=[pts[0],pts[pts.length-1]]; const mx=(a[0]+b[0])/2, my=(a[1]+b[1])/2;
+    const dx=b[0]-a[0], dy=b[1]-a[1]; const bend = leg.m==="fly"?0.22:0.12;
+    return `M${a[0].toFixed(2)},${a[1].toFixed(2)} Q${(mx-dy*bend).toFixed(2)},${(my+dx*bend).toFixed(2)} ${b[0].toFixed(2)},${b[1].toFixed(2)}`;
+  }
+  return "M"+pts.map(p=>p[0].toFixed(2)+","+p[1].toFixed(2)).join(" L");
+}
+/* place labels without overlap: try right, left, above, below, diagonals */
+function placeLabels(items, fs, box, extra=[]){
+  const placed = items.map(it=>({x0:it.x-it.r,y0:it.y-it.r,x1:it.x+it.r,y1:it.y+it.r})).concat(extra);
+  const hit = (a,b)=>!(a.x1<b.x0||a.x0>b.x1||a.y1<b.y0||a.y0>b.y1);
+  return items.map(it=>{
+    if(!it.text) return null;
+    const w = [...it.text].length*fs*0.92, h=fs*1.05, g=it.r+fs*0.3;
+    const cands = [[g,0,"start"],[-g,0,"end"],[0,-g-h*0.35,"middle"],[0,g+h*0.75,"middle"],[g,-h*0.8,"start"],[g,h*0.8,"start"],[-g,-h*0.8,"end"],[-g,h*0.8,"end"]];
+    for(const [dx,dy,anc] of cands){
+      const bx = anc==="start"? it.x+dx : anc==="end"? it.x+dx-w : it.x-w/2;
+      const by = it.y+dy-h*0.5;
+      const r = {x0:bx,y0:by,x1:bx+w,y1:by+h};
+      const inside = !box || (r.x0>=box[0] && r.x1<=box[0]+box[2] && r.y0>=box[1] && r.y1<=box[1]+box[3]);
+      if(inside && !placed.some(p=>hit(p,r))){ placed.push(r); return {x:anc==="middle"?it.x:it.x+dx, y:it.y+dy+fs*0.34, anc}; }
+    }
+    return {x:it.x+g, y:it.y+fs*0.34, anc:"start"};
+  });
+}
+function mapSVG({legs, stops, team, overview, minW=34}){
+  const keys = [...legs.flatMap(l=>l.p), ...stops];
+  const [vx,vy,vw,vh] = overview ? [0,30,830,580] : fitBox(bboxOf(keys), minW);
+  const fs = overview ? vw/46 : vw/30;
+  const col = t => `var(--${(t||team)==="A"?"pine":(t||team)==="B"?"sand":"sky"})`;
+  let s = `<svg viewBox="${vx.toFixed(2)} ${vy.toFixed(2)} ${vw.toFixed(2)} ${vh.toFixed(2)}" role="img" aria-label="이동 경로 지도" preserveAspectRatio="xMidYMid meet">`;
+  s += `<rect class="sea" x="${vx-200}" y="${vy-200}" width="${vw+400}" height="${vh+400}"/>`;
+  s += Object.values(GEO).map(d=>`<path class="land" d="${d}"/>`).join("");
+  const [tx,ty]=proj(39.09,-120.04); s += `<ellipse class="lake" cx="${tx}" cy="${ty}" rx="5" ry="9.5"/>`;
+  const [px,py]=proj(36.0,-123.6); s += `<text class="water" x="${px}" y="${py}" font-size="${(overview?fs:fs*0.8)*1.1}" text-anchor="middle">태평양</text>`;
+  if(overview || vw>150) STATES_KO.forEach(([n,la,lo])=>{const [x,y]=proj(la,lo); s+=`<text class="state" x="${x}" y="${y}" font-size="${fs*1.15}" text-anchor="middle">${n}</text>`;});
+  const stopXY = stops.filter(k=>!isOff(k)).map(k=>proj(PL[k][0],PL[k][1]));
+  CTX.forEach(([la,lo,n])=>{ const [x,y]=proj(la,lo); if(x<vx||x>vx+vw||y<vy||y>vy+vh) return;
+    if(stopXY.some(([a,b])=>Math.hypot(a-x,b-y)<fs*3)) return;
+    s+=`<circle class="ctx" cx="${x}" cy="${y}" r="${fs*0.18}"/><text class="ctxt" x="${x+fs*0.4}" y="${y+fs*0.35}" font-size="${fs*0.82}">${n}</text>`; });
+  legs.forEach(l=>{ s += `<path class="leg ${l.m}" d="${legPath(l,vx,vw)}" style="stroke:${col(l.team)}" vector-effect="non-scaling-stroke"/>`; });
+  legs.filter(l=>l.p.some(isOff)).forEach(l=>{ const k=l.p.find(isOff); const other=l.p.find(o=>!isOff(o)); const [,y]=proj(PL[other][0],PL[other][1]);
+    const yy = y + (k==="korea"? -vw*0.08 : vw*0.06); s+=`<text class="lbl strong" x="${vx+fs*0.5}" y="${yy-fs*0.6}" font-size="${fs}" style="stroke-width:${(fs*0.28).toFixed(3)}">${PL[k][2]} ✈</text>`; });
+  const r = overview?fs*0.32:fs*0.62;
+  const items = stops.filter(k=>!isOff(k)).map(k=>{const [x,y]=proj(PL[k][0],PL[k][1]); return {k,x,y,r,text:PL[k][2]};});
+  const iw=vw*0.24, ih=iw*580/830, ix=vx+vw-iw-vw*0.02, iy=vy+vw*0.02;
+  const labs = placeLabels(items, fs*(overview?0.8:0.92), [vx,vy,vw,vh], overview?[]:[{x0:ix-fs*0.3,y0:iy-fs*0.3,x1:ix+iw,y1:iy+ih+fs*0.3}]);
+  items.forEach((it,i)=>{
+    s+=`<circle class="stop" cx="${it.x}" cy="${it.y}" r="${r}" style="fill:${overview?"var(--ink)":col()}"/>`;
+    if(!overview) s+=`<text class="no" x="${it.x}" y="${it.y+fs*0.27}" font-size="${fs*0.75}" text-anchor="middle">${i+1}</text>`;
+  });
+  items.forEach((it,i)=>{ const L=labs[i]; if(L) s+=`<text class="lbl" x="${L.x}" y="${L.y}" text-anchor="${L.anc}" font-size="${fs*(overview?0.8:0.92)}" style="stroke-width:${(fs*0.28).toFixed(3)}">${it.text}</text>`; });
+  if(!overview){
+    s += scaleBar(vx,vy,vw,vh,fs);
+    s += `<svg class="inset" x="${ix}" y="${iy}" width="${iw}" height="${ih}" viewBox="0 30 830 580"><rect class="sea" x="0" y="30" width="830" height="580"/>`
+      + Object.values(GEO).map(d=>`<path class="land" d="${d}"/>`).join("")
+      + [["CA",36.6,-119.8],["NV",39.2,-116.9],["UT",39.2,-111.6],["AZ",34.4,-111.6]].map(([n,la,lo])=>{const [x,y]=proj(la,lo);return `<text class="state" x="${x}" y="${y}" font-size="44" text-anchor="middle">${n}</text>`;}).join("")
+      + `<rect class="here" x="${vx}" y="${vy}" width="${Math.max(vw,14)}" height="${Math.max(vh,10)}"/><rect class="iframe" x="0" y="30" width="830" height="580"/></svg>`;
+  }
+  return s + `</svg>`;
+}
+function dayMap(team, d, kids){
+  const m = MAPS[team][d]; if(!m) return "";
+  return `<figure class="map">${mapSVG({legs:m.legs, stops:m.stops, team})}<figcaption><b>${kids?"오늘의 지도":"오늘 이동"}</b> ${m.note}<span class="legend-mini"><i class="l-drive"></i>차 <i class="l-fly"></i>비행기${m.legs.some(l=>l.m==="boat")?' <i class="l-boat"></i>배':""}</span></figcaption></figure>`;
+}
+function overviewMap(team){
+  const pick = t => Object.values(MAPS[t]).flatMap(m=>m.legs.map(l=>({...l, team:l.team||t})));
+  const legs = team ? pick(team).filter(l=>l.team===team) : [...pick("A"),...pick("B")];
+  const stopsA = ["irvine","sb","yv","tahoe","napa","sf"], stopsB=["lv","zion","bryce","page","monument","gc","irvine","sdzoo","sf"];
+  const stops = [...new Set(team==="A"?stopsA:team==="B"?stopsB:[...stopsA,...stopsB])];
+  return `<figure class="map overview">${mapSVG({legs, stops, team: team||"A", overview:true})}
+   <figcaption><b>지도로 보는 13일</b> 굵은 선은 차, 점선은 비행기입니다. 얼바인은 LA 남쪽 해안, 라스베이거스는 동쪽 사막, 요세미티·타호·샌프란시스코는 북쪽입니다.</figcaption></figure>`;
+}
+
+/* ---------- route board ---------- */
+const DATES = ["5/30","5/31","6/1","6/2","6/3","6/4","6/5","6/6","6/7","6/8","6/9","6/10","6/11"];
+const DOW   = ["일","월","화","수","목","금","토","일","월","화","수","목","금"];
+const ROUTE = {
+  A:["도착·얼바인","라구나·미션","산타바바라","솔뱅","졸업식","졸업식","요세미티","타호","나파","SF","SF","스탠퍼드","SF 출국"],
+  B:["베가스","자이언·브라이스","앤텔로프·모뉴먼트","그랜드캐년","베가스 공연","얼바인","LA","샌디에이고","디즈니","디즈니","SF 합류","스탠퍼드","SF 출국"]
+};
+function board(){
+  const head = DATES.map((d,i)=>`<th>${d}<br>${DOW[i]}</th>`).join("");
+  const row = k=>ROUTE[k].map((t,i)=>`<td class="${i>=10?"J":k}${(i===5||i===10)?" meet":""}">${t}</td>`).join("");
+  return `<div class="board"><table aria-label="날짜별 위치"><tr><th class="who"></th>${head}</tr><tr><th class="who">부모님</th>${row("A")}</tr><tr><th class="who">동생네</th>${row("B")}</tr></table></div>
+  <div class="legend"><span><i style="background:var(--pine-soft);outline:1px solid var(--pine)"></i>부모님 팀</span><span><i style="background:var(--sand-soft);outline:1px solid var(--sand)"></i>동생네 팀</span><span><i style="background:var(--sky-soft);outline:1px solid var(--sky)"></i>함께하는 날</span><span><i style="outline:2px dashed var(--sky)"></i>만나는 날 (6/4 얼바인, 6/9 샌프란시스코)</span></div>`;
+}
+
+/*__DAYS__*/
+
+/* ---------- logistics per day ---------- */
+const STAY = {
+ A:{"5/30":"얼바인 아들 집","5/31":"얼바인 아들 집","6/1":"산타바바라 호텔","6/2":"얼바인 아들 집","6/3":"얼바인 아들 집","6/4":"얼바인 아들 집 (새벽 출발)","6/5":"요세미티 남쪽 입구 숙소","6/6":"사우스 레이크 타호","6/7":"나파","6/8":"샌프란시스코","6/9":"샌프란시스코","6/10":"샌프란시스코","6/11":"기내 (6/13 새벽 인천)"},
+ B:{"5/30":"라스베이거스 스트립","5/31":"페이지 호텔 (투어 포함)","6/1":"페이지 호텔 (투어 포함)","6/2":"라스베이거스 스트립","6/3":"라스베이거스 스트립","6/4":"얼바인 오빠네 집","6/5":"얼바인 오빠네 집","6/6":"얼바인 오빠네 집","6/7":"얼바인 오빠네 집","6/8":"얼바인 오빠네 집","6/9":"샌프란시스코","6/10":"샌프란시스코","6/11":"기내 (6/13 새벽 인천)"}
+};
+/*__MEALS__*/
+const MOVE = {
+ A:{"5/30":"항공 + 승용차","5/31":"승용차 25분","6/1":"승용차 2시간 30분","6/2":"승용차 약 4시간 30분","6/3":"근거리","6/4":"근거리","6/5":"승용차 약 6시간 (밤길)","6/6":"승용차 4–5시간","6/7":"승용차 약 3시간","6/8":"승용차 약 2시간 30분 (뮤어 우즈 경유)","6/9":"도보 · 케이블카","6/10":"승용차 45분","6/11":"배 + 항공"},
+ B:{"5/30":"국제선 + 국내선","5/31":"투어 밴 6–7시간","6/1":"투어 밴 + 4x4","6/2":"투어 밴 7–8시간","6/3":"도보·택시","6/4":"국내선 + 렌터카","6/5":"렌터카 왕복 2–3시간","6/6":"렌터카 왕복 3시간","6/7":"렌터카 25분","6/8":"렌터카 25분","6/9":"국내선 + 렌터카","6/10":"렌터카 45분","6/11":"배 + 항공"}
+};
+function infoList(team,d){
+  const rows = [["숙박",STAY[team][d]],["이동",MOVE[team][d]]];
+  return `<div class="info">${rows.map(([a,b])=>`<div><b>${a}</b><span>${b}</span></div>`).join("")}</div>`;
+}
+const credit = k => CREDITS[k] ? `<span class="photo-credit">© ${(CREDITS[k].artist||"").slice(0,40)} · ${CREDITS[k].license||""}</span>` : "";
+function hero(x, kidsTitle){
+  const k = x.ph[0];
+  return `<div class="day-hero ${k?"":"noimg"}">${k?img(k)+credit(k):""}<div class="cap"><span class="dn">${x.n} · ${x.d.replace("/","월 ")}일 ${x.w}요일</span><h2 ${kidsTitle?'class="k"':""}>${kidsTitle||x.t}</h2><span class="where">${x.where}</span></div></div>`;
+}
+function histBlock(x, label){
+  if(!x.hist) return "";
+  return `<details class="hist"><summary>${label} · ${x.hist[0]}</summary><p>${x.hist[1]}</p>${x.histImg?`<figure>${img(x.histImg[0])}<figcaption>${x.histImg[1]}</figcaption></figure>`:""}</details>`;
+}
+const linksBlock = x => x.links?`<div class="links">${x.links.map(([l,u])=>`<a href="${u}" target="_blank" rel="noopener">${l} ↗</a>`).join("")}</div>`:"";
+
+/* ---------- views ---------- */
+function glance(team, days){
+  return `<div class="glance"><table><thead><tr><th>DAY</th><th>날짜</th><th>일정</th><th>식사 포인트</th><th>숙박</th></tr></thead><tbody>
+   ${days.map((x,i)=>`<tr data-go="${team}-${i}"><td class="d">${String(i+1).padStart(2,"0")}</td><td class="d">${x.d} ${x.w}</td><td class="t">${x.t}${x.joint?'<span class="jt">함께</span>':""}</td><td class="m">${highlightMeal(team,x.d)}</td><td>${STAY[team][x.d]}</td></tr>`).join("")}
+  </tbody></table></div>`;
+}
+function renderA(){
+  return `<section class="cover">${img("glacier_point")}<div class="in"><span class="eyebrow">Private itinerary · 부모님</span><h1>캘리포니아 해안과 시에라 산맥</h1><p>2027년 5월 30일 – 6월 11일 · 손주 졸업식과 요세미티·타호·나파·샌프란시스코</p><div class="chips"><span class="chip">13일</span><span class="chip">아시아나 직항</span><span class="chip">아들 가족과 자동차 여행</span><span class="chip">트래킹 13코스</span><span class="chip">미스트 트레일 · 뮤어 우즈</span></div></div></section>
+  <section class="sec"><div class="letter"><h3>아버지, 어머니께</h3><p>10년 전 그랜드캐년과 LA 시내는 이미 보셨으니, 이번에는 바닷가 마을과 250년 된 미션, 그리고 처음 보시는 요세미티·타호·나파 위주로 꾸렸습니다.</p><p>저희 가족도 주말마다 산에 다니다 보니, 이번 여행은 <b>거의 매일 아침 한 코스씩 함께 걷는</b> 일정으로 짰습니다. 관광버스로 전망대만 찍고 가는 여행이 아니라, 이곳 사람들이 실제로 걷는 길을 제가 앞장서 모시겠습니다. 가장 힘든 날은 요세미티 미스트 트레일 하루뿐이고, 그날도 중간에서 돌아올 수 있습니다.</p><p>날짜마다 <b>‘아들의 현지 팁’</b>을 접어 두었습니다. 궁금하실 때 눌러 보시고, 미국에서 지내며 알게 된 생활 요령은 맨 위 <b>‘현지인 꿀팁’</b> 탭에 모았습니다.</p><p class="sign">얼바인에서, 아들 드림</p></div></section>
+  <section class="sec"><div class="sec-h"><h2>일정 한눈에</h2><p>줄을 누르면 그날 일정으로 이동합니다</p></div>${glance("A",A_DAYS)}</section>
+  <section class="sec"><div class="sec-h"><h2>이동 경로</h2><p>초록 선이 부모님 경로입니다</p></div>${overviewMap("A")}<div style="margin-top:12px">${board()}</div></section>
+  <section class="sec"><div class="sec-h"><h2>함께 걷는 길</h2><p>줄을 누르면 그날 일정으로 이동합니다</p></div>${trails()}</section>
+  <section class="sec parents"><div class="sec-h"><h2>날짜별 일정</h2></div><div class="days">${A_DAYS.map(dayA).join("")}</div></section>`;
+}
+const LV = ["","쉬움","보통","도전"];
+const lvDots = n => `<span class="lv l${n}">${[1,2,3].map(i=>`<i class="${i<=n?"on":""}"></i>`).join("")}${LV[n]}</span>`;
+function trails(){
+  const rows = A_DAYS.flatMap((x,i)=>(x.hike||[]).map(h=>({x,i,h})));
+  const km = rows.reduce((a,r)=>a+parseFloat(r.h.km.replace(/[^0-9.]/g,"")),0);
+  const up = rows.reduce((a,r)=>a+(parseFloat((r.h.up.match(/[0-9.]+/)||[0])[0])||0),0);
+  return `<div class="trail-sum"><div><b>${rows.length}</b><span>코스</span></div><div><b>약 ${Math.round(km)}km</b><span>13일 동안 걷는 거리</span></div><div><b>약 ${Math.round(up/10)*10}m</b><span>오르막 합계 · 남산 약 ${(up/262).toFixed(1)}번</span></div><div><b>1곳</b><span>‘도전’ 코스 (중간 회귀 가능)</span></div></div>
+  <div class="trails"><table><thead><tr><th>날짜</th><th>코스</th><th>거리</th><th>오르막</th><th>시간</th><th>난이도</th></tr></thead><tbody>
+  ${rows.map(({x,i,h})=>`<tr data-go="A-${i}"><td class="d">${x.d} ${x.w}</td><td class="n">${h.n}</td><td>${h.km}</td><td>${h.up}</td><td>${h.h}</td><td>${lvDots(h.lv)}</td></tr>`).join("")}
+  </tbody></table></div>`;
+}
+function hikeBlock(x){
+  if(!x.hike) return "";
+  return `<div class="hikes">${x.hike.map(h=>`<div class="hike"><div class="hike-h"><div><span class="k">오늘의 트래킹</span><h4>${h.n}</h4></div>${lvDots(h.lv)}</div>
+    <div class="stats"><span>${h.km}</span><span>${h.up}</span><span>${h.h}</span></div>
+    <p><b>볼거리</b> · ${h.w}</p><p class="say"><b>아들의 한마디</b>${h.t}</p></div>`).join("")}</div>`;
+}
+function tipsBlock(x, who){
+  if(!x.tips) return "";
+  return `<details class="tips"><summary><span>${who}의 현지 팁 <span class="n">${x.tips.length}개</span></span></summary><ol>${x.tips.map(t=>`<li>${t}</li>`).join("")}</ol></details>`;
+}
+function dayA(x,i){
+  const team = x.joint ? "var(--sky)" : "var(--pine)";
+  return `<article class="day" id="A-${i}" style="--team:${team}">${hero(x)}
+   <div class="day-body"><div class="main">
+     <p class="lead">${x.lead}</p>
+     <ul class="todo">${x.todo.map(([a,b])=>`<li><b>${a}</b><span>${b}</span></li>`).join("")}</ul>
+     ${hikeBlock(x)}
+     ${x.note?`<div class="box note">${x.note}</div>`:""}
+     ${tipsBlock(x,"아들")}
+     ${histBlock(x,"알고 보면 더 재미있는 이야기")}
+     ${linksBlock(x)}
+   </div><div class="aside">${dayMap("A",x.d)}${mealsBlock("A",x.d)}${infoList("A",x.d)}</div></div></article>`;
+}
+let bMode = "adult";
+try{ bMode = localStorage.getItem("jj_bmode") || "adult"; }catch(e){}
+function renderB(){
+  const kids = bMode==="kids";
+  return `<section class="cover">${img(kids?"antelope":"grand_canyon")}<div class="in"><span class="eyebrow">Private itinerary · 동생네 가족</span><h1>${kids?"사막과 협곡, 그리고 꿈의 나라 탐험":"그랜드 서클과 남부 캘리포니아"}</h1><p>2027년 5월 30일 – 6월 11일 · 어른 2 · 어린이 2 (10살, 7살) · 첫 미국 여행</p><div class="chips"><span class="chip">라스베이거스 3박</span><span class="chip">MaxTour 3일 캐년 투어</span><span class="chip">디즈니랜드 2일</span><span class="chip">샌프란시스코 합류</span></div></div></section>
+  <section class="sec"><div class="sub" role="group" aria-label="보기 방식"><button type="button" data-mode="adult" aria-pressed="${!kids}">어른용 상세 일정</button><button type="button" data-mode="kids" aria-pressed="${kids}">아이들용 모험 일정</button></div></section>
+  ${kids ? `<section class="sec"><div class="letter" style="border:2px solid var(--kid)"><h3 class="k" style="font-family:var(--f-kid);font-weight:400">탐험대 대원들에게</h3><p style="font-family:var(--f-kid);font-size:1.08rem">13일 동안 사막, 협곡, 놀이공원, 바다를 모험해요. 매일 미션을 해내면 체크하세요! 지도에서 오늘 어디로 가는지, 차를 얼마나 타는지도 확인해요.</p></div></section>`
+   : `<section class="sec"><div class="letter"><h3>첫 미국 여행, 오빠가 알려줄게</h3><p>미국 입국에는 ESTA(전자여행허가, 1인 $40.62)가 필요합니다. 출발 72시간 전까지 신청하세요. 캐년 투어는 밴으로 하루 5–8시간 이동하니 아이들 간식과 볼거리를 넉넉히 준비하세요. 국립공원 3곳은 성인 1인당 비거주 연간 패스($250)를 미리 사 두는 게 가장 저렴합니다. 날짜마다 접어 둔 ‘오빠의 현지 팁’과 맨 위 ‘현지인 꿀팁’ 탭에 미국 생활 요령을 모아 뒀어.</p><p class="sign">얼바인에서, 오빠가</p></div></section>
+     <section class="sec"><div class="sec-h"><h2>일정 한눈에</h2><p>줄을 누르면 그날 일정으로 이동합니다</p></div>${glance("B",B_DAYS)}</section>
+     <section class="sec"><div class="sec-h"><h2>MaxTour 3일 투어 포함 사항</h2><p>공식 투어 페이지 기준</p></div><div class="strip"><div><b>포함</b>호텔 2박, 아침 2·점심 2·저녁 1, 국립공원 기본 입장료, 생수·간식</div><div><b>불포함</b>앤텔로프 $87, 모뉴먼트 4x4 $75, 비거주 공원 요금, 가이드 팁</div><div><b>조건</b>만 5세 이상, 어린이도 같은 요금, 최대 14명 밴</div><div><b>짐</b>캐리어 불가, 배낭·더플백 1개</div></div></section>`}
+  <section class="sec"><div class="sec-h"><h2>이동 경로</h2><p>주황 선이 동생네 가족 경로입니다</p></div>${overviewMap("B")}${kids?"":`<div style="margin-top:12px">${board()}</div>`}</section>
+  <section class="sec ${kids?"kids":""}"><div class="sec-h"><h2 ${kids?'class="k" style="font-family:var(--f-kid);font-weight:400"':""}>${kids?"매일매일 모험":"날짜별 일정"}</h2></div><div class="days">${B_DAYS.map(kids?dayKid:dayB).join("")}</div></section>`;
+}
+function dayB(x,i){
+  const team = x.joint ? "var(--sky)" : "var(--sand)";
+  return `<article class="day" id="B-${i}" style="--team:${team}">${hero(x)}
+   <div class="day-body"><div class="main">
+     <p class="lead">${x.lead}</p>
+     <div class="tl">${x.tl.map(([a,b])=>`<div><time>${a}</time><span>${b}</span></div>`).join("")}</div>
+     ${x.ph.length>1?`<div class="extra-ph">${x.ph.slice(1).map(fig).join("")}</div>`:""}
+     ${x.book?`<div class="box book"><h4>예약 · 요금</h4><ul>${x.book.map(s=>`<li>${s}</li>`).join("")}</ul></div>`:""}
+     ${histBlock(x,"배경 이야기")}
+   </div><div class="aside">${dayMap("B",x.d)}${mealsBlock("B",x.d)}${infoList("B",x.d)}
+     ${tipsBlock(x,"오빠")}
+     ${linksBlock(x)}</div></div></article>`;
+}
+function missions(){ try{ return JSON.parse(localStorage.getItem("jj_missions")||"{}"); }catch(e){ return {}; } }
+function dayKid(x,i){
+  const k = x.kid, done = missions();
+  const h = x.drive||0, pct = Math.min(100, Math.round(h/7*100));
+  const driveTxt = h===0 ? "오늘은 차를 거의 안 타요!" : h<1 ? "차 타는 시간: 아주 조금" : `차 타는 시간: 약 ${h}시간`;
+  return `<article class="day" id="B-${i}" style="--team:var(--kid)">${hero(x,k.t)}
+   <div class="day-body"><div class="main">
+     <div class="drive"><span>${driveTxt}</span><div class="bar" aria-hidden="true"><span style="width:${pct}%"></span></div></div>
+     <div class="facts">${k.fact.map(([a,b])=>`<div class="fact"><b>${a}</b>${b}</div>`).join("")}</div>
+     <div class="mission"><div class="k" style="font-family:var(--f-kid);font-size:1.1rem;color:var(--kid)">오늘의 미션</div>${k.m.map((m,j)=>{const id=`m-${x.d.replace("/","-")}-${j}`;return `<label for="${id}"><input type="checkbox" id="${id}" data-mid="${id}" ${done[id]?"checked":""}>${m}</label>`;}).join("")}</div>
+   </div><div class="aside">${dayMap("B",x.d,true)}${mealsBlock("B",x.d,true)}</div></div></article>`;
+}
+
+/* ---------- cost model ---------- */
+const FLIGHTS = {
+  oz:{label:"아시아나 스탠다드 (최저가 직항)",adult:1883300},
+  ke:{label:"대한항공 스탠다드 (승급 불가)",adult:1924900},
+  kef:{label:"대한항공 가는 편 스탠다드 + 오는 편 플렉스 (귀국 승급 가능)",adult:2794900},
+  kef2:{label:"대한항공 왕복 플렉스 (양방향 승급 가능)",adult:3469900},
+  yp:{label:"에어프레미아 편도 2장",adult:2150000}
+};
+const HOTELS = {
+  lv1:{lbl:"라스베이거스 스트립 · 5/30(일)",n:1,tax:.1338,fee:50,t:{eco:[94,"Excalibur"],std:[146,"Planet Hollywood"],lux:[206,"Caesars Palace"]}},
+  lv2:{lbl:"라스베이거스 스트립 · 6/2–6/3(평일)",n:2,tax:.1338,fee:50,t:{eco:[62,"Flamingo"],std:[94,"Paris Las Vegas"],lux:[230,"Bellagio"]}},
+  sb:{lbl:"산타바바라 · 6/1",n:1,tax:.12,fee:0,t:{eco:[145,"Lemon Tree Inn"],std:[199,"Franciscan Inn & Suites"],lux:[334,"Hilton Santa Barbara Beachfront"]}},
+  yo:{lbl:"요세미티 남쪽 입구 · 6/5",n:1,tax:.10,fee:0,t:{eco:[98,"Yosemite Bug Rustic Resort"],std:[172,"Quality Inn Yosemite Gateway"],lux:[329,"Tenaya Lodge at Yosemite"]}},
+  th:{lbl:"사우스 레이크 타호 · 6/6",n:1,tax:.12,fee:0,t:{eco:[103,"Golden Nugget Lake Tahoe"],std:[149,"The Jeffrey Hotel"],lux:[215,"Black Bear Lodge"]}},
+  np:{lbl:"나파 · 6/7",n:1,tax:.14,fee:0,t:{eco:[109,"Bel Abri Napa Valley Inn"],std:[197,"Hotel Napa Valley"],lux:[392,"Archer Hotel Napa"]}},
+  sfA:{lbl:"샌프란시스코 · 6/8–6/10",n:3,tax:.1625,fee:0,t:{eco:[126,"Best Western Plus Bayside"],std:[194,"Suites at Fisherman's Wharf"],lux:[339,"Hotel Zephyr"]}},
+  sfB:{lbl:"샌프란시스코 · 6/9–6/10",n:2,tax:.1625,fee:0,t:{eco:[126,"Best Western Plus Bayside"],std:[194,"Suites at Fisherman's Wharf"],lux:[339,"Hotel Zephyr"]}}
+};
+const CARS = {
+  sna:{lbl:"렌터카 SNA 6/4–6/9 (5일)",t:{eco:[240,"소형차 (기아 리오급)"],std:[463,"중형 SUV (닛산 로그급)"],lux:[600,"7인승 미니밴 (추정)"]}},
+  sfo:{lbl:"렌터카 SFO 6/9–6/11 (2일)",t:{eco:[213,"소형차 (닛산 버사급)"],std:[305,"소형 SUV"],lux:[359,"7인승 (닛산 패스파인더급)"]}}
+};
+const MEALS = {eco:35, std:55, lux:90};   // 1인 1일, 세금·팁 포함 (추정)
+const CATS = {air:["항공","var(--brand)"], stay:["숙박","var(--pine)"], tour:["투어·입장","var(--sand)"], move:["현지 교통","var(--sky)"], food:["식비","var(--gold)"], etc:["준비·기타","var(--muted)"]};
+const it = (o)=>Object.assign({on:true, cur:"USD", tag:"추정"}, o);
+function freshState(){ return {
+  fx:1400, flight:"oz", style:"std", reserve:5,
+  items:{
+   A:[
+    it({id:"a_air",cat:"air",lbl:"국제선 (성인)",kind:"flight",who:"adult",q:2,tag:"확인"}),
+    it({id:"a_esta",cat:"etc",lbl:"ESTA 전자여행허가",u:40.62,q:2,tag:"확인"}),
+    it({id:"a_ins",cat:"etc",lbl:"여행자 보험 (2주, 60대 이상)",u:70000,cur:"KRW",q:2}),
+    it({id:"a_sb",cat:"stay",lbl:"",kind:"hotel",h:"sb",q:1}),
+    it({id:"a_yo",cat:"stay",lbl:"",kind:"hotel",h:"yo",q:1}),
+    it({id:"a_th",cat:"stay",lbl:"",kind:"hotel",h:"th",q:1}),
+    it({id:"a_np",cat:"stay",lbl:"",kind:"hotel",h:"np",q:1}),
+    it({id:"a_sf",cat:"stay",lbl:"",kind:"hotel",h:"sfA",q:1}),
+    it({id:"a_sfpark",cat:"move",lbl:"샌프란시스코 호텔 주차 (3박, 부모님 분담 1/2)",u:30,q:3}),
+    it({id:"a_gas",cat:"move",lbl:"로드트립 주유비 분담 (약 1,900km, 1/3)",u:110,q:1,note:"갤런당 $5.2, 연비 25mpg 가정"}),
+    it({id:"a_npf",cat:"tour",lbl:"요세미티 비거주 외국인 요금",u:100,q:2,tag:"확인",note:"16세 이상 1인당, 7일 유효"}),
+    it({id:"a_sjc",cat:"tour",lbl:"미션 산후안 카피스트라노 (경로)",u:15,q:2}),
+    it({id:"a_sbm",cat:"tour",lbl:"올드 미션 산타바바라 (65세 이상)",u:15,q:2,tag:"확인"}),
+    it({id:"a_wine",cat:"tour",lbl:"와이너리 시음 2곳",u:60,q:4}),
+    it({id:"a_alc",cat:"tour",lbl:"알카트라즈 낮 투어 (경로)",u:45,q:2,note:"성인 $47.95, 62세 이상 할인"}),
+    it({id:"a_train",cat:"tour",lbl:"나파 와인 트레인 (선택)",u:250,q:2,on:false}),
+    it({id:"a_cat",cat:"tour",lbl:"카탈리나섬 당일 배 (5/31 대안)",u:87,q:2,on:false}),
+    it({id:"a_food",cat:"food",lbl:"외식 (1인 1일)",kind:"meal",q:2,days:8,note:"집밥 5일 제외 8일"}),
+    it({id:"a_home",cat:"food",lbl:"집밥 장보기 분담",u:20,q:5,note:"5일"})
+   ],
+   B:[
+    it({id:"b_aira",cat:"air",lbl:"국제선 (성인)",kind:"flight",who:"adult",q:2,tag:"확인"}),
+    it({id:"b_airc",cat:"air",lbl:"국제선 (어린이, 성인의 75%)",kind:"flight",who:"child",q:2}),
+    it({id:"b_lax",cat:"air",lbl:"국내선 LAX → 라스베이거스",u:220731,cur:"KRW",q:4,tag:"확인"}),
+    it({id:"b_las",cat:"air",lbl:"국내선 라스베이거스 → SNA",u:246102,cur:"KRW",q:4,tag:"확인"}),
+    it({id:"b_sna",cat:"air",lbl:"국내선 SNA → 샌프란시스코",u:224748,cur:"KRW",q:4,tag:"확인"}),
+    it({id:"b_bag",cat:"air",lbl:"국내선 위탁 수하물",u:40,q:6,note:"편당 1개 $35–45, 3구간 × 2개"}),
+    it({id:"b_esta",cat:"etc",lbl:"ESTA 전자여행허가",u:40.62,q:4,tag:"확인"}),
+    it({id:"b_ins",cat:"etc",lbl:"여행자 보험 (2주)",u:35000,cur:"KRW",q:4}),
+    it({id:"b_sim",cat:"etc",lbl:"eSIM 데이터 (2주)",u:25,q:2}),
+    it({id:"b_lv1",cat:"stay",lbl:"",kind:"hotel",h:"lv1",q:1}),
+    it({id:"b_lv2",cat:"stay",lbl:"",kind:"hotel",h:"lv2",q:1}),
+    it({id:"b_sf",cat:"stay",lbl:"",kind:"hotel",h:"sfB",q:1}),
+    it({id:"b_tour",cat:"tour",lbl:"MaxTour 3일 투어 (4인 1실)",u:499,q:4,tag:"확인",note:"어린이 동일 요금, 호텔 2박·식사 5끼 포함"}),
+    it({id:"b_ant",cat:"tour",lbl:"로어 앤텔로프 캐니언",u:87,q:4,tag:"확인"}),
+    it({id:"b_mv",cat:"tour",lbl:"모뉴먼트 밸리 4x4",u:75,q:4,tag:"확인"}),
+    it({id:"b_pass",cat:"tour",lbl:"비거주 연간 패스 (성인)",u:250,q:2,tag:"확인",note:"공원 3곳 개별 $300보다 저렴"}),
+    it({id:"b_tip",cat:"tour",lbl:"가이드 팁 (1인 1일)",u:10,q:12,note:"4명 × 3일"}),
+    it({id:"b_show",cat:"tour",lbl:"공연",kind:"show",q:4}),
+    it({id:"b_dla",cat:"tour",lbl:"디즈니 2일 파크호퍼 (성인·10살)",u:435,q:3,note:"2026년 일반가 기준, 날짜별 변동"}),
+    it({id:"b_dlc",cat:"tour",lbl:"디즈니 2일 파크호퍼 (7살)",u:415,q:1}),
+    it({id:"b_ll",cat:"tour",lbl:"라이트닝 레인 멀티패스 (1인 1일)",u:32,q:8,on:false}),
+    it({id:"b_zooa",cat:"tour",lbl:"샌디에이고 동물원 (성인·12세 이상)",u:78,q:2}),
+    it({id:"b_zooc",cat:"tour",lbl:"샌디에이고 동물원 (3–11세)",u:68,q:2}),
+    it({id:"b_alca",cat:"tour",lbl:"알카트라즈 낮 투어 (성인)",u:47.95,q:2,tag:"확인"}),
+    it({id:"b_alcc",cat:"tour",lbl:"알카트라즈 낮 투어 (5–11세)",u:29.15,q:2}),
+    it({id:"b_sci",cat:"tour",lbl:"익스플로라토리움 (선택)",u:35,q:4,on:false}),
+    it({id:"b_car1",cat:"move",lbl:"",kind:"car",c:"sna",q:1}),
+    it({id:"b_car2",cat:"move",lbl:"",kind:"car",c:"sfo",q:1}),
+    it({id:"b_cdw",cat:"move",lbl:"렌터카 자차 보험 (1일)",u:30,q:7,note:"KAYAK 요금에 미포함, 외국인 권장"}),
+    it({id:"b_seat",cat:"move",lbl:"부스터 시트 2개 현지 구매",u:35,q:2,note:"대여는 1일 $13–15 × 7일"}),
+    it({id:"b_gas",cat:"move",lbl:"주유비",u:120,q:1,note:"약 900km"}),
+    it({id:"b_park",cat:"move",lbl:"주차비 (디즈니 2일·LA·SF 호텔)",u:210,q:1,note:"디즈니 $40×2, SF 호텔 $50×2, 기타"}),
+    it({id:"b_uber",cat:"move",lbl:"공항·베가스 택시/우버",u:35,q:4}),
+    it({id:"b_food",cat:"food",lbl:"외식 (1인 1일)",kind:"meal",q:4,days:7,note:"얼바인 집밥 4일, 투어 포함식 제외 · 어린이는 60%로 계산"}),
+    it({id:"b_home",cat:"food",lbl:"얼바인 장보기",u:30,q:5})
+   ]
+  }
+};}
+const SHOWS = {mys:[95,"미스테르 (세금·수수료 포함 추정)"], o:[155,"O · 만 5세 이상 (세금·수수료 포함 추정)"], none:[0,"보지 않음"]};
+let S = freshState();
+S.items.B.find(i=>i.id==="b_show").show="mys";
+let BASE = JSON.parse(JSON.stringify(S));
+try{ const saved = JSON.parse(localStorage.getItem("jj_cost")||"null"); if(saved && saved.items) S = saved; }catch(e){}
+
+function tierOf(s){ return s.tier || S.style; }
+function unit(i, st){
+  if(i.kind==="flight"){ const a=FLIGHTS[st.flight].adult; return i.who==="child"? Math.round(a*0.75/100)*100 : a; }
+  if(i.kind==="hotel"){ const h=HOTELS[i.h]; const [p]=h.t[i.tier||st.style]; return (p+h.fee)*(1+h.tax)*h.n; }
+  if(i.kind==="car"){ return CARS[i.c].t[i.tier||st.style][0]; }
+  if(i.kind==="meal"){ const m = MEALS[i.tier||st.style]; return i.id==="b_food" ? m*0.8*i.days : m*i.days; }   // 2 adults + 2 kids at 60% → avg 0.8
+  if(i.kind==="show"){ return SHOWS[i.show||"mys"][0]; }
+  return i.u;
+}
+function cur(i){ return (i.kind==="flight" || i.cur==="KRW") ? "KRW" : "USD"; }
+function krwOf(i, st){ const u=unit(i,st); return cur(i)==="KRW" ? u*i.q : u*i.q*st.fx; }
+function totals(team, st){
+  const by = {}; Object.keys(CATS).forEach(c=>by[c]=0);
+  st.items[team].filter(i=>i.on).forEach(i=>by[i.cat]+=krwOf(i,st));
+  const sub = Object.values(by).reduce((a,b)=>a+b,0);
+  const res = sub*st.reserve/100; by.etc += res;
+  return {by, total: sub+res, reserve: res};
+}
+const W = n => "₩" + Math.round(n).toLocaleString("ko-KR");
+const U = n => "$" + (Math.round(n*100)/100).toLocaleString("en-US",{maximumFractionDigits:2});
+const MAN = n => (n/10000).toLocaleString("ko-KR",{maximumFractionDigits:0}) + "만원";
+function delta(now, base){
+  const d = now-base; if(Math.abs(d)<500) return `<span class="delta same">표준안과 같음</span>`;
+  return `<span class="delta ${d>0?"up":"down"}">표준안 대비 ${d>0?"+":"−"}${MAN(Math.abs(d))}</span>`;
+}
+function label(i){
+  if(i.kind==="hotel"){ const h=HOTELS[i.h]; return `${h.lbl} <small>${h.n}박 · 1박 요금 + 세금 ${Math.round(h.tax*1000)/10}%${h.fee?` + 리조트피 $${h.fee}`:""} · 방 수</small>`; }
+  if(i.kind==="car") return `${CARS[i.c].lbl} <small>KAYAK 총액, 2026-10-18 조회</small>`;
+  if(i.kind==="meal") return `${i.lbl} <small>${i.note||""} · ${i.days}일 · 절약 $35 / 표준 $55 / 여유 $90</small>`;
+  if(i.kind==="flight") return `${i.lbl} <small>${FLIGHTS[S.flight].label}</small>`;
+  return `${i.lbl}${i.note?`<small>${i.note}</small>`:""}`;
+}
+function choice(i){
+  const opt = (map, sel) => Object.entries(map).map(([k,[p,n]])=>`<option value="${k}" ${k===sel?"selected":""}>${{eco:"절약",std:"표준",lux:"여유"}[k]||""} · ${n} · $${p}</option>`).join("");
+  if(i.kind==="hotel") return `<select data-tier="${i.id}" aria-label="숙소 등급">${opt(HOTELS[i.h].t, i.tier||S.style)}</select>`;
+  if(i.kind==="car") return `<select data-tier="${i.id}" aria-label="차종">${opt(CARS[i.c].t, i.tier||S.style)}</select>`;
+  if(i.kind==="meal") return `<select data-tier="${i.id}" aria-label="식비 수준">${["eco","std","lux"].map(k=>`<option value="${k}" ${k===(i.tier||S.style)?"selected":""}>${{eco:"절약 $35",std:"표준 $55",lux:"여유 $90"}[k]}</option>`).join("")}</select>`;
+  if(i.kind==="show") return `<select data-show="${i.id}" aria-label="공연 선택">${Object.entries(SHOWS).map(([k,[p,n]])=>`<option value="${k}" ${k===(i.show||"mys")?"selected":""}>${n}${p?` · $${p}`:""}</option>`).join("")}</select>`;
+  return "";
+}
+function sheet(team, title){
+  const groups = Object.keys(CATS).filter(c=>S.items[team].some(i=>i.cat===c));
+  return `<section class="sheet"><h3><span>${title}</span><span class="num" id="sum-${team}"></span></h3><div class="scroll"><table>
+   <thead><tr><th>포함</th><th>항목</th><th>선택</th><th style="text-align:right">단가</th><th>수량</th><th style="text-align:right">금액</th></tr></thead><tbody>
+   ${groups.map(c=>`<tr class="grp"><td colspan="6">${CATS[c][0]}<span id="g-${team}-${c}"></span></td></tr>`+S.items[team].filter(i=>i.cat===c).map(i=>`
+     <tr data-team="${team}" data-id="${i.id}" class="${i.on?"":"off"}">
+      <td><input type="checkbox" id="on-${i.id}" ${i.on?"checked":""} aria-label="포함"></td>
+      <td class="lbl"><label for="on-${i.id}">${label(i)}</label><span class="tag ${i.tag==="추정"?"warn":""}">${i.tag}</span></td>
+      <td>${choice(i)}</td>
+      <td class="r" id="u-${i.id}"></td>
+      <td><input type="number" id="q-${i.id}" min="0" max="99" value="${i.q}" aria-label="수량"></td>
+      <td class="r" id="s-${i.id}"></td></tr>`).join("")).join("")}
+   </tbody></table></div></section>`;
+}
+function renderC(){
+  return `<section class="sec"><div class="sec-h"><h2>여행 경비 시뮬레이션</h2><p>2026년 10월 실제 조회가 기준, 항목을 바꾸면 바로 계산됩니다</p></div>
+   <div class="cost-top" id="kpis"></div></section>
+   <section class="sec panel">
+    <div class="ctrls">
+     <label>여행 스타일 (숙소·차·식비 일괄)<span class="seg" role="group">${["eco","std","lux"].map(k=>`<button type="button" data-style="${k}" aria-pressed="${S.style===k}">${{eco:"절약형",std:"표준형",lux:"여유형"}[k]}</button>`).join("")}</span></label>
+     <label for="flight" class="flight">국제선 항공권 (인천→LA / 샌프란시스코→인천)<select id="flight">${Object.entries(FLIGHTS).map(([k,v])=>`<option value="${k}" ${k===S.flight?"selected":""}>${v.label} · ${W(v.adult)}</option>`).join("")}</select></label>
+     <label for="fx">환율 (원/달러)<input type="number" id="fx" min="900" max="2500" step="10" value="${S.fx}"></label>
+     <label for="reserve">예비비 (%)<input type="number" id="reserve" min="0" max="30" step="1" value="${S.reserve}"></label>
+     <button class="btn" type="button" id="reset">표준안으로 되돌리기</button>
+    </div>
+    <div class="bars" id="bars"></div>
+    <div class="catleg">${Object.values(CATS).map(([n,c])=>`<span><i style="background:${c}"></i>${n}</span>`).join("")}</div>
+   </section>
+   <section class="sec">${sheet("A","부모님 팀 · 성인 2")}</section>
+   <section class="sec">${sheet("B","동생네 가족 · 성인 2, 어린이 2")}</section>
+   <p class="fine">호텔은 Google 호텔에서 해당 날짜로 조회한 1박 요금(세금 별도)에 지역 숙박세와 라스베이거스 리조트피를 더했습니다. 어린이 국제선은 성인의 75%로 추정했고, 디즈니 요금은 2026년 일반가 기준입니다. 부모님 팀은 아들 가족과 함께 쓰는 비용 중 부모님 몫(방 1개)만 넣었습니다. 바꾼 내용은 이 기기에만 저장됩니다.</p>`;
+}
+function updateC(){
+  ["A","B"].forEach(t=>{
+    S.items[t].forEach(i=>{
+      const ue=document.getElementById("u-"+i.id); if(!ue) return;
+      const u=unit(i,S); ue.textContent = cur(i)==="KRW" ? W(u) : U(u);
+      document.getElementById("s-"+i.id).textContent = i.on ? W(krwOf(i,S)) : "—";
+      ue.closest("tr").classList.toggle("off", !i.on);
+    });
+    const T=totals(t,S); document.getElementById("sum-"+t).textContent = W(T.total);
+    Object.keys(CATS).forEach(c=>{ const g=document.getElementById(`g-${t}-${c}`); if(g) g.textContent = W(S.items[t].filter(i=>i.on&&i.cat===c).reduce((a,i)=>a+krwOf(i,S),0)); });
+  });
+  const A=totals("A",S), B=totals("B",S), bA=totals("A",BASE), bB=totals("B",BASE);
+  document.getElementById("kpis").innerHTML = `
+   <div class="kpi A"><span class="eyebrow">부모님 팀</span><span class="v">${W(A.total)}</span><span class="s">1인 ${MAN(A.total/2)} · 약 ${U(Math.round(A.total/S.fx))}</span>${delta(A.total,bA.total)}</div>
+   <div class="kpi B"><span class="eyebrow">동생네 가족</span><span class="v">${W(B.total)}</span><span class="s">1인 평균 ${MAN(B.total/4)} · 약 ${U(Math.round(B.total/S.fx))}</span>${delta(B.total,bB.total)}</div>
+   <div class="kpi T"><span class="eyebrow">전체 6명</span><span class="v">${W(A.total+B.total)}</span><span class="s">예비비 ${S.reserve}% 포함 · ${MAN(A.reserve+B.reserve)}</span>${delta(A.total+B.total,bA.total+bB.total)}</div>`;
+  const max = Math.max(A.total,B.total);
+  const bar = (n,T)=>`<div class="barrow"><b>${n}</b><div class="stack" aria-hidden="true" style="width:${Math.max(8,T.total/max*100)}%">${Object.entries(CATS).map(([c,[nm,col]])=>`<span title="${nm} ${W(T.by[c])}" style="width:${T.by[c]/T.total*100}%;background:${col}"></span>`).join("")}</div><span class="num">${MAN(T.total)}</span></div>`;
+  document.getElementById("bars").innerHTML = bar("부모님",A)+bar("동생네",B)
+    + `<p class="fine" style="margin:0">가장 큰 비용: 부모님 ${topCat(A)}, 동생네 ${topCat(B)}</p>`;
+  try{ localStorage.setItem("jj_cost", JSON.stringify(S)); }catch(e){}
+}
+function topCat(T){ const [c,v] = Object.entries(T.by).sort((a,b)=>b[1]-a[1])[0]; return `${CATS[c][0]} ${Math.round(v/T.total*100)}%`; }
+function bindC(el){
+  el.querySelectorAll("[data-style]").forEach(b=>b.addEventListener("click",()=>{ S.style=b.dataset.style; ["A","B"].forEach(t=>S.items[t].forEach(i=>delete i.tier)); show("C"); }));
+  el.querySelector("#flight").addEventListener("change",e=>{ S.flight=e.target.value; show("C"); });
+  el.querySelector("#fx").addEventListener("input",e=>{ const v=+e.target.value; if(v>0){S.fx=v; updateC();} });
+  el.querySelector("#reserve").addEventListener("input",e=>{ const v=+e.target.value; if(v>=0){S.reserve=v; updateC();} });
+  el.querySelector("#reset").addEventListener("click",()=>{ S=JSON.parse(JSON.stringify(BASE)); show("C"); });
+  el.querySelectorAll("tr[data-id]").forEach(tr=>{
+    const i = S.items[tr.dataset.team].find(x=>x.id===tr.dataset.id);
+    tr.querySelector("input[type=checkbox]").addEventListener("change",e=>{ i.on=e.target.checked; updateC(); });
+    tr.querySelector("input[type=number]").addEventListener("input",e=>{ i.q=Math.max(0,+e.target.value||0); updateC(); });
+    const sel = tr.querySelector("select[data-tier]"); if(sel) sel.addEventListener("change",e=>{ i.tier=e.target.value; updateC(); });
+    const sh = tr.querySelector("select[data-show]"); if(sh) sh.addEventListener("change",e=>{ i.show=e.target.value; updateC(); });
+  });
+  updateC();
+}
+
+/* ---------- preparation ---------- */
+const CHECK = [
+ ["여권 유효기간 6개월 이상 확인","6명 모두 · 출국일 기준"],
+ ["ESTA 신청 (1인 $40.62)","출발 72시간 전까지, 가능하면 한 달 전 · 공식 사이트 esta.cbp.dhs.gov만 이용"],
+ ["항공권 발권 (아시아나/대한항공)","소아 운임 확인 · 오픈조(LA 입국, SF 출국)"],
+ ["MaxTour 5/31 출발 가능 여부 확인 후 예약","예약 시 20% 보증금 · 7일 전까지 무료 취소"],
+ ["미국 국립공원 비거주 패스 구매 (동생네 성인 2)","$250 · 공원 입구 또는 온라인"],
+ ["알카트라즈 티켓 예매","판매 시작 즉시 매진되는 편 · 공식 판매처 City Cruises"],
+ ["디즈니랜드 티켓 + 파크 예약","티켓 구매 후 날짜별 파크 예약 필수"],
+ ["요세미티·타호·나파·SF 숙소 예약","무료 취소 요금으로 먼저 잡기"],
+ ["렌터카 예약 (SNA·SFO) + 부스터 시트","7살은 부스터 시트 법적 의무"],
+ ["국제운전면허증 (운전할 어른)","한국 면허증과 함께 지참"],
+ ["여행자 보험 가입","의료비 한도 충분히"],
+ ["티오가 로드 개통 여부 확인 (5월 말)","닫혀 있으면 6/6 우회로 이용"],
+ ["졸업식 일정·장소 확정","Jaei & Jia 졸업식 6/3–6/4"]
+];
+const CONTACTS = [
+ ["긴급 (경찰·구급·소방)","911"],
+ ["영사콜센터 (24시간)","+82-2-3210-0404"],
+ ["주 LA 총영사관","+1-213-385-9300"],
+ ["주 샌프란시스코 총영사관","+1-415-921-2251"]
+];
+function renderD(){
+  let done={}; try{ done=JSON.parse(localStorage.getItem("jj_check")||"{}"); }catch(e){}
+  return `<section class="sec"><div class="sec-h"><h2>여행 준비</h2><p>체크한 내용은 이 기기에만 저장됩니다</p></div>
+   <div class="prep"><div class="panel check">${CHECK.map(([a,b],i)=>`<label for="ck-${i}"><input type="checkbox" id="ck-${i}" data-ck="${i}" ${done[i]?"checked":""}><span>${a}<small>${b}</small></span></label>`).join("")}</div>
+   <div class="panel"><h3>긴급 연락처</h3><div class="contact">${CONTACTS.map(([a,b])=>`<div><span>${a}</span><span><span class="num">${b}</span> <button type="button" data-copy="${b}">복사</button></span></div>`).join("")}</div>
+   <p class="fine">여권 분실 시 가까운 총영사관에서 긴급 여권을 받을 수 있습니다. 6/4까지는 LA, 6/9부터는 샌프란시스코 총영사관이 가깝습니다.</p></div></div></section>`;
+}
+function bindD(el){
+  el.querySelectorAll("[data-ck]").forEach(c=>c.addEventListener("change",()=>{ let d={}; try{d=JSON.parse(localStorage.getItem("jj_check")||"{}");}catch(e){} d[c.dataset.ck]=c.checked; try{localStorage.setItem("jj_check",JSON.stringify(d));}catch(e){} }));
+  el.querySelectorAll("[data-copy]").forEach(b=>b.addEventListener("click",()=>{
+    const done=()=>{b.textContent="복사됨"; setTimeout(()=>b.textContent="복사",1500);};
+    if(navigator.clipboard) navigator.clipboard.writeText(b.dataset.copy).then(done).catch(()=>{ const r=document.createRange(); r.selectNodeContents(b.previousElementSibling); const s=getSelection(); s.removeAllRanges(); s.addRange(r); });
+  }));
+}
+
+/* ---------- local tips ---------- */
+/*__TIPS__*/
+function renderE(){
+  return `<section class="sec"><div class="letter"><h3>여행 책에는 없는 것들</h3><p>패키지 여행이라면 가이드가 알아서 해 주고, 자유여행이라면 부딪히며 배우는 것들입니다. 미국에 살면서 직접 겪고 알게 된 것만 골랐습니다. 한 번에 다 읽지 마시고, 궁금한 제목만 눌러 보세요. <span class="must">꼭</span> 표시는 모르면 돈이나 시간을 잃는 것들입니다.</p><p class="sign">얼바인에서, 아들 · 오빠</p></div></section>
+  <section class="sec"><div class="tipgrid">${TIPS.map(([h,sub,items])=>`<div class="tipcat"><h3>${h}</h3><p>${sub}</p>${items.map(([t,b,m])=>`<details><summary><span>${t}${m?'<span class="must">꼭</span>':""}</span></summary><p>${b}</p></details>`).join("")}</div>`).join("")}</div></section>`;
+}
+
+/* ---------- view switching ---------- */
+function show(v){
+  document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-selected", String(b.dataset.view===v)));
+  const el = document.getElementById("view");
+  el.innerHTML = v==="A"?renderA():v==="B"?renderB():v==="C"?renderC():v==="E"?renderE():renderD();
+  el.querySelectorAll("tr[data-go]").forEach(tr=>tr.addEventListener("click",()=>document.getElementById(tr.dataset.go)?.scrollIntoView({behavior:"smooth"})));
+  if(v==="B"){
+    el.querySelectorAll(".sub button").forEach(b=>b.addEventListener("click",()=>{ bMode=b.dataset.mode; try{localStorage.setItem("jj_bmode",bMode);}catch(e){} show("B"); }));
+    el.querySelectorAll("input[data-mid]").forEach(c=>c.addEventListener("change",()=>{ const m=missions(); m[c.dataset.mid]=c.checked; try{localStorage.setItem("jj_missions",JSON.stringify(m));}catch(e){} }));
+  }
+  if(v==="C") bindC(el);
+  if(v==="D") bindD(el);
+  try{ localStorage.setItem("jj_view", v); }catch(e){}
+}
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{ show(b.dataset.view); window.scrollTo({top:0}); }));
+document.getElementById("credits").innerHTML = Object.entries(CREDITS).map(([k,c])=>
+  `<li>${PHOTO[k]||k}: <a href="${c.page}" target="_blank" rel="noopener">${c.title.replace("File:","")}</a> · ${c.artist||"저작자 미상"} · ${c.license||""}</li>`).join("");
+let start = "A";
+const hash = (location.hash||"").slice(1);
+if(["A","B","C","D","E"].includes(hash)) start = hash; else { try{ start = localStorage.getItem("jj_view") || "A"; }catch(e){} }
+show(start);
+</script>

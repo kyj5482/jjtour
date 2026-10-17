@@ -1,0 +1,248 @@
+{
+ "vegas_strip": {
+  "title": "File:Las Vegas Blvd, the \"Strip\".jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Las_Vegas_Blvd,_the_%22Strip%22.jpg",
+  "artist": "Ron Reiring",
+  "license": "CC BY 2.0"
+ },
+ "bellagio": {
+  "title": "File:Bellagio Las Vegas December 2013 panorama.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Bellagio_Las_Vegas_December_2013_panorama.jpg",
+  "artist": "King of Hearts",
+  "license": "CC BY-SA 3.0"
+ },
+ "zion": {
+  "title": "File:Virgin River, Zion Canyon, Zion National Park, Utah (68919699).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Virgin_River,_Zion_Canyon,_Zion_National_Park,_Utah_(68919699).jpg",
+  "artist": "Ken Lund from Reno, Nevada, USA",
+  "license": "CC BY-SA 2.0"
+ },
+ "emerald_pools": {
+  "title": "File:Ermerald Pools Trail (6380894157).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Ermerald_Pools_Trail_(6380894157).jpg",
+  "artist": "Phil Whitehouse from London, United Kingdom",
+  "license": "CC BY 2.0"
+ },
+ "bryce": {
+  "title": "Thor's Hammer from Sunset Point (NPS)",
+  "page": "https://www.nps.gov/brca/learn/photosmultimedia/photogallery.htm",
+  "artist": "NPS Photo",
+  "license": "Public domain"
+ },
+ "horseshoe": {
+  "title": "File:USA 10187 Horseshoe Bend Luca Galuzzi 2007.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:USA_10187_Horseshoe_Bend_Luca_Galuzzi_2007.jpg",
+  "artist": "Luca Galuzzi (Lucag)",
+  "license": "CC BY-SA 2.5"
+ },
+ "antelope": {
+  "title": "File:Lower Antelope Canyon 478.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Lower_Antelope_Canyon_478.jpg",
+  "artist": "Uploaded by Meckimac",
+  "license": "CC BY-SA 3.0"
+ },
+ "monument": {
+  "title": "File:Monument Valley 2.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Monument_Valley_2.jpg",
+  "artist": "Huebi",
+  "license": "CC BY 2.0 de"
+ },
+ "grand_canyon": {
+  "title": "File:Grand Canyon Powell Point Evening Light 2013.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Grand_Canyon_Powell_Point_Evening_Light_2013.jpg",
+  "artist": "Tuxyso",
+  "license": "CC BY-SA 3.0"
+ },
+ "disneyland": {
+  "title": "File:Sleeping Beauty Castle Disneyland Anaheim 2013.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Sleeping_Beauty_Castle_Disneyland_Anaheim_2013.jpg",
+  "artist": "Tuxyso",
+  "license": "CC BY-SA 3.0"
+ },
+ "dca": {
+  "title": "File:Pixar Pier lagoon, California Adventure, Disneyland, Anaheim, California, USA.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Pixar_Pier_lagoon,_California_Adventure,_Disneyland,_Anaheim,_California,_USA.jpg",
+  "artist": "Cory Doctorow",
+  "license": "CC BY-SA 2.0"
+ },
+ "santa_monica": {
+  "title": "File:Ferris Wheel, Santa Monica Pier (24039087124).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Ferris_Wheel,_Santa_Monica_Pier_(24039087124).jpg",
+  "artist": "Sharon Mollerus",
+  "license": "CC BY 2.0"
+ },
+ "griffith": {
+  "title": "File:Griffith Observatory 2012 01.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Griffith_Observatory_2012_01.jpg",
+  "artist": "Photograph by Mike Peel (www.mikepeel.net).",
+  "license": "CC BY-SA 4.0"
+ },
+ "balboa": {
+  "title": "File:California Tower seen from the Alcazar Garden, Balboa Park, San Diego, California.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:California_Tower_seen_from_the_Alcazar_Garden,_Balboa_Park,_San_Diego,_California.jpg",
+  "artist": "Christian David",
+  "license": "CC BY-SA 4.0"
+ },
+ "lajolla": {
+  "title": "File:California sea lion in La Jolla (70568).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:California_sea_lion_in_La_Jolla_(70568).jpg",
+  "artist": "Rhododendrites",
+  "license": "CC BY-SA 4.0"
+ },
+ "laguna": {
+  "title": "File:Heisler Park - Laguna Beach - California - 01.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Heisler_Park_-_Laguna_Beach_-_California_-_01.jpg",
+  "artist": "NorbertNagel",
+  "license": "CC BY-SA 4.0"
+ },
+ "sjc_mission": {
+  "title": "File:Mission San Juan Capistrano 02.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Mission_San_Juan_Capistrano_02.jpg",
+  "artist": "Bernard Gagnon",
+  "license": "CC BY-SA 3.0"
+ },
+ "sb_mission": {
+  "title": "File:Mission Santa Barbara01.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Mission_Santa_Barbara01.jpg",
+  "artist": "Bernard Gagnon",
+  "license": "CC BY-SA 3.0"
+ },
+ "solvang": {
+  "title": "File:Solvang California Windmill.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Solvang_California_Windmill.jpg",
+  "artist": "SvenPaulus",
+  "license": "Public domain"
+ },
+ "sb_wharf": {
+  "title": "File:SantaBarbaraSunrise 4823.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:SantaBarbaraSunrise_4823.jpg",
+  "artist": "Dori",
+  "license": "CC BY-SA 3.0 us"
+ },
+ "tunnel_view": {
+  "title": "File:Tunnel View, Yosemite Valley, Yosemite NP - Diliff.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Tunnel_View,_Yosemite_Valley,_Yosemite_NP_-_Diliff.jpg",
+  "artist": "Diliff",
+  "license": "CC BY-SA 3.0"
+ },
+ "yosemite_falls": {
+  "title": "File:Yosemite Falls from trail, Yosemite NP, CA, US - Diliff.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Yosemite_Falls_from_trail,_Yosemite_NP,_CA,_US_-_Diliff.jpg",
+  "artist": "Diliff",
+  "license": "CC BY-SA 3.0"
+ },
+ "mariposa": {
+  "title": "File:Yosemite National Park (CA, USA), Mariposa Grove of Giant Sequoias, Grizzly Giant -- 2022 -- 2754.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Yosemite_National_Park_(CA,_USA),_Mariposa_Grove_of_Giant_Sequoias,_Grizzly_Giant_--_2022_--_2754.jpg",
+  "artist": "Dietmar Rabich",
+  "license": "CC BY-SA 4.0"
+ },
+ "emerald_bay": {
+  "title": "File:Golden Hour at Emerald Bay.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Golden_Hour_at_Emerald_Bay.jpg",
+  "artist": "Frank Schulenburg",
+  "license": "CC BY-SA 3.0"
+ },
+ "sand_harbor": {
+  "title": "File:Sand Harbor, Lake Tahoe, Nevada, 20220515, 11.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Sand_Harbor,_Lake_Tahoe,_Nevada,_20220515,_11.jpg",
+  "artist": "Blake Everett Carroll",
+  "license": "CC BY-SA 4.0"
+ },
+ "golden_gate": {
+  "title": "File:Golden Gate Bridge as seen from Marshall’s Beach, March 2018.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Golden_Gate_Bridge_as_seen_from_Marshall%E2%80%99s_Beach,_March_2018.jpg",
+  "artist": "Frank Schulenburg",
+  "license": "CC BY-SA 4.0"
+ },
+ "alcatraz": {
+  "title": "File:Alcatraz recreation yard, NW view.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Alcatraz_recreation_yard,_NW_view.jpg",
+  "artist": "Photograph:  Radomianin",
+  "license": "Public domain"
+ },
+ "cable_car": {
+  "title": "File:San Francisco cable car no. 24 en 2016.JPG",
+  "page": "https://commons.wikimedia.org/wiki/File:San_Francisco_cable_car_no._24_en_2016.JPG",
+  "artist": "© Pierre André",
+  "license": "CC BY-SA 4.0"
+ },
+ "stanford": {
+  "title": "File:Stanford Memorial Church (2025)-L1007381.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Stanford_Memorial_Church_(2025)-L1007381.jpg",
+  "artist": "Frank Schulenburg",
+  "license": "CC BY-SA 4.0"
+ },
+ "chm": {
+  "title": "File:Computer History Museum, Mountain View, California April 2025 05.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Computer_History_Museum,_Mountain_View,_California_April_2025_05.jpg",
+  "artist": "GualdimG",
+  "license": "CC BY-SA 4.0"
+ },
+ "apple_park": {
+  "title": "File:Aerial view of Apple Park dllu.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Aerial_view_of_Apple_Park_dllu.jpg",
+  "artist": "Daniel L. Lu (user:dllu)",
+  "license": "CC BY-SA 4.0"
+ },
+ "googleplex": {
+  "title": "File:Googleplex with Pride colors 2015.gk.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Googleplex_with_Pride_colors_2015.gk.jpg",
+  "artist": "Grendelkhan",
+  "license": "CC BY-SA 3.0"
+ },
+ "cal_academy": {
+  "title": "File:California Academy of Sciences San Francisco December 2016 HDR.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:California_Academy_of_Sciences_San_Francisco_December_2016_HDR.jpg",
+  "artist": "King of Hearts",
+  "license": "CC BY-SA 4.0"
+ },
+ "route66": {
+  "title": "File:Downtown Williams, south side of Route 66 east from 3rd Street.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Downtown_Williams,_south_side_of_Route_66_east_from_3rd_Street.jpg",
+  "artist": "Eric Wincentsen",
+  "license": "CC BY-SA 3.0"
+ },
+ "getty": {
+  "title": "File:Inner Courtyard of Getty Museum.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Inner_Courtyard_of_Getty_Museum.jpg",
+  "artist": "Freier Denker",
+  "license": "CC0"
+ },
+ "sd_zoo": {
+  "title": "File:Su Lin giant panda bear cub at the San Diego Zoo.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Su_Lin_giant_panda_bear_cub_at_the_San_Diego_Zoo.jpg",
+  "artist": "Original uploader was Ailuropoda at en.wikipedia",
+  "license": "CC BY-SA 3.0"
+ },
+ "glacier_point": {
+  "title": "File:Girl Posing at Glacier Point Yosemite 2013.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Girl_Posing_at_Glacier_Point_Yosemite_2013.jpg",
+  "artist": "Tuxyso",
+  "license": "CC BY-SA 3.0"
+ },
+ "tioga": {
+  "title": "File:Lake Tenaya in Yosemite NP.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Lake_Tenaya_in_Yosemite_NP.jpg",
+  "artist": "Brocken Inaglory",
+  "license": "CC BY-SA 3.0"
+ },
+ "napa": {
+  "title": "File:Grapevine trellissing and irrigation tubing underneath.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Grapevine_trellissing_and_irrigation_tubing_underneath.jpg",
+  "artist": "John Morgan",
+  "license": "CC BY 2.0"
+ },
+ "exploratorium": {
+  "title": "File:Public exhibit on skateboarding ollie physics at the Exploratorium.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Public_exhibit_on_skateboarding_ollie_physics_at_the_Exploratorium.jpg",
+  "artist": "Kylelovesyou",
+  "license": "CC0"
+ },
+ "yose_history": {
+  "title": "Roosevelt and Muir at Glacier Point, 1903 (NPS)",
+  "page": "https://www.nps.gov/yose/learn/photosmultimedia/photogallery.htm",
+  "artist": "NPS / Underwood & Underwood",
+  "license": "Public domain"
+ }
+}
