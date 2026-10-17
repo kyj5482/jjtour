@@ -297,6 +297,34 @@ figure.map figcaption b{color:var(--ink)}
 .kids .choice{border-color:var(--kid);background:var(--kid-soft)}
 .kids .choice-btns button{font-family:var(--f-kid);font-weight:400;font-size:1.08rem}
 .kids .choice-btns button[aria-pressed="true"]{border-color:var(--kid);background:var(--kid)}
+.jr-intro p{margin:0}
+.jr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:12px;margin-top:12px}
+.jr-card{display:grid;grid-template-columns:64px minmax(0,1fr);gap:12px;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:12px}
+.jr-card.got{border-color:var(--gold);background:#FFF8E8}
+.jr-badge{width:64px;height:64px;border-radius:50%;overflow:hidden;border:3px solid var(--line);background:var(--soft)}
+.jr-card.got .jr-badge{border-color:var(--gold);box-shadow:0 0 0 3px #F3DFAE}
+.jr-card:not(.got) .jr-badge img{filter:grayscale(.85) opacity(.75)}
+.jr-badge img{width:100%;height:100%;object-fit:cover;display:block}
+.jr-body{display:grid;gap:4px;align-content:start;min-width:0}
+.jr-body h4{margin:0;font-size:1.05rem}
+.jr-body p{margin:0;font-size:.9rem}
+.jr-date{font-size:.76rem;font-weight:700;color:var(--muted);letter-spacing:.04em}
+.jr-got{display:flex;gap:8px;align-items:center;font-weight:700;font-size:.92rem;cursor:pointer}
+.jr-got input{width:20px;height:20px;accent-color:var(--gold)}
+.jr-en-wrap{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.jr-en-wrap h3{font-size:1.05rem;margin-bottom:8px}
+.jr-en{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:8px}
+.jr-en .say{background:var(--sky-soft);border-radius:10px;padding:10px 12px;display:grid;gap:2px}
+.jr-en .say b{font-size:1.02rem;color:var(--ink)}
+.jr-en .pron{color:var(--sky);font-size:.88rem;font-weight:600}
+.jr-en small{color:var(--muted);font-size:.82rem}
+.jr-day{border:2px dashed var(--gold);border-radius:12px;padding:12px 14px;display:grid;gap:6px;background:#FFFBF2}
+.jr-day h4{margin:0;font-size:.95rem;color:var(--gold)}
+.jr-day p{margin:0;font-size:.94rem}
+.jr-day .say-line b{color:var(--sky)}
+.jr-day .say-big{font-size:1.15rem;font-weight:800;color:var(--sky)}
+.jr-kids .jr-body h4,.kids .jr-day h4,.kids .jr-day p{font-family:var(--f-kid);font-weight:400}
+.kids .jr-day .say-big{font-family:var(--f-body);font-weight:800}
 details.tips{border:1px solid var(--line);border-radius:12px;background:var(--soft)}
 details.tips summary{cursor:pointer;list-style:none;padding:12px 16px;font-weight:800;display:flex;justify-content:space-between;gap:10px;align-items:center}
 details.tips summary::-webkit-details-marker{display:none}
@@ -697,14 +725,44 @@ function syncChoiceCost(){
     Object.entries(CHOICE_ITEMS[x.choice.id]).forEach(([k,ids])=>S.items.B.forEach(i=>{ if(ids.includes(i.id)) i.on = k===cur; })); });
   try{ localStorage.setItem("jj_cost", JSON.stringify(S)); }catch(e){}
 }
+/* ---------- Junior Ranger ---------- */
+function jrDone(){ try{ return JSON.parse(localStorage.getItem("jj_jr")||"{}"); }catch(e){ return {}; } }
+const JR_FILES = {zion:"zion", brca:"bryce", grca:"grand_canyon", alca:"alcatraz"};
+function jrEnglish(kids){
+  return `<div class="jr-en">${JR_EN.map(([en,ko,mean])=>`<div class="say"><b lang="en">${en}</b><span class="pron">${ko}</span><small>${mean}</small></div>`).join("")}</div>`;
+}
+function jrSection(kids){
+  const done = jrDone();
+  const cards = JR.map(j=>`<div class="jr-card ${done[j.k]?"got":""}"><div class="jr-badge" aria-hidden="true">${img(JR_FILES[j.k])}</div>
+    <div class="jr-body"><span class="jr-date">${j.d} · ${j.age}</span><h4>${j.park}</h4>
+    ${kids?"":`<p>${j.how}</p>`}
+    <label class="jr-got"><input type="checkbox" data-jr="${j.k}" ${done[j.k]?"checked":""}> 배지 받았어요!</label>
+    ${kids?"":`<div class="links"><a href="${j.book}" target="_blank" rel="noopener">책자 내려받기 ↗</a></div>`}</div></div>`).join("");
+  const got = JR.filter(j=>done[j.k]).length;
+  return `<section class="sec jr ${kids?"jr-kids":""}"><div class="sec-h"><h2 ${kids?'class="k" style="font-family:var(--f-kid);font-weight:400"':""}>${kids?"주니어 레인저 배지 모으기":"주니어 레인저 도전"}</h2><p>${got} / ${JR.length} 배지</p></div>
+   <div class="letter jr-intro">${kids
+     ? `<p style="font-family:var(--f-kid);font-size:1.12rem">미국 국립공원에는 진짜 레인저(공원 지킴이)가 있어요. 공원 책자의 문제를 풀고 레인저에게 <b>영어로</b> 말을 걸면, 오른손을 들고 선서한 뒤 진짜 배지를 받을 수 있어요! 이번 여행에서 4개를 모아 봐요.</p>`
+     : `<p>미국 국립공원마다 있는 무료 어린이 프로그램입니다. 공원 책자의 활동을 풀고, 레인저 앞에서 오른손을 들고 영어로 선서하면 그 공원 배지를 줍니다. 아이들이 레인저에게 직접 영어로 말을 거는 게 핵심이라, 영어 연습과 모험심 둘 다 챙길 수 있어.</p>
+        <p><b>오빠의 요령:</b> 캐년 투어는 공원마다 머무는 시간이 2–3시간이라 현장에서 처음 받아 풀면 시간이 모자라. 책자 3권(자이언·브라이스·그랜드캐년)을 한국에서 미리 인쇄해서 비행기와 투어 밴 안에서 풀어 두고, 공원에서는 레인저 검사와 선서만 하는 게 좋아. 우편으로 배지를 보내 주는 공원도 해외로는 안 보내니 주소는 얼바인 오빠네 집으로 써.</p>`}</div>
+   <div class="jr-grid">${cards}</div>
+   <div class="jr-en-wrap"><h3 ${kids?'class="k" style="font-family:var(--f-kid);font-weight:400"':""}>레인저에게 영어로 말해 봐요</h3>${jrEnglish(kids)}
+   <p class="fine">선서 문구는 공원마다 조금씩 다르고, 레인저가 한 줄씩 먼저 말해 주면 따라 하면 돼요.</p></div></section>`;
+}
+function jrDay(x, kids){
+  const js = JR.filter(j=>j.d===x.d); if(!js.length) return "";
+  return js.map(j=>`<div class="jr-day"><h4>주니어 레인저 · ${j.park}</h4>
+    ${kids?`<p>레인저에게 이렇게 말해 봐요:</p><p class="say-big" lang="en">${j.say}</p>`
+          :`<p>${j.tour}</p><p class="say-line">오늘의 영어: <b lang="en">${j.say}</b></p><div class="links"><a href="${j.book}" target="_blank" rel="noopener">책자 ↗</a><a href="${j.page}" target="_blank" rel="noopener">공원 안내 ↗</a></div>`}</div>`).join("");
+}
 let bMode = "adult";
 try{ bMode = localStorage.getItem("jj_bmode") || "adult"; }catch(e){}
 function renderB(){
   const kids = bMode==="kids";
   return `<section class="cover">${img(kids?"antelope":"grand_canyon")}<div class="in"><span class="eyebrow">Private itinerary · 동생네 가족</span><h1>${kids?"사막과 협곡, 그리고 꿈의 나라 탐험":"그랜드 서클과 남부 캘리포니아"}</h1><p>2027년 5월 30일 – 6월 11일 · 어른 2 · 어린이 2 (10살, 7살) · 첫 미국 여행</p><div class="chips"><span class="chip">라스베이거스 3박</span><span class="chip">MaxTour 3일 캐년 투어</span><span class="chip">디즈니랜드 2일</span><span class="chip">샌프란시스코 합류</span></div></div></section>
   <section class="sec"><div class="sub" role="group" aria-label="보기 방식"><button type="button" data-mode="adult" aria-pressed="${!kids}">어른용 상세 일정</button><button type="button" data-mode="kids" aria-pressed="${kids}">아이들용 모험 일정</button></div></section>
-  ${kids ? `<section class="sec"><div class="letter" style="border:2px solid var(--kid)"><h3 class="k" style="font-family:var(--f-kid);font-weight:400">탐험대 대원들에게</h3><p style="font-family:var(--f-kid);font-size:1.08rem">13일 동안 사막, 협곡, 놀이공원, 바다를 모험해요. 매일 미션을 해내면 체크하세요! 지도에서 오늘 어디로 가는지, 차를 얼마나 타는지도 확인해요.</p></div></section>`
+  ${kids ? `<section class="sec"><div class="letter" style="border:2px solid var(--kid)"><h3 class="k" style="font-family:var(--f-kid);font-weight:400">탐험대 대원들에게</h3><p style="font-family:var(--f-kid);font-size:1.08rem">13일 동안 사막, 협곡, 놀이공원, 바다를 모험해요. 매일 미션을 해내면 체크하세요! 지도에서 오늘 어디로 가는지, 차를 얼마나 타는지도 확인해요.</p></div></section>${jrSection(true)}`
    : `<section class="sec"><div class="letter"><h3>첫 미국 여행, 오빠가 알려줄게</h3><p>미국 입국에는 ESTA(전자여행허가, 1인 $40.62)가 필요합니다. 출발 72시간 전까지 신청하세요. 캐년 투어는 밴으로 하루 5–8시간 이동하니 아이들 간식과 볼거리를 넉넉히 준비하세요. 국립공원 3곳은 성인 1인당 비거주 연간 패스($250)를 미리 사 두는 게 가장 저렴합니다. 날짜마다 접어 둔 ‘오빠의 현지 팁’과 맨 위 ‘현지인 꿀팁’ 탭에 미국 생활 요령을 모아 뒀어.</p><p class="sign">얼바인에서, 오빠가</p></div></section>
+     ${jrSection(false)}
      <section class="sec"><div class="sec-h"><h2>일정 한눈에</h2><p>줄을 누르면 그날 일정으로 이동합니다</p></div>${glance("B",B_DAYS.map(applyChoice))}</section>
      <section class="sec"><div class="sec-h"><h2>MaxTour 3일 투어 포함 사항</h2><p>공식 투어 페이지 기준</p></div><div class="strip"><div><b>포함</b>호텔 2박, 아침 2·점심 2·저녁 1, 국립공원 기본 입장료, 생수·간식</div><div><b>불포함</b>앤텔로프 $87, 모뉴먼트 4x4 $75, 비거주 공원 요금, 가이드 팁</div><div><b>조건</b>만 5세 이상, 어린이도 같은 요금, 최대 14명 밴</div><div><b>짐</b>캐리어 불가, 배낭·더플백 1개</div></div></section>`}
   <section class="sec"><div class="sec-h"><h2>이동 경로</h2><p>주황 선이 동생네 가족 경로입니다</p></div>${overviewMap("B")}${kids?"":`<div style="margin-top:12px">${board()}</div>`}</section>
@@ -718,6 +776,7 @@ function dayB(x,i){
      <p class="lead">${x.lead}</p>
      <div class="tl">${x.tl.map(([a,b])=>`<div><time>${a}</time><span>${b}</span></div>`).join("")}</div>
      ${x.ph.length>1?`<div class="extra-ph">${x.ph.slice(1).map(fig).join("")}</div>`:""}
+     ${jrDay(x)}
      ${x.book?`<div class="box book"><h4>예약 · 요금</h4><ul>${x.book.map(s=>`<li>${s}</li>`).join("")}</ul></div>`:""}
      ${histBlock(x,"배경 이야기")}
    </div><div class="aside">${dayMap("B",x.mapKey||x.d)}${mealsBlock("B",x.d,false,x.meal)}${infoList("B",x.d)}
@@ -733,6 +792,7 @@ function dayKid(x,i){
    <div class="day-body"><div class="main">
      ${choiceBlock(x,true)}
      <div class="drive"><span>${driveTxt}</span><div class="bar" aria-hidden="true"><span style="width:${pct}%"></span></div></div>
+     ${jrDay(x,true)}
      <div class="facts">${k.fact.map(([a,b])=>`<div class="fact"><b>${a}</b>${b}</div>`).join("")}</div>
      <div class="mission"><div class="k" style="font-family:var(--f-kid);font-size:1.1rem;color:var(--kid)">오늘의 미션</div>${k.m.map((m,j)=>{const id=`m-${x.d.replace("/","-")}-${j}`;return `<label for="${id}"><input type="checkbox" id="${id}" data-mid="${id}" ${done[id]?"checked":""}>${m}</label>`;}).join("")}</div>
    </div><div class="aside">${dayMap("B",x.mapKey||x.d,true)}${mealsBlock("B",x.d,true,x.meal)}</div></div></article>`;
@@ -963,6 +1023,7 @@ const CHECK = [
  ["국제운전면허증 (운전할 어른)","한국 면허증과 함께 지참"],
  ["여행자 보험 가입","의료비 한도 충분히"],
  ["티오가 로드 개통 여부 확인 (5월 말)","닫혀 있으면 6/6 우회로 이용"],
+ ["주니어 레인저 책자 3권 인쇄 (동생네 아이 2명)","자이언·브라이스·그랜드캐년 · 공원 안내 페이지에서 PDF 내려받기, 알카트라즈는 현장에서"],
  ["졸업식 시간·장소 확정","6/3 Jia 초등학교 · 6/4 Jaei 중학교 졸업식"]
 ];
 const CONTACTS = [
@@ -1007,6 +1068,7 @@ function show(v){
       setChoice(c, b.dataset.val); show("B");
       const nb = document.querySelector(`#${art} [data-choice="${c.id}"][data-val="${b.dataset.val}"]`); if(nb) scrollBy(0, nb.getBoundingClientRect().top-top);
     }));
+    el.querySelectorAll("input[data-jr]").forEach(c=>c.addEventListener("change",()=>{ const d=jrDone(); d[c.dataset.jr]=c.checked; try{localStorage.setItem("jj_jr",JSON.stringify(d));}catch(e){} const y=scrollY; show("B"); scrollTo(0,y); }));
     el.querySelectorAll("input[data-mid]").forEach(c=>c.addEventListener("change",()=>{ const m=missions(); m[c.dataset.mid]=c.checked; try{localStorage.setItem("jj_missions",JSON.stringify(m));}catch(e){} }));
   }
   if(v==="C") bindC(el);

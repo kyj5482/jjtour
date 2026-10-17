@@ -237,3 +237,35 @@ B_DAYS.find(x=>x.d==="6/6").choice = {
        m:["범고래 쇼 앞자리에서 물 맞아 보기","내 키로 탈 수 있는 놀이기구 3개 찾기","라호야에서 바다사자 아기 찾기"]}}
  }
 };
+
+/* 주니어 레인저: 국립공원 레인저가 주는 무료 어린이 배지 프로그램. 공원별 조건이 달라 투어 일정에 맞춘 요령을 함께 적는다. */
+const JR = [
+ {k:"zion", d:"5/31", park:"자이언", age:"4세 이상",
+  book:"https://www.nps.gov/zion/learn/kidsyouth/upload/Jr-Ranger-Web-508-3.pdf", page:"https://www.nps.gov/zion/learn/kidsyouth/beajuniorranger.htm",
+  how:"나이에 맞는 활동을 하고(9세 이상은 두 캐릭터 활동 모두), 레인저 프로그램에 한 번 참여한 뒤 방문자 센터나 인간역사박물관 데스크에서 검사받아요.",
+  tour:"투어 정차가 2시간 30분이라 레인저 프로그램 시간과 안 맞을 수 있어. 그럴 땐 완성한 페이지 사진과 주소를 공원에 보내면 배지를 우편으로 보내 줘. 주소는 얼바인 오빠네 집으로 쓰면 돼.",
+  say:"Excuse me, can I get a Junior Ranger book?"},
+ {k:"brca", d:"5/31", park:"브라이스 캐니언", age:"모든 나이",
+  book:"https://home.nps.gov/brca/learn/kidsyouth/upload/Bryce-Canyon-Junior-Ranger-Book-Reduced-508.pdf", page:"https://www.nps.gov/brca/learn/kidsyouth/junior-ranger.htm",
+  how:"자기 나이만큼 활동을 하고(7살은 7개), 방문자 센터 박물관 구경·공원 영화·레인저 프로그램 중 하나를 한 뒤 방문자 센터에서 선서하고 배지를 받아요.",
+  tour:"조건에 ‘박물관 구경’이 있어서 투어 중에 받기 가장 쉬운 곳이야. 가이드에게 방문자 센터에 들러 달라고 아침에 미리 부탁해 둬.",
+  say:"I finished my book. Can you check it, please?"},
+ {k:"grca", d:"6/2", park:"그랜드캐년", age:"4세 이상",
+  book:"https://www.nps.gov/grca/learn/kidsyouth/upload/S-Rim-Jr-Ranger-booklet-full-508-fillable.pdf", page:"https://www.nps.gov/grca/learn/kidsyouth/junior-ranger.htm",
+  how:"사우스림 책자를 하고, 레인저 프로그램이나 공원 영화를 본 뒤 그랜드캐년 방문자 센터·버캄프 방문자 센터 등에 제출해요.",
+  tour:"그랜드캐년은 공원 안에서만 배지를 주고 우편 발송이 없어. 책자는 한국에서 미리 인쇄해 차 안에서 풀고, 가이드에게 방문자 센터 들를 시간을 꼭 부탁해. 안 되면 집에서 하는 ‘가상 주니어 레인저’ 배지라도 받자.",
+  say:"What is your favorite animal in the Grand Canyon?"},
+ {k:"alca", d:"6/11", park:"알카트라즈", age:"모든 나이",
+  book:"https://www.nps.gov/alca/learn/kidsyouth/junior-ranger.htm", page:"https://www.nps.gov/alca/learn/kidsyouth/junior-ranger.htm",
+  how:"섬 부두 안내소(Dock Information Station)에서 책자를 받거나 미리 내려받아 풀어요. 완성하면 레인저에게 보여 주거나 사진을 이메일로 보내요.",
+  tour:"레인저가 검사하고 배지를 우편으로 보내 주는데 해외로는 안 보내. 얼바인 주소로 받아서 나중에 한국으로 같이 보내 줄게.",
+  say:"Thank you, Ranger! This was so much fun."}
+];
+const JR_EN = [
+ ["Hi! I'm a Junior Ranger from Korea.","하이! 아임 어 주니어 레인저 프롬 코리아.","안녕하세요! 저는 한국에서 온 주니어 레인저예요."],
+ ["Excuse me, can I get a Junior Ranger book?","익스큐즈 미, 캔 아이 겟 어 주니어 레인저 북?","실례합니다, 주니어 레인저 책 받을 수 있어요?"],
+ ["I finished my book. Can you check it, please?","아이 피니시드 마이 북. 캔 유 체크 잇, 플리즈?","책 다 했어요. 검사해 주실래요?"],
+ ["What is your favorite animal in this park?","왓 이즈 유어 페이버릿 애니멀 인 디스 파크?","이 공원에서 제일 좋아하는 동물이 뭐예요?"],
+ ["I promise to protect this park.","아이 프라미스 투 프로텍트 디스 파크.","이 공원을 지키겠다고 약속해요. (선서 연습)"],
+ ["Thank you, Ranger!","땡큐, 레인저!","고맙습니다, 레인저님!"]
+];
